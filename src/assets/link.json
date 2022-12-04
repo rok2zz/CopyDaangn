@@ -1,0 +1,16 @@
+{
+    "link": [
+        {
+            "address": "",
+            "name": "중고거래"
+        },
+        {
+            "address": "jobs",
+            "name": "알바"
+        },
+        {
+            "address": "realty",
+            "name": "부동산 직거래"
+        }
+    ]
+}

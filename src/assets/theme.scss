@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+body.light {
+    background-color: #FFFFFF;
+
+    .input-background-color { background-color: #F2F3F6;}
+    .banner-font-color { color: #212124; }
+    .banner-background-color { background-color: #D2EDFA; }
+}
+
+body.dark {
+    background-color: #17171A;
+
+    .input-background-color { background-color: #2B2E33; }
+
+    .banner-font-color { color: #212124; }
+    .banner-background-color { background-color: #D2EDFA; }
+}
