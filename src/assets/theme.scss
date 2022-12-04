@@ -2,17 +2,34 @@
 
 body.light {
     background-color: #FFFFFF;
+    .general-font-color { color: #212124; }
+    .general-font-color-2529 { color: #212529; }
+    .general-font-color-black-white { color: #212124; }
+    .footer-font-color-gray-8b94 { color: #868B94}
+    .footer-font-color-gray-5159 { color: #4D5159}
+    
+    .border-top-color { border-color: #EAEBEE }
 
-    .input-background-color { background-color: #F2F3F6;}
-    .banner-font-color { color: #212124; }
-    .banner-background-color { background-color: #D2EDFA; }
+    .background-color-black-white { background-color: #F2F3F6;}
+    .background-color-carrot-f7f2 { background-color: #FBF7F2; }
+    .background-color-carrot-e2d2 { background-color: #FFE2D2;}
+    .background-color-green { background-color: #E6F3E6; }
+    .background-color-sky { background-color: #D2EDFA; }
 }
 
 body.dark {
     background-color: #17171A;
+    .general-font-color { color: #212124; }
+    .general-font-color-2529 { color: #212529; }
+    .general-font-color-black-white { color: #EAEBEE; }
+    .footer-font-color-gray-8b94 { color: #868B94}
+    .footer-font-color-gray-5159 { color: #4D5159}
 
-    .input-background-color { background-color: #2B2E33; }
-
-    .banner-font-color { color: #212124; }
-    .banner-background-color { background-color: #D2EDFA; }
+    .border-top-color { border-color: #EAEBEE }
+    
+    .background-color-black-white { background-color: #2B2E33; }
+    .background-color-carrot-f7f2 { background-color: #FBF7F2; }
+    .background-color-carrot-e2d2 { background-color: #FFE2D2;}
+    .background-color-green { background-color: #E6F3E6; }
+    .background-color-sky { background-color: #D2EDFA; };
 }

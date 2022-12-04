@@ -43,15 +43,19 @@
 
     "read": [
         {
+            "address": "https://www.daangn.com/policy/terms",
             "info": "이용약관"
         },
         {
+            "address": "https://www.daangn.com/policy/pribacy",
             "info": "개인정보처리방침"
         },
         {
+            "address": "https://www.daangn.com/policy/location",
             "info": "위치기반서비스 이용약관"
         },
         {
+            "address": "https://www.daangn.com/wv/faqs/3994",
             "info": "이용자보호 비전과 계획"
         }
     ]
