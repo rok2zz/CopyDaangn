@@ -3,6 +3,7 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import DaangnHome from '../views/DaangnHome.vue'
 import Jobs from '../views/Jobs.vue'
 import Realty from '../views/Realty.vue'
+import HotArticles from '../views/HotArticles.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes: Array<RouteConfig> = [
     path: '/realty',
     name: 'realty',
     component: Realty
+  },
+  {
+    path: '/hot_articles',
+    name: 'hot_articles',
+    component: HotArticles
   }
 ]
 

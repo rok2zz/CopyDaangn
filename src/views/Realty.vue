@@ -44,7 +44,6 @@
 						font-size: 18px;
 
 						margin-top: 16px;
-
 					}
 
 					> .bannerSpan {
@@ -52,6 +51,8 @@
 
 						font-size: 32px;
 						font-weight: bold;
+
+						margin-top: 0px;
 					}
 				}
 

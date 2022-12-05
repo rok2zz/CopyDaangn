@@ -1,19 +1,29 @@
 <template>
   <div :class="$style.index">
-    <div :class="[$style.container, 'general-font-color-2529']">
-		<div :class="[$style.landingContainer, landingClassBackgroundColor(item.imageIndex)]" v-for="(item, index) in landing" :key="index">
-			<div :class="[$style.landingContents, landingClassHeight(item.imageIndex)]">
-				<div :class="$style.leftLandingContents" v-if="index % 2 == 0">
-					<span :class="$style.landingSpan">{{ item.title }}</span>
-					<span>{{ item.contents }}</span>
+    <div :class="[$style.container, 'general-font-color-black-2529']">
+		<div :class="$style.landingContainer">
+		</div>
+		<div :class="[$style.hotArticlesContainer, 'background-color-gray']">
+			<div :class="$style.hotArticlesContents">
+				<div :class="$style.hotArticlesTitle">
+					<span>중고거래 인기매물</span>
 				</div>
-				<div :class="$style.leftLandingContents" v-else>
-					<img :class="$style.landingImage" :src="require('@/assets/landing' + item.imageIndex + '.webp')">
+				<div :class="$style.hotArticlesList">
+					<div :class="$style.hotArticles" v-for="(item, index) in products" :key="index" >
+						<router-link class="general-font-color-black-2529" :to="('/articles?id=' + item.id)"  v-if="index < 4">
+							<img :src="item.images[0]">
+							<span :class="$style.articleTitle" v-if="(item.name.length >= 15)">{{ cuttingName(item.name) }}</span>
+							<span :class="$style.articleTitle" v-else>{{ item.name }}</span>
+							<span :class="$style.articlePrice">{{ priceType(item.price) }}원</span>
+							<span :class="$style.articleLocation">{{ item.registered_by.location }}</span>
+							<span class="general-font-color-gray-8e96">관심 {{ item.likes }}∙채팅 {{ item.chats }}</span>
+						</router-link>
+					</div>
 				</div>
-				<div :class="$style.rightLandingContents" v-if="index % 2 == 0">
-					<img :class="[$style.landingImage, landingClassBackgroundColor(item.imageIndex)]" :src="require('@/assets/landing' + item.imageIndex + '.webp')">
-				</div>
-				<div :class="$style.rightLandingContents" v-else>
+				<div :class="$style.hotArticlesLink">
+					<router-link class="general-font-color-black-2529" to="/hot_articles">
+						<span>인기매물 더 보기</span>
+					</router-link>
 				</div>
 			</div>
 		</div>
@@ -70,17 +80,81 @@
 					
 				}
 			}
+		}
 
-			> .landingContents.landingHeight684 {
-				height: 684px;
-			}
+		> .hotArticlesContainer {
+			padding: 60px 0px;
 
-			> .landingContents.landingHeight740 {
-				height: 740px;
-			}
+			> .hotArticlesContents {
+				width: 1024px;
 
-			> .landingContents.landingHeight735 {
-				height: 735px;
+				margin: 0 auto;
+
+				> .hotArticlesTitle {
+					text-align: center;
+
+					font-size: 40px;
+					font-weight: bold;		
+					
+					padding-top: 60px;
+					padding-bottom: 80px;
+				}
+
+				> .hotArticlesList {
+					display: flex;
+					flex-wrap: wrap;
+
+					> .hotArticles {
+						width: 212px;
+						
+						display: flex;
+
+						margin: 0px 22px;
+						margin-bottom: 56px;
+
+						> a {
+							display: block;
+							
+							> img {
+								width: 212px;
+								height: 212px;
+
+								margin-bottom: 10px;
+
+								border-radius: 10px;
+							}
+
+							
+							> span {
+								width: 100%;
+
+								display: inline-block;
+								
+								font-size: 13px;
+
+								padding-bottom: 4px;
+							}
+
+							> .articleTitle {
+								font-size: 16px;
+							}
+
+							> .articlePrice {
+								font-size: 15px;
+								font-weight: bold;
+							}
+						}
+					}
+
+				}
+
+				> .hotArticlesLink {
+					text-align: center;
+
+					font-size: 16px;
+
+					padding-bottom: 120px;
+				}
 			}
 		}
 	}
@@ -100,44 +174,22 @@ import LandingJsonFile from '@/assets/landing.json'
 export default class DaangnHome extends Vue {
 	mode: string = this.$store.getters.getMode
 	landing: any = LandingJsonFile.landing
-	sales: any = {}
+	products: any = {}
 
 	mounted() {
-		this.sales = this.$store.getters.getSales
+		this.products = this.$store.getters.getProducts
 		
 		this.$store.commit('setMode', 'light')
 	}
-
-	landingClassBackgroundColor(index: number) {
-		var backgroundColor: string = ""
-
-		if (index == 1) {
-			backgroundColor =  "background-color-carrot-f7f2"
-		} else if (index == 3) {
-			backgroundColor = "background-color-green"
-		}
-
-		return backgroundColor
+	
+	cuttingName(name: string): string {
+		return name.substring(0,16) + '...'
 	}
 
-	landingClassHeight(index: number) {
-		switch(index) {
-			case 1:
-				// @ts-ignore
-				return this.$style.landingHeight684
-				break
-			case 2:
-				// @ts-ignore
-				return this.$style.landingHeight684
-				break
-			case 3:
-				// @ts-ignore
-				return this.$style.landingHeight740
-			case 4:
-				// @ts-ignore
-				return this.$style.landingHeight735
-				break
-		}
+	priceType(price: number): string {
+		var priceComma = String(price).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+		return priceComma
 	}
 }
 </script>

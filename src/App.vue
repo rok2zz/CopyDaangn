@@ -1,24 +1,26 @@
 <template>
 	<div :class="$style.index">
 		<div :class="$style.container">
-			<div :class="$style.headContainer">
+			<div :class="[$style.headContainer, 'background-color-black-white-basic']">
 				<div :class="$style.header">
-					<div :class="$style.logo">
-						<router-link to="/">
-							<img :src="require('@/assets/logo.svg')">
-						</router-link>
+					<div :class="$style.leftHeader">
+						<div :class="$style.logo">
+							<router-link to="/">
+								<img :src="require('@/assets/logo.svg')">
+							</router-link>
+						</div>
+						<div :class="$style.link" v-for="(item, index) in linkAddress" :key="index">
+							<router-link :to="('/' + item.address)">
+								<span class="footer-font-color-gray-black">{{ item.name }}</span>
+							</router-link>
+						</div>
 					</div>
-					<div :class="$style.link" v-for="(item, index) in linkAddress" :key="index">
-						<router-link :to="('/' + item.address)">
-							<span>{{ item.name }}</span>
-						</router-link>
-					</div>
-					<div :class="$style.rightHeader">
+						<div :class="$style.rightHeader">
 						<div :class="$style.search">
-							<input v-on:keydown="keydownHandler" :class="[$style.searchInput, 'background-color-black-white']" type="text" placeholder="물품이나 동네를 검색해보세요" v-model="searchID">
+							<input v-on:keydown="keydownHandler" :class="[$style.searchInput, 'general-font-color-black-gray', 'background-color-black-white']" type="text" placeholder="물품이나 동네를 검색해보세요" v-model="searchID">
 						</div>
 						<div :class="$style.chat">
-							<button :class="$style.chatBtn">채팅하기</button>
+							<button :class="[$style.chatBtn, 'general-font-color-black-white','background-color-black-white-basic', 'border-color-black-white']">채팅하기</button>
 						</div>
 					</div>
 				</div>
@@ -108,7 +110,7 @@
 		> .headContainer {			
 			height: 64px;
 
-			display: fixed;
+			position: fixed;
 			top: 0;
 
 			> .header {
@@ -121,45 +123,39 @@
 				margin: 0 auto;
 				padding: 12px 16px;
 
-				> .logo {
-					padding-right: 40px;
-				}
+				> .leftHeader {
+					display: flex;
 
-				> .link {
-					padding-right: 30px;
+					> .logo {
+						padding-right: 40px;
+					}
 
-					transform: translateY(-3px);
+					> .link {
+						padding-right: 30px;
 
-					> a {
-						text-decoration: none;
+						transform: translateY(2px);
 
-						font-size: 18px;
-						font-weight: bold;
+						> a {
+							text-decoration: none;
 
-						> span {
-							color: #4d5159;
+							font-size: 18px;
+							font-weight: bold;
 						}
-					}
 
-					:global {
-						.router-link-exact-active {
-							> span {
-								color: #ff6f0f;
-							}
-						}				
-					}
-
-					@include mobile {
-						display: none;
-					}
+						:global {
+							.router-link-exact-active {
+								> span {
+									color: #ff6f0f;
+								}
+							}				
+						}
+					}				
 				}
 
 				> .rightHeader {
 					display: flex;
 					position: fixed;
-					top: 12px;
 					right: 16px;
-
 					
 					> .search {
 						padding-right: 12px;
@@ -191,16 +187,18 @@
 
 							padding: 5px;
 
-							border-radius: 3px;
-						}
-
-						@include mobile {
-							display: none;
+							border: 1px solid;
+							border-radius: 3px;							
 						}
 					}
-					
 				}
 			}
+		}
+		
+		> .mainContainer {
+			min-width: 1024px;
+
+			padding-top: 64px;
 		}
 
 		> .footerContainer {
@@ -356,7 +354,7 @@ import InfoFooterJsonFile from '@/assets/infoFooter.json'
 })
 export default class HomeView extends Vue {
 	mode: string = this.$store.getters.getMode
-	sales: any = ContentsJsonFile.products
+	products: any = ContentsJsonFile.products
 	linkAddress: any = LinkJsonFile.link
 	linkFooter: any = LinkFooterJsonFile.link
 	downloadFooter: any = LinkFooterJsonFile.download
@@ -367,7 +365,7 @@ export default class HomeView extends Vue {
 	searchID?: string
 
 	mounted() {
-		this.$store.commit('setSales', this.sales)
+		this.$store.commit('setProducts', this.products)
 	}
 
 	@Watch('$store.state.mode')

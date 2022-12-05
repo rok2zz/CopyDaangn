@@ -6,22 +6,22 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		mode: "light",
-		sales: {}
+		products: {}
 	},
 	getters: {
 		getMode(state) {
 			return state.mode
 		},
-		getSales(state) {
-			return state.sales
+		getProducts(state) {
+			return state.products
 		}
 	},
 	mutations: {
 		setMode(state, value) {
 			state.mode = value
 		},
-		setSales(state, value) {
-			state.sales = value
+		setProducts(state, value) {
+			state.products = value
 		}
 	},
 })
