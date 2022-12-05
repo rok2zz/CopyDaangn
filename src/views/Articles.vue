@@ -2,7 +2,15 @@
 	<div :class="$style.index">
 		<div :class="$style.container">
 			<div :class="$style.articleImageContainer">
-				
+				<button class="background-color-black-white-basic">
+					<img :src="require('@/assets/chvron_left.svg')">
+				</button>
+				<div :class="$style.articleInfoImage">
+					<!-- <img :src="require(callInfoImage(imageIndex))"> -->
+				</div>
+				<button class="background-color-black-white-basic">
+					<img :src="require('@/assets/chvron_right.svg')">
+				</button>
 			</div>
 			<div :class="$style.userInfoContainer">
 
@@ -19,8 +27,8 @@
 						</span>
 					</div>
 					<div :class="$style.hotArticlesList">
-						<div :class="$style.hotArticles" v-for="(item, index) in products" :key="index">
-							<router-link class="general-font-color-black-2529" :to="('/articles?id=' + item.id)" v-if="(duplicatedIndexCheck() && index < 6)">
+						<div :class="$style.hotArticles" v-for="(item, index) in duplicatedProducts.slice(0, 6)" :key="index">
+							<router-link class="general-font-color-black-2529" :to="{name: 'articles', query: {id : item.id}}">
 								<img :src="item.images[0]">
 								<span :class="$style.articleTitle" v-if="item.name.length >= 15">{{ cuttingName(item.name) }}</span>
 								<span :class="$style.articleTitle" v-else>{{ item.name }}</span>
@@ -40,6 +48,36 @@
 .index {
 	
 	> .container {
+
+		> .articleImageContainer {
+			width: 730px;
+			
+			display: flex;
+			align-items: center;
+
+			margin: 0 auto;
+
+			> button {
+				border: none;
+
+				cursor: pointer;
+			}
+
+			> .articleInfoImage {
+
+				> img {
+					border-radius: 10px;
+				}
+			}
+		}
+
+		> .userInfoContainer {
+			width: 677px;
+
+			display: flex;
+
+			padding: 25px 0px;
+		}
 
 
 		> .hotArticlesContainer {
@@ -90,8 +128,6 @@
 
 					display: flex;
 					flex-wrap: wrap;
-
-					text-align: center;
 
 					> .hotArticles {
 						width: 33%;
@@ -150,18 +186,44 @@ import ContentsJsonFile from '@/assets/contents.json'
 		// HelloWorld,
 	},
 })
-export default class Hot_Articles extends Vue {
+export default class Articles extends Vue {
 	products: any = ContentsJsonFile.products
-	articleID: any = this.$store.getters.getArticleID
+	duplicatedProducts: any = []
+	selectedProduct: any = []
+	articleID: any = this.$route.query.id
+	articleImageIndex: number = 1
+	imageIndex: number = 0
 
-	duplicatedIndexCheck() {
-		for (var i = 0; i < this.products.length; i++) {
-			if (this.products[i] == this.articleID) {
-				return
-			} else {
-				return this.products
-			}
+	mounted() {
+		this.duplicateProducts()
+		this.selectProduct()
+	}
+
+	duplicateProducts() {
+		this.duplicatedProducts = this.products.filter((el: { id: any; }) => {
+			return !(this.articleID === el.id)
+		})
+	}
+
+	selectProduct() {
+		this.selectedProduct = this.products.filter((el: { id: any; }) => {
+			return this.articleID === el.id
+		})
+	}
+
+	@Watch('articleID') 
+	watchArticleID() {
+	}
+
+	checkArticleImageIndex() {
+		this.articleImageIndex = this.articleID.images.length
+	}
+
+	callInfoImage(index: number) {
+		if (this.selectedProduct[index] == null) {
+			return
 		}
+		return this.selectedProduct[index].images[this.imageIndex]
 	}
 
 	cuttingName(name: string): string {

@@ -80,7 +80,7 @@
 					</div>
 					<div :class="$style.hotArticlesList">
 						<div :class="$style.hotArticles" v-for="(item, index) in products" :key="index" >
-							<router-link class="general-font-color-black-2529" :to="('/articles?id=' + item.id)"  v-if="index < 4">
+							<router-link class="general-font-color-black-2529" :to="{name: 'articles', query: {id : item.id}}"  v-if="index < 4">
 								<img :src="item.images[0]">
 								<span :class="$style.articleTitle" v-if="item.name.length >= 15">{{ cuttingName(item.name) }}</span>
 								<span :class="$style.articleTitle" v-else>{{ item.name }}</span>

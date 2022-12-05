@@ -7,8 +7,8 @@
 						<span>중고거래 인기매물</span>
 					</div>
 					<div :class="$style.hotArticlesList">
-						<div :class="$style.hotArticles" v-for="(item, index) in products" :key="index" >
-							<router-link class="general-font-color-black-2529" :to="('/articles?id=' + item.id)">
+						<div :class="$style.hotArticles" v-for="(item, index) in products" :key="index">
+							<router-link class="general-font-color-black-2529" :to="{name: 'articles', query: {id : item.id}}">
 								<img :src="item.images[0]">
 								<span :class="$style.articleTitle" v-if="item.name.length >= 15">{{ cuttingName(item.name) }}</span>
 								<span :class="$style.articleTitle" v-else>{{ item.name }}</span>
@@ -120,7 +120,7 @@ import ContentsJsonFile from '@/assets/contents.json'
 })
 export default class Hot_Articles extends Vue {
 	products: any = ContentsJsonFile.products
-	
+
 	cuttingName(name: string): string {
 		return name.substring(0,16) + '...'
 	}
