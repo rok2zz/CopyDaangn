@@ -2,11 +2,17 @@
 
 body.light {
     background-color: #FFFFFF;
+
+    .router-link-exact-active {
+        > span { color: #ff6f0f; }
+    }	
+
     .general-font-color { color: #212124; }
     .general-font-color-black-gray { color: #212124; }
     .general-font-color-black-2529 { color: #212529; }
     .general-font-color-black-white { color: #212124; }
     .general-font-color-gray-8e96 { color: #868E96; }
+    .general-font-color-carrot { color: #FF8A3D; }
     .footer-font-color-gray-8b94 { color: #868B94; }
     .footer-font-color-gray-5159 { color: #4D5159; }
     .footer-font-color-gray-black { color: #4D5159; }
@@ -24,15 +30,22 @@ body.light {
     .background-color-green { background-color: #E6F3E6; }
     .background-color-sky { background-color: #D2EDFA; }
     .background-color-gray { background-color: #F8F9FA; }
+    .background-color-green { background-color: #E6F3E6; }
 }
 
 body.dark {
     background-color: #17171A;
+
+    .router-link-exact-active {
+        > span { color: #ff6f0f; }
+    }	
+
     .general-font-color { color: #212124; }
     .general-font-color-black-gray { color: #2B2E33; }
     .general-font-color-black-2529 { color: #212529; }
     .general-font-color-black-white { color: #EAEBEE; }
     .general-font-color-gray-8e96 { color: #868E96; }
+    .general-font-color-carrot { color: #FF8A3D; }
     .footer-font-color-gray-8b94 { color: #868B94; }
     .footer-font-color-gray-5159 { color: #4D5159; }
     .footer-font-color-gray-black { color: #ADB1BA; }
@@ -49,4 +62,5 @@ body.dark {
     .background-color-green { background-color: #E6F3E6; }
     .background-color-sky { background-color: #D2EDFA; }
     .background-color-gray { background-color: #F8F9FA; }
+    .background-color-green { background-color: #E6F3E6; }
 }

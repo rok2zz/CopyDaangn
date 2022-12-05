@@ -1,13 +1,13 @@
 <template>
 	<div :class="$style.index">
 		<div :class="$style.container">
-			<div :class="[$style.realtyBanner, 'background-color-carrot-e2d2']">
-				<div :class="$style.banner">
-					<div :class="[$style.leftBanner, 'general-font-color']">
+			<div :class="[$style.albaBannerContainer, 'background-color-carrot-e2d2']">
+				<div :class="$style.albaBanner">
+					<div :class="[$style.leftAlbaBanner, 'general-font-color']">
 						<span :class="$style.bannerSpan">우리 동네에서 찾는 <br> 당근알바</span>
 						<span>걸어서 10분 거리의<br>동네 알바들 여기 다 있어요.</span>
 					</div>
-					<div :class="$style.rightBanner">
+					<div :class="$style.rightAlbaBanner">
 						<img :class="$style.albaBannerImage" :src="require('@/assets/alba_banner.png')">
 					</div>
 				</div>
@@ -21,12 +21,12 @@
 
 	> .container {
 		
-		> .realtyBanner {
+		> .albaBannerContainer {
 			height: 315px;
 
 			display: flex;
 
-			> .banner {
+			> .albaBanner {
 				width: 800px;
 
 				display: flex;
@@ -35,7 +35,7 @@
 				padding: 12px;
 				padding-top: 48px;
 				
-				> .leftBanner {
+				> .leftAlbaBanner {
 					width: 50%;
 
 					span {
@@ -54,7 +54,7 @@
 					}
 				}
 
-				> .rightBanner {
+				> .rightAlbaBanner {
 					width: 50%;
 
 					> .albaBannerImage {
@@ -80,12 +80,8 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 	},
 })
 export default class Jobs extends Vue {
-	mode: string = this.$store.getters.getMode
-	
 	mounted() {
 		this.$store.commit('setMode', "dark")
 	}
-
-	
 }
 </script>

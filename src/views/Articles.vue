@@ -1,14 +1,26 @@
 <template>
 	<div :class="$style.index">
 		<div :class="$style.container">
+			<div :class="$style.articleImageContainer">
+				
+			</div>
+			<div :class="$style.userInfoContainer">
+
+			</div>
+			<div :class="$style.articleInfoContainer">
+
+			</div>
 			<div :class="$style.hotArticlesContainer">
-				<div :class="$style.hotArticlesContents">
+				<div :class="[$style.hotArticlesContents, 'border-top-color']">
 					<div :class="$style.hotArticlesTitle">
-						<span>중고거래 인기매물</span>
+						<span :class="$style.hotArticlesTitleSpan">당근마켓 인기중고</span>
+						<span :class="$style.hotArticlesLinkSpan">
+							<router-link class="general-font-color-carrot" to="/hot_articles">더 구경하기</router-link>
+						</span>
 					</div>
 					<div :class="$style.hotArticlesList">
-						<div :class="$style.hotArticles" v-for="(item, index) in products" :key="index" >
-							<router-link class="general-font-color-black-2529" :to="('/articles?id=' + item.id)">
+						<div :class="$style.hotArticles" v-for="(item, index) in products" :key="index">
+							<router-link class="general-font-color-black-2529" :to="('/articles?id=' + item.id)" v-if="(duplicatedIndexCheck() && index < 6)">
 								<img :src="item.images[0]">
 								<span :class="$style.articleTitle" v-if="item.name.length >= 15">{{ cuttingName(item.name) }}</span>
 								<span :class="$style.articleTitle" v-else>{{ item.name }}</span>
@@ -29,42 +41,71 @@
 	
 	> .container {
 
-		> .hotArticlesContainer {
-			padding: 60px 0px;
-			padding-top: 30px;
 
+		> .hotArticlesContainer {
 			> .hotArticlesContents {
-				width: 1024px;
+				width: 677px;
 
 				margin: 0 auto;
+				padding-top: 32px;
+
+				border-top: 1px solid;
 
 				> .hotArticlesTitle {
-					text-align: center;
+					width: 100%;
 
-					font-size: 40px;
-					font-weight: bold;		
-					
-					padding-bottom: 80px;
+					text-align: left;
+
+					padding-bottom: 32px;
+
+					> span {
+						display: inline-block;
+					}
+
+					> .hotArticlesTitleSpan {
+						width: 50%;
+
+						font-size: 18px;
+						font-weight: bold;
+					}
+
+					> .hotArticlesLinkSpan {
+						width: 50%;
+						text-align: right;
+
+						> a {
+							font-size: 15px;
+
+							text-decoration: none;
+						}
+
+						> a:hover {
+							font-weight: bold;
+						}
+					}
 				}
 
 				> .hotArticlesList {
+					width: 100%;
+
 					display: flex;
 					flex-wrap: wrap;
 
+					text-align: center;
+
 					> .hotArticles {
-						width: 212px;
+						width: 33%;
 						
 						display: flex;
 
-						margin: 0px 22px;
 						margin-bottom: 56px;
 
 						> a {
 							display: block;
 							
 							> img {
-								width: 212px;
-								height: 212px;
+								width: 208px;
+								height: 208px;
 
 								margin-bottom: 10px;
 
@@ -92,15 +133,6 @@
 							}
 						}
 					}
-
-				}
-
-				> .hotArticlesLink {
-					text-align: center;
-
-					font-size: 16px;
-
-					padding-bottom: 120px;
 				}
 			}
 		}
@@ -120,7 +152,18 @@ import ContentsJsonFile from '@/assets/contents.json'
 })
 export default class Hot_Articles extends Vue {
 	products: any = ContentsJsonFile.products
-	
+	articleID: any = this.$store.getters.getArticleID
+
+	duplicatedIndexCheck() {
+		for (var i = 0; i < this.products.length; i++) {
+			if (this.products[i] == this.articleID) {
+				return
+			} else {
+				return this.products
+			}
+		}
+	}
+
 	cuttingName(name: string): string {
 		return name.substring(0,16) + '...'
 	}

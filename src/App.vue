@@ -5,7 +5,7 @@
 				<div :class="$style.header">
 					<div :class="$style.leftHeader">
 						<div :class="$style.logo">
-							<router-link to="/">
+							<router-link class="router-link-exact-active" to="/">
 								<img :src="require('@/assets/logo.svg')">
 							</router-link>
 						</div>
@@ -17,7 +17,7 @@
 					</div>
 						<div :class="$style.rightHeader">
 						<div :class="$style.search">
-							<input v-on:keydown="keydownHandler" :class="[$style.searchInput, 'general-font-color-black-gray', 'background-color-black-white']" type="text" placeholder="물품이나 동네를 검색해보세요" v-model="searchID">
+							<input v-on:keydown="keydownHandler" :class="[$style.searchInput, 'general-font-color-black-gray', 'background-color-black-white']" type="text" placeholder="물품이나 동네를 검색해보세요" v-model="searchQuery">
 						</div>
 						<div :class="$style.chat">
 							<button :class="[$style.chatBtn, 'general-font-color-black-white','background-color-black-white-basic', 'border-color-black-white']">채팅하기</button>
@@ -140,14 +140,6 @@
 
 							font-size: 18px;
 							font-weight: bold;
-						}
-
-						:global {
-							.router-link-exact-active {
-								> span {
-									color: #ff6f0f;
-								}
-							}				
 						}
 					}				
 				}
@@ -342,7 +334,6 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import ContentsJsonFile from '@/assets/contents.json'
 import LinkFooterJsonFile from '@/assets/linkFooter.json'
 import LinkJsonFile from '@/assets/link.json'
 import InfoFooterJsonFile from '@/assets/infoFooter.json'
@@ -353,20 +344,14 @@ import InfoFooterJsonFile from '@/assets/infoFooter.json'
 	},
 })
 export default class HomeView extends Vue {
+	searchQuery?: string
 	mode: string = this.$store.getters.getMode
-	products: any = ContentsJsonFile.products
 	linkAddress: any = LinkJsonFile.link
 	linkFooter: any = LinkFooterJsonFile.link
 	downloadFooter: any = LinkFooterJsonFile.download
 	infoFooter: any = InfoFooterJsonFile.info
 	inquiryFoorer: any = InfoFooterJsonFile.inquiry
 	readFooter: any = InfoFooterJsonFile.read
-
-	searchID?: string
-
-	mounted() {
-		this.$store.commit('setProducts', this.products)
-	}
 
 	@Watch('$store.state.mode')
 	modeChange() {
@@ -395,9 +380,21 @@ export default class HomeView extends Vue {
 
 	keydownHandler(e: KeyboardEvent) {
 		if (e.key == "Enter") {
+			this.daangnSearch()
 		}
 	}
 
+	daangnSearch() {
+		if (this.searchQuery == null) {
+			return alert('검색어를 입력하세요.')
+		}
+
+		this.$store.commit('setSearchQuery', this.searchQuery)
+
+		this.searchQuery = ""
+
+		this.$router.push('/search?q=' + this.$store.getters.getSearchQuery)
+	}
 }
 </script>
  
