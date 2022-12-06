@@ -6,15 +6,22 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		mode: "light",
+		searchQuery: ""
 	},
 	getters: {
 		getMode(state) {
 			return state.mode
+		},
+		setSearchQuery(state) {
+			return state.searchQuery
 		}
 	},
 	mutations: {
 		setMode(state, value) {
 			state.mode = value
+		},
+		getSearchQuery(state, value) {
+			state.searchQuery = value
 		}
 	},
 })

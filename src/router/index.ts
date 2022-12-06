@@ -6,6 +6,7 @@ import Realty from '../views/Realty.vue'
 import HotArticles from '../views/HotArticles.vue'
 import Articles from '../views/Articles.vue'
 import Search from '../views/Search.vue'
+import ImageView from '../views/ImageView.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const routes: Array<RouteConfig> = [
     path: '/search',
     name: 'search',
     component: Search
+  },
+  {
+    path: '/ImageView',
+    name: 'imageview',
+    component: ImageView
   }
 ]
 

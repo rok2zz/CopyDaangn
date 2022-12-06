@@ -112,6 +112,7 @@
 
 			position: fixed;
 			top: 0;
+			z-index: 2;
 
 			> .header {
 				width: 1200px;
@@ -191,9 +192,14 @@
 			min-width: 1024px;
 
 			padding-top: 64px;
+
+			position: relative;
+			z-index: 1;
 		}
 
 		> .footerContainer {
+			min-width: 1024px;
+
 			border-top: 1px solid;
 
 			> .footer {
@@ -203,7 +209,6 @@
 
 				> .linkFooter {
 					display: flex;
-
 
 					font-size: 14px;
 					
@@ -337,6 +342,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import LinkFooterJsonFile from '@/assets/linkFooter.json'
 import LinkJsonFile from '@/assets/link.json'
 import InfoFooterJsonFile from '@/assets/infoFooter.json'
+import { watch } from 'vue'
 
 @Component({
 	components: {
@@ -344,7 +350,7 @@ import InfoFooterJsonFile from '@/assets/infoFooter.json'
 	},
 })
 export default class HomeView extends Vue {
-	searchQuery?: string
+	searchQuery: string = ""
 	mode: string = this.$store.getters.getMode
 	linkAddress: any = LinkJsonFile.link
 	linkFooter: any = LinkFooterJsonFile.link
@@ -381,19 +387,18 @@ export default class HomeView extends Vue {
 	keydownHandler(e: KeyboardEvent) {
 		if (e.key == "Enter") {
 			this.daangnSearch()
+			this.searchQuery = ""
 		}
 	}
 
 	daangnSearch() {
-		if (this.searchQuery == null) {
+		if (this.searchQuery == "") {
 			return alert('검색어를 입력하세요.')
 		}
 
 		this.$store.commit('setSearchQuery', this.searchQuery)
 
-		this.searchQuery = ""
-
-		this.$router.push('/search?q=' + this.$store.getters.getSearchQuery)
+		this.$router.push({name: 'search', query: {q : this.searchQuery}});
 	}
 }
 </script>

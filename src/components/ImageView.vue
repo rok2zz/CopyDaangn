@@ -20,5 +20,5 @@ import { Component, Vue } from 'vue-property-decorator';
     // HelloWorld,
   },
 })
-export default class HelloWorld extends Vue {}
+export default class ImageView extends Vue {}
 </script>

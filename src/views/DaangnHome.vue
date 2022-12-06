@@ -86,7 +86,7 @@
 								<span :class="$style.articleTitle" v-else>{{ item.name }}</span>
 								<span :class="$style.articlePrice">{{ priceType(item.price) }}원</span>
 								<span :class="$style.articleLocation">{{ item.registered_by.location }}</span>
-								<span class="general-font-color-gray-8e96">관심 {{ item.likes }}∙채팅 {{ item.chats }}</span>
+								<span class="general-font-color-gray-8e96">관심 {{ item.likes }} ∙ 채팅 {{ item.chats }}</span>
 							</router-link>
 						</div>
 					</div>
