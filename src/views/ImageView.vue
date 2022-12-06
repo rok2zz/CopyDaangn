@@ -17,15 +17,12 @@
 
 		position: relative;
 
-
+		background-color: black;
 		> .imageContainer {
 			width: 768px;
 
 			margin: 0 auto;
 			padding: 300px 0px;
-
-			
-
 
 			> .bigImage {
 				width: 768px;
@@ -33,8 +30,8 @@
 
 			> .close {
 				position: absolute;
-				top: 20px;
-				right: 20px;
+				top: 250px;
+				right: 80px;
 				cursor: pointer;
 			}
 		}

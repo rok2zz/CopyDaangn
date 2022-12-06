@@ -2,7 +2,7 @@
 	<div :class="$style.index">
 		<div :class="$style.container">
 			<div :class="$style.searchContainer">
-				query를 받아서 검색
+				{{ searchQuery }} 검색 결과
 			</div>
 		</div>
 	</div>
@@ -35,6 +35,6 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 	},
 })
 export default class Hot_Articles extends Vue {
-	searchQuery?: string
+	searchQuery: any = this.$route.query.q
 }
 </script>

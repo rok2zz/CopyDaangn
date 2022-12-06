@@ -20,7 +20,7 @@
 							<input v-on:keydown="keydownHandler" :class="[$style.searchInput, 'general-font-color-black-gray', 'background-color-black-white']" type="text" placeholder="물품이나 동네를 검색해보세요" v-model="searchQuery">
 						</div>
 						<div :class="$style.chat">
-							<button :class="[$style.chatBtn, 'general-font-color-black-white','background-color-black-white-basic', 'border-color-black-white']">채팅하기</button>
+							<button :class="[$style.chatBtn, 'general-font-color-black-white', 'background-color-black-white-basic', 'border-top-color']">채팅하기</button>
 						</div>
 					</div>
 				</div>
@@ -373,6 +373,13 @@ export default class HomeView extends Vue {
 				document.body.classList.add('dark')
 				break
 		}
+	}
+	@Watch('$router')
+	scrollToTop() {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		})
 	}
 
 	downloadClass(style: string) {
