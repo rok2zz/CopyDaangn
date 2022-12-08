@@ -1,14 +1,14 @@
 <template>
 	<div :class="$style.index">
 		<div :class="$style.container">
-			<div :class="[$style.albaBannerContainer, 'background-color-carrot-e2d2']">
+			<div :class="[$style.contents, 'background-color-jobs']">
 				<div :class="$style.albaBanner">
-					<div :class="[$style.leftAlbaBanner, 'general-font-color']">
+					<div :class="[$style.leftBanner, 'general-font-color-basic-3']">
 						<span :class="$style.bannerSpan">우리 동네에서 찾는 <br> 당근알바</span>
 						<span>걸어서 10분 거리의<br>동네 알바들 여기 다 있어요.</span>
 					</div>
-					<div :class="$style.rightAlbaBanner">
-						<img :class="$style.albaBannerImage" :src="require('@/assets/alba_banner.png')">
+					<div :class="$style.rightBanner">
+						<img :src="require('@/assets/alba_banner.png')">
 					</div>
 				</div>
 			</div>
@@ -21,7 +21,7 @@
 
 	> .container {
 		
-		> .albaBannerContainer {
+		> .contents {
 			height: 315px;
 
 			display: flex;
@@ -35,7 +35,7 @@
 				padding: 12px;
 				padding-top: 48px;
 				
-				> .leftAlbaBanner {
+				> .leftBanner {
 					width: 50%;
 
 					span {
@@ -54,10 +54,10 @@
 					}
 				}
 
-				> .rightAlbaBanner {
+				> .rightBanner {
 					width: 50%;
 
-					> .albaBannerImage {
+					> img {
 						width: 603px;
 
 						padding-top: 7px;

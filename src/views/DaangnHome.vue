@@ -1,108 +1,123 @@
 <template>
   	<div :class="$style.index">
 		<div :class="[$style.container, 'general-font-color-basic']">
-			<div :class="[$style.landingContainer, $style.mainLanding, 'background-color-carrot-f7f2']">
-				<div :class="[$style.landingContents, $style.landing0]">
-					<div :class="[$style.leftLandingContents, $style.landing0]">
-						<div :class="$style.landingSpanContainer">
-							<span :class="$style.landingSpan">{{ landingCall(0).title }}</span>
-							<span>{{ landingCall(0).contents }}</span>
+			<div :class="[$style.landing, $style.main, 'general-background-color-landing-1']">
+				<div :class="[$style.contents, $style.landing1]">
+					<div :class="[$style.leftLanding, $style.landing1]">
+						<div :class="$style.landingSpan">
+							<span :class="$style.mainTitle">당신 근처의<br>당근마켓</span>
+							<span>중고 거래부터 동네 정보까지, 이웃과 함께해<br>가깝고 따뜻한 당신의 근처를 만들어요.</span>
 						</div>
 					</div>
-					<div :class="[$style.rightLandingContents, $style.landing0]">
-						<img :class="[$style.mainImage, 'background-color-carrot-f7f2']" :src="require('@/assets/landing1.webp')">
+					<div :class="[$style.rightLanding, $style.landing1]">
+						<img class="general-background-color-landing-1" :src="require('@/assets/landing1.webp')">
 					</div>
 				</div>
 			</div>
-			<div :class="$style.landingContainer">
-				<div :class="$style.landingContents">
-					<div :class="$style.leftLandingContents">
+			<div :class="$style.landing">
+				<div :class="$style.contents">
+					<div :class="$style.leftLanding">
 						<img :src="require('@/assets/landing2.webp')">
 					</div>
-					<div :class="[$style.rightLandingContents, $style.landing1]">
-						<div :class="$style.landingSpanContainer">
-							<span :class="$style.landingSpan">{{ landingCall(1).title }}</span>
-							<span>{{ landingCall(1).contents }}</span>
-							<div :class="$style.btnContainer">
+					<div :class="[$style.rightLanding, $style.landing2]">
+						<div :class="$style.landingSpan">
+							<span :class="$style.title">우리 동네<br>중고 직거래 마켓</span>
+							<span>동네 주민들과 가깝고 따뜻한 거래를 지금 경험해보세요</span>
+							<div :class="$style.landingBtn">
 								<router-link :class="$style.articlesBtn" to="/hot_articles">
-									<button class="general-font-color-black-2529">{{ landingCall(1).button }}</button>
+									<button class="general-font-color-basic">인기매물 보기</button>
 								</router-link>
 								<router-link :class="$style.trustBtn" to="/">
-									<button class="general-font-color-black-2529">{{ landingCall(1).button2 }}</button>
+									<button class="general-font-color-basic">믿을 수 있는 중고거래</button>
 								</router-link>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div :class="[$style.landingContainer, 'background-color-green']">
-				<div :class="$style.landingContents">
-					<div :class="$style.leftLandingContents">
-						<div :class="$style.landingSpanContainer">
-							<span :class="$style.landingSpan">{{ landingCall(2).title }}</span>
-							<span>{{ landingCall(2).contents }}</span>
-							<div :class="$style.landingIcon">
-								<div :class="$style.iconContents" v-for="(item, index) in landingCall(2).icon" :key="index">
-									<img :src="require('@/assets/icon' + item.iconIndex + '.svg')">
-									<span :class="$style.iconSpan">{{ item.title }}</span>
-									<span>{{ item.contents }}</span>
+
+			<div :class="[$style.landing, 'general-background-color-landing-3']">
+				<div :class="$style.contents">
+					<div :class="$style.leftLanding">
+						<div :class="$style.landingSpan">
+							<span :class="$style.title">이웃과 함께 하는<br>동네생활</span>
+							<span>우리 동네의 다양한 이야기를 이웃과 함께 나누어요.</span>
+							<div :class="$style.icon">
+								<div :class="$style.contents">
+									<img :src="require('@/assets/icon1.svg')">
+									<span :class="$style.iconSpan">우리동네질문</span>
+									<span>궁금한 게 있을 땐 이<br>웃에게 물어보세요.</span>
+								</div>
+								<div :class="$style.contents">
+									<img :src="require('@/assets/icon1.svg')">
+									<span :class="$style.iconSpan">동네분실센터</span>
+									<span>무언가를 잃어버렸을 때, 함께 찾을 수 있어요 </span>
+								</div>
+								<div :class="$style.contents">
+									<img :src="require('@/assets/icon1.svg')">
+									<span :class="$style.iconSpan">동네모임</span>
+									<span>관심사가 비슷한 이웃과 온오프라인으로 만나요.</span>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div :class="$style.rightLandingContents">
+					<div :class="$style.rightLanding">
 						<img :src="require('@/assets/landing3.webp')">
 					</div>
 				</div>
 			</div>
-			<div :class="$style.landingContainer">
-				<div :class="$style.landingContents">
-					<div :class="$style.leftLandingContents">
+
+			<div :class="$style.landing">
+				<div :class="$style.contents">
+					<div :class="$style.leftLanding">
 						<img :src="require('@/assets/landing4.webp')">
 					</div>
-					<div :class="[$style.rightLandingContents, $style.landing3]">
-						<div :class="$style.landingSpanContainer">
-							<span :class="$style.landingSpan">{{ landingCall(3).title }}</span>
-							<span>{{ landingCall(3).contents }}</span>
-							<div :class="$style.btnContainer">
-								<router-link :class="$style.articlesBtn" to="/">
-									<button class="general-font-color-black-2529">{{ landingCall(3).button }}</button>
+					<div :class="[$style.rightLanding, $style.landing4]">
+						<div :class="$style.landingSpan">
+							<span :class="$style.title">내 근처에서 찾는<br>동네가게</span>
+							<span>우리 동네 가게를 찾고 있나요?<br>동네 주민이 남긴 진짜 후기를 함꼐 확인해보세요!</span>
+							<div :class="$style.landingBtn">
+								<router-link to="/">
+									<button class="general-font-color-basic">당근마켓 동네가게 찾기</button>
 								</router-link>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div :class="[$style.hotArticlesContainer, 'background-color-gray']">
-				<div :class="$style.hotArticlesContents">
-					<div :class="$style.hotArticlesTitle">
+
+			<div :class="[$style.hotArticles, 'background-color-gray']">
+				<div :class="$style.contents">
+					<div :class="$style.title">
 						<span>중고거래 인기매물</span>
 					</div>
-					<div :class="$style.hotArticlesList">
-						<div :class="$style.hotArticles" v-for="(item, index) in products" :key="index" >
-							<router-link class="general-font-color-basic" :to="{name: 'articles', query: {id : item.id}}"  v-if="index < 4">
-								<img :src="item.images[0]">
-								<span :class="$style.articleTitle" v-if="item.name.length >= 15">{{ cuttingName(item.name) }}</span>
-								<span :class="$style.articleTitle" v-else>{{ item.name }}</span>
-								<span :class="$style.articlePrice">{{ priceType(item.price) }}원</span>
-								<span :class="$style.articleLocation">{{ item.registered_by.location }}</span>
-								<span class="general-font-color-gray-8e96">관심 {{ item.likes }} ∙ 채팅 {{ item.chats }}</span>
+					<div :class="$style.list" v-if="hotArticlesException()">
+						<div :class="$style.articles" v-for="(item, index) in products.slice(0, 4)" :key="index" >
+							<router-link class="general-font-color-basic" :to="{name: 'articles', query: {id : item.id}}">
+								<img :src="item.images[imageIndex]">
+								<span :class="$style.title" v-if="item.name.length >= 15">{{ cuttingName(item.name) }}</span>
+								<span :class="$style.title" v-else>{{ item.name }}</span>
+								<span :class="$style.price">{{ priceType(item.price) }}원</span>
+								<span>{{ item.registered_by.location }}</span>
+								<span class="general-font-color-basic-2">관심 {{ item.likes }} ∙ 채팅 {{ item.chats }}</span>
 							</router-link>
 						</div>
 					</div>
-					<div :class="$style.hotArticlesLink">
+					<div :class="$style.link">
 						<router-link class="general-font-color-basic" to="/hot_articles">
 							<span>인기매물 더 보기</span>
 						</router-link>
 					</div>
 				</div>
 			</div>
+
+
 			<div :class="$style.hotKeywords">
 				<div :class="$style.contents">
 					<router-link class="general-font-color-basic" to="/top_keywords">
 						중고거래 인기검색어
 					</router-link>
-					<div :class="$style.keywordsList">
+					<div :class="$style.keywordsList" v-if="keywordsException()">
 						<span v-for="(item, index) in keywords.slice(0, 10)" :key="index">
 							<span class="general-font-color-basic" v-on:click="daangnSearch(item.word)">{{ item.word }}</span>
 						</span>
@@ -118,10 +133,10 @@
 	
 	> .container {
 
-		> .landingContainer {
+		> .landing {
 			padding: 60px 0px;
 			
-			> .landingContents {
+			> .contents {
 				width: 1024px;
 
 				display: flex;
@@ -137,15 +152,22 @@
 					font-size: 16px;
 				}
 
-				.landingSpan {
+				.title {
 					font-size: 40px;
 					font-weight: bold;
 
 					padding-bottom: 24px;
 				}
+
+				.mainTitle {
+					font-size: 48px;
+					font-weight: bold;
+					
+					padding-bottom: 24px;
+				}
 				
 
-				> .leftLandingContents {
+				> .leftLanding {
 					display: flex;
 					align-items: center;
 
@@ -153,18 +175,18 @@
 						width: 532px;
 					}
 
-					> .landingSpanContainer {
+					> .landingSpan {
 
-						> .landingIcon {
+						> .icon {
 							display: flex;
 
 							padding-top: 40px;
 
-							> .iconContents {
+							> .contents {
 								width: calc(100% / 3);
 
 								> span {
-									width: 100%;
+									width: 127px;
 
 									font-size: 13px;
 								}
@@ -181,13 +203,14 @@
 					}
 				}
 
-				> .leftLandingContents.landing0 {
-					width: 400px;
-					
-					padding-bottom: 60px;
+				> .leftLanding.landing1 {
+					width: 35%;
+
+					padding-left: 30px;
+					padding-bottom: 130px;
 				}
 
-				> .rightLandingContents {
+				> .rightLanding {
 					display: flex;
 					align-items: center;
 
@@ -195,10 +218,12 @@
 						width: 546px;
 					}
 
-					> .landingSpanContainer {
+					> .landingSpan {
 					
-						> .btnContainer {
+						> .landingBtn {
+
 							> a {
+
 								> button {
 									font-size: 18px;
 									font-weight: bold;
@@ -221,40 +246,46 @@
 						}
 					}
 				}
-				> .rightLandingContents.landing0 {
-										
+				
+				> .rightLanding.landing1 {
+					width: 60%;
+
 					> img {
 						width: 802px;
 					}
 				}
 
-				> .rightLandingContents.landing1 {
+				> .rightLanding.landing2 {
 					padding-left: 48px;
 				}
 
-				> .rightLandingContents.landing3 {
-					padding-left: 100px;
+				> .rightLanding.landing3 {
+					padding-left: 20px;
+				}
+
+				> .rightLanding.landing4 {
+					padding-left: 120px;
 				}
 			}
 
-			> .landingContents.landing0 {
+			> .contents.landing1 {
 				width: 1200px;
 			}
 		}
 
-		> .landingContainer.mainLanding {
+		> .landing.main {
 			padding-bottom: 0px;
 		}
 
-		> .hotArticlesContainer {
+		> .hotArticles {
 			padding: 60px 0px;
 
-			> .hotArticlesContents {
+			> .contents {
 				width: 1024px;
 
 				margin: 0 auto;
 
-				> .hotArticlesTitle {
+				> .title {
 					text-align: center;
 
 					font-size: 40px;
@@ -264,11 +295,11 @@
 					padding-bottom: 80px;
 				}
 
-				> .hotArticlesList {
+				> .list {
 					display: flex;
 					flex-wrap: wrap;
 
-					> .hotArticles {
+					> .articles {
 						width: 212px;
 						
 						display: flex;
@@ -285,7 +316,7 @@
 
 								margin-bottom: 10px;
 
-								border-radius: 10px;
+								border-radius: 12px;
 							}
 
 							
@@ -299,11 +330,11 @@
 								padding-bottom: 4px;
 							}
 
-							> .articleTitle {
+							> .title {
 								font-size: 16px;
 							}
 
-							> .articlePrice {
+							> .price {
 								font-size: 15px;
 								font-weight: bold;
 							}
@@ -311,7 +342,7 @@
 					}
 				}
 
-				> .hotArticlesLink {
+				> .link {
 					text-align: center;
 
 					font-size: 16px;
@@ -359,7 +390,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import LandingJsonFile from '@/assets/landing.json'
 import ContentsJsonFile from '@/assets/contents.json'
 import KeywordsJsonFile from '@/assets/top_keywords.json'
 
@@ -370,20 +400,28 @@ import KeywordsJsonFile from '@/assets/top_keywords.json'
 })
 export default class DaangnHome extends Vue {
 	mode: string = this.$store.getters.getMode
-	landing: any = LandingJsonFile.landing
 	products: any = ContentsJsonFile.products
 	keywords: any = KeywordsJsonFile.keywords
+	imageIndex: number = 0
 
 	mounted() {
 		this.$store.commit('setMode', 'light')
 	}
 
-	landingCall(index: number) {
-		if (this.landing[index] == null) {
-			return
+	hotArticlesException() {
+		if (this.products == null) {
+			return false
 		}
 
-		return this.landing[index]
+		return true
+	}
+
+	keywordsException() {
+		if (this.keywords == null) {
+			return false
+		}
+
+		return true
 	}
 
 	daangnSearch(keyword: any) {

@@ -1,7 +1,7 @@
 <template>
 	<div :class="$style.index">
 		<div :class="$style.container">
-			<div :class="$style.imageContainer">
+			<div :class="$style.contents">
 				<img :class="$style.bigImage" :src="imageAddress">
 				<img :class="$style.close" :src="require('@/assets/close.svg')" v-on:click="closeImageView">
 			</div>
@@ -18,7 +18,7 @@
 		position: relative;
 
 		background-color: black;
-		> .imageContainer {
+		> .contents {
 			width: 768px;
 
 			margin: 0 auto;

@@ -1,7 +1,7 @@
 <template>
 	<div :class="$style.index">
 		<div :class="$style.container">
-			<div :class="[$style.headContainer, 'background-color-black-white-basic']">
+			<div :class="[$style.headContainer, 'change-background-color-basic']">
 				<div :class="$style.header">
 					<div :class="$style.leftHeader">
 						<div :class="$style.logo">
@@ -11,13 +11,13 @@
 						</div>
 						<div :class="$style.link" v-for="(item, index) in linkAddress" :key="index">
 							<router-link :to="('/' + item.address)">
-								<span class="footer-font-color-gray-black">{{ item.name }}</span>
+								<span class="change-font-color-footer">{{ item.name }}</span>
 							</router-link>
 						</div>
 					</div>
 						<div :class="$style.rightHeader">
 						<div :class="$style.search">
-							<input v-on:keydown="keydownHandler" :class="[$style.searchInput, 'general-font-color-black-gray', 'background-color-black-white']" type="text" placeholder="물품이나 동네를 검색해보세요" v-model="searchQuery">
+							<input v-on:keydown="keydownHandler" :class="[$style.searchInput, 'change-font-color-search', 'background-color-black-white']" type="text" placeholder="물품이나 동네를 검색해보세요" v-model="searchQuery">
 						</div>
 						<div :class="$style.chat">
 							<button :class="[$style.chatBtn, 'general-font-color-black-white', 'background-color-black-white-basic', 'change-border-color']">채팅하기</button>
@@ -30,18 +30,18 @@
 			</div>
 			<div :class="[$style.footerContainer, 'change-border-top-color']">
 				<div :class="$style.footer">
-					<div :class="[$style.linkFooter, 'general-font-color-black-white']">
+					<div :class="[$style.linkFooter, 'change-font-color-link']">
 						<div :class="$style.leftLinkFooter">
 							<div :class="$style.linkList">
 								<div :class="$style.list" v-for="(item, index) in linkFooter" :key="index">
 									<div :class="$style.routerList">
-										<router-link class="general-font-color-black-white" :to="'/' + item.inPageLink">{{ item.inPage }}</router-link>
+										<router-link class="change-font-color-link" :to="'/' + item.inPageLink">{{ item.inPage }}</router-link>
 									</div>
 									<div :class="$style.anchorList">
-										<a class="general-font-color-black-white" :href="item.outPageLink" target="_blank">{{ item.outPage }}</a>
+										<a class="change-font-color-link" :href="item.outPageLink" target="_blank">{{ item.outPage }}</a>
 									</div>
 									<div :class="$style.anchorList">
-										<a class="general-font-color-black-white" :href="item.managePageLink" target="_blank">{{ item.managePage }}</a>
+										<a class="change-font-color-link" :href="item.managePageLink" target="_blank">{{ item.managePage }}</a>
 									</div>
 								</div>
 							</div>
@@ -57,7 +57,7 @@
 							</div>
 						</div>
 					</div>
-					<div :class="[$style.infoFooter, 'footer-font-color-gray-8b94', 'change-border-top-color']">
+					<div :class="[$style.infoFooter, 'general-font-color-footer', 'change-border-top-color']">
 						<div :class="$style.leftInfoFooter">
 							<div :class="$style.infoDiv">
 								<span v-for="(item, index) in infoFooter" :key="index">
@@ -69,14 +69,14 @@
 							</div>
 							<div :class="$style.inquiryDiv">
 								<span :class="$style.inquirySpan" v-for="(item, index) in inquiryFoorer" :key="index">
-									<router-link :class="[$style.inquiryAnchor, 'footer-font-color-gray-8b94']" :to="'/'">
+									<router-link :class="[$style.inquiryAnchor, 'general-font-color-footer']" :to="'/'">
 										{{ item.inquiry }}
 									</router-link>
 								</span>
 							</div>
 							<div :class="$style.readDiv">
-								<a :href="item.address" :class="[$style.readAnchor, 'footer-font-color-gray-8b94']" target="_blank" v-for="(item, index) in readFooter" :key="index">
-									<span class="footer-font-color-gray-5159" v-if="index == 1">{{ item.info }}</span>
+								<a :href="item.address" :class="[$style.readAnchor, 'general-font-color-footer']" target="_blank" v-for="(item, index) in readFooter" :key="index">
+									<span class="change-font-color-footer" v-if="index == 1">{{ item.info }}</span>
 									<span v-else>{{ item.info }}</span>
 								</a>
 							</div>
@@ -181,7 +181,9 @@
 
 							padding: 5px;
 
-							border-radius: 3px;							
+							border-radius: 3px;		
+							border-width: 1px;
+							border-style: solid;					
 						}
 					}
 				}
@@ -199,6 +201,9 @@
 
 		> .footerContainer {
 			min-width: 1200px;
+
+			border-top-width: 1px;
+			border-top-style: solid;
 
 			> .footer {
 				width: 768px;
@@ -270,6 +275,9 @@
 					padding-bottom: 100px;
 
 					font-size: 13px;
+
+					border-top-width: 1px;
+					border-top-style: solid;
 
 					> .leftInfoFooter {
 

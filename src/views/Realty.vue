@@ -1,14 +1,14 @@
 <template>
 	<div :class="$style.index">
 		<div :class="$style.container">
-			<div :class="[$style.realtyBannerContainer, 'background-color-sky']">
-				<div :class="[$style.realtyBanner, 'general-font-color']">
-					<div :class="$style.leftRealtyBanner">
+			<div :class="[$style.contents, 'general-background-color-realty']">
+				<div :class="[$style.realtyBanner, 'general-font-color-basic-3']">
+					<div :class="$style.leftBanner">
 						<span :class="$style.bannerSpan">복비없이 투명한 <br> 부동산 직거래</span>
 						<span>이웃이 살던 집, 당근마켓에서 <br> 편하게 직거래해보세요.</span>
 					</div>
-					<div :class="$style.rightRealtyBanner">
-						<img :class="$style.realtyBannerImage" :src="require('@/assets/budongsan_banner.png')">
+					<div :class="$style.rightBanner">
+						<img :src="require('@/assets/budongsan_banner.png')">
 					</div>
 				</div>
 			</div>
@@ -21,7 +21,7 @@
 
 	> .container {
 		
-		> .realtyBannerContainer {
+		> .contents {
 			height: 315px;
 
 			display: flex;
@@ -35,7 +35,7 @@
 				padding: 12px;
 				padding-top: 48px;
 				
-				> .leftRealtyBanner {
+				> .leftBanner {
 					width: 50%;
 
 					span {
@@ -56,10 +56,10 @@
 					}
 				}
 
-				> .rightRealtyBanner {
+				> .rightBanner {
 					width: 50%;
 
-					> .realtyBannerImage {
+					> img {
 						width: 485px;
 					}
 				}

@@ -4,53 +4,59 @@
 			<div :class="$style.hiddenPage" v-if="hiddenCheck()">
 				<span>숨겨져 있는 게시글은 볼 수 없습니당 :(</span>
 			</div>
-			<div :class="$style.nonHiddenPage" v-else>
-				<div :class="$style.articleImageContainer">
-					<button class="background-color-black-white-basic" v-if="checkImageIndex()" v-on:click="minusImageIndex">
+			<div :class="$style.nonHiddenPage" v-else-if="selectedException()">
+				<div :class="$style.articleImage">
+					<button class="general-background-color-light" v-on:click="minusImageIndex">
 						<img :src="require('@/assets/chvron_left.svg')">
 					</button>
-					<div :class="$style.articleInfoImage">
-						<img :src="checkSelectedImageIndex()" v-on:click="imageView(checkSelected().id, checkSelectedImage())">
-						<div :class="$style.imageBtnContainer" v-if="checkSelectedImage()?.length > 1">
-							<span :class="$style.btnSpan" v-for="(item, index) in checkSelectedImage().length" :key="index">
+					<div :class="$style.infoImage" v-if="imagesException()">
+						<img :src="selectedProduct.images[imageIndex]" v-on:click="imageView()">
+						<div :class="$style.infoImageBtn" v-if="maxImageIndex > 1">
+							<span :class="$style.btnSpan" v-for="(item, index) in maxImageIndex" :key="index">
 								<button :class="$style.imageBtn" v-if="index == imageIndex" v-on:click="btnImageIndex(index)"></button>
 								<button v-else v-on:click="btnImageIndex(index)"></button>
 							</span>
 						</div>
 					</div>
-					<button class="background-color-black-white-basic" v-if="checkImageIndex()" v-on:click="plusImageIndex">
+					<button class="general-background-color-light" v-on:click="plusImageIndex">
 						<img :src="require('@/assets/chvron_right.svg')">
 					</button>
 				</div>
-				<div :class="$style.userInfoContainer">
-					<div :class="$style.infoContainer">
-						<img :src="checkSelectedThumbnail()">
-						<div :class="$style.userInfo">
-							<span :class="$style.userName">{{ checkSelected()?.registered_by?.name }}</span>
-							<span :class="$style.userLocation">{{ checkSelected()?.registered_by?.location }}</span>
+				
+				<div :class="[$style.userInfo, 'general-border-bottom-color']" v-if="registeredByException()">
+					<div :class="$style.contents">
+						<div :class="$style.user">
+							<img :src="thumbnailException()">
+							<div :class="$style.info">
+								<span :class="$style.userName">{{ selectedProduct.registered_by.name }}</span>
+								<span :class="$style.userLocation">{{selectedProduct.registered_by.location }}</span>
+							</div>
 						</div>
-					</div>
-					<div :class="$style.mannerContainer">
-						<div :class="$style.mannerTemparature">
-							<div :class="[$style.manner, 'change-font-color-temperature-' + tempIndex]">
-								<span>{{ checkSelected()?.registered_by?.temperature }}°C</span>
-								<div :class="[$style.grayBar, 'background-color-gray-ecef']">
-									<div :class="[$style.changeBar, setBar(),'change-bar-color-temperature-' + tempIndex]"></div>
+
+						<div :class="$style.mannerInfo">
+							<div :class="$style.mannerTemparature">
+								<div :class="[$style.manner, 'change-font-color-temperature-' + tempIndex]">
+									<span>{{ selectedProduct.registered_by.temperature }}°C</span>
+									<div :class="[$style.grayBar, 'change-bar-color-temparature-0']">
+										<div :class="[$style.changeBar,'change-bar-color-temperature-' + tempIndex]"></div>
+									</div>
+								</div>
+								<div :class="$style.face">
+									<img :src="require('@/assets/face_' + tempIndex + '.png')">
 								</div>
 							</div>
-							<div :class="$style.mannerFace">
-								<img :src="require('@/assets/face_' + tempIndex + '.png')">
-							</div>
 						</div>
-						<span class="general-font-color-gray-8e96">매너온도</span>
 					</div>
+					<span class="general-font-color-basic-2">매너온도</span>
 				</div>
-				<div :class="[$style.articleInfoContainer, 'general-border-bottom-color']">
-					<span :class="$style.articleTitle">{{ checkSelected()?.name }}</span>
-					<span class="general-font-color-gray-8e96">{{ checkSelected()?.category }} ∙ {{ timeForToday(checkSelected()?.registered_date) }}</span>
-					<span :class="$style.articlePrice">{{ priceType(checkSelected()?.price) }}원</span>
-					<span :class="$style.articleInfo">{{ checkSelected()?.description }}</span>
-					<span class="general-font-color-gray-8e96">관심 {{ checkSelected()?.likes }} ∙ 채팅 {{ checkSelected()?.chats }} ∙ 조회 {{ checkSelected()?.views }}</span>
+
+				<div :class="[$style.articleInfo, 'general-border-bottom-color']">
+					<span :class="$style.title">{{ selectedProduct.name }}</span>
+					<span class="general-font-color-basic-2" v-if="categoryAndDateExcetion()">{{ selectedProduct.category }} ∙ {{ timeForToday(selectedProduct.registered_date) }}</span>
+					<span class="general-font-color-basic-2" v-else>알 수 없음</span>
+					<span :class="$style.price">{{ priceType(selectedProduct.price) }}원</span>
+					<span :class="$style.info">{{ selectedProduct.description }}</span>
+					<span class="general-font-color-basic-2">관심 {{ selectedProduct.likes }} ∙ 채팅 {{ selectedProduct.chats }} ∙ 조회 {{ selectedProduct.views }}</span>
 				</div>	
 			</div>
 
@@ -59,18 +65,18 @@
 					<div :class="$style.title">
 						<span :class="$style.titleSpan">당근마켓 인기중고</span>
 						<span :class="$style.linkSpan">
-							<router-link class="general-font-color-carrot" to="/hot_articles">더 구경하기</router-link>
+							<router-link class="general-font-color-emphasize" to="/hot_articles">더 구경하기</router-link>
 						</span>
 					</div>
 					<div :class="$style.list">
-						<div :class="$style.articles" v-for="(item, index) in duplicatedProducts.slice(0, 6)" :key="index">
+						<div :class="[$style.articles, lrCheck(index)]" v-for="(item, index) in duplicatedProducts.slice(0, 6)" :key="index">
 							<div class="general-font-color-basic" v-on:click="updateUrlQuery(item.id)">
 								<img :src="item.images[0]">
 								<span :class="$style.title" v-if="item.name.length >= 15">{{ cuttingName(item.name) }}</span>
 								<span :class="$style.title" v-else>{{ item.name }}</span>
 								<span :class="$style.price">{{ priceType(item.price) }}원</span>
 								<span>{{ item.registered_by.location }}</span>
-								<span class="general-font-color-gray-8e96">관심 {{ item.likes }} ∙ 채팅 {{ item.chats }}</span>
+								<span class="general-font-color-basic-2">관심 {{ item.likes }} ∙ 채팅 {{ item.chats }}</span>
 							</div>
 						</div>
 					</div>
@@ -96,7 +102,7 @@
 
 		> .nonHiddenPage {
 
-			> .articleImageContainer {
+			> .articleImage {
 				width: 730px;
 				
 				display: flex;
@@ -114,7 +120,7 @@
 					cursor: pointer;
 				}
 
-				> .articleInfoImage {
+				> .infoImage {
 					width: 100%;
 
 					position: relative;
@@ -130,7 +136,7 @@
 						cursor: pointer;
 					}
 
-					> .imageBtnContainer {
+					> .infoImageBtn {
 						width: 100%;
 
 						position: absolute;
@@ -144,6 +150,7 @@
 
 							border: none;
 							border-radius: 50%;
+
 							opacity: 0.5;
 
 							cursor: pointer;
@@ -156,102 +163,121 @@
 								opacity: 1;
 							}
 						}
-						
 					}
 				}
 			}
 
-			> .userInfoContainer {
+			> .userInfo {
 				width: 677px;
 
-				display: flex;
 
 				margin: 0 auto;
 				margin-top: 25px;
 				padding-bottom: 10px;
 
-				> .infoContainer {
-					width: 50%;
+				border-bottom-width: 1px;
+				border-bottom-style: solid;
 
+				> .contents {
 					display: flex;
 
-					> img {
-						width: 40px;
-						height: 40px;
+					> .user {
+						width: 100%;
 
-						border-radius: 50%;
-					}
-
-					> .userInfo {	
-						padding-left: 10px;
-						
-						> span {
-							width: 100%;
-
-							display: inline-block;
-
-							font-size: 13px;
-						}
-
-						> .userName {
-							font-size: 15px;
-							font-weight: bold;
-						}
-					}
-				}
-				
-				> .mannerContainer {
-					width: 50%;
-
-					margin-left: auto;
-					text-align: right;
-
-					> .mannerTemparature {
 						display: flex;
 
-						justify-content: flex-end;
+						> img {
+							width: 40px;
+							height: 40px;
 
-						> .manner {
-							font-size: 16px;
-							font-weight: bold;
+							border-radius: 50%;
+						}
 
-							> .grayBar {
-								width: 100px;
-								height: 4px;
+						> .info {	
+							padding-left: 8px;
 
-								margin-top: 5px;
+							line-height: 1.2;
+							
+							> span {
+								width: 100%;
 
-								> .changeBar {
+								display: inline-block;
+
+								font-size: 13px;
+							}
+
+							> .userName {
+								font-size: 15px;
+								font-weight: bold;
+							}
+						}
+					}
+				
+					> .mannerInfo {
+						width: 50%;
+
+						text-align: right;
+
+						> .mannerTemparature {
+
+							display: flex;
+
+							justify-content: flex-end;
+
+							> .manner {
+								font-size: 16px;
+								font-weight: bold;
+
+								> .grayBar {
+									width: 100px;
 									height: 4px;
+
+									margin-top: 5px;
+
+									> .changeBar {
+										height: 4px;
+									}
 								}
 							}
-						}
 
-						> .mannerFace {
+							> .face {
 
-							> img {
-								width: 30px;
-								height: 30px;	
+								> img {
+									width: 24px;
+									
+									object-fit: contain;
+
+									transform: translateY(4px);
+								}
+		
+								
+								padding-left: 10px;
 							}
-	
-							
-							padding-left: 10px;
 						}
-					}
-						
-					> span {
-						font-size: 12px;
 					}
 				}
+
+				> span {
+					width: 100%;
+
+					text-align: right;
+					display: inline-block;
+
+					font-size: 12px;
+				}
+
 			}
 
-			> .articleInfoContainer {
+			> .articleInfo {
 				width: 677px; 
 
 				margin: 0 auto;
-				padding: 32px 0px;
+				padding: 22px 0px;
 
 				white-space: pre-wrap;
+
+				border-bottom-width: 1px;
+				border-bottom-style: solid;
 
 				> span {
 					width: 100%;
@@ -263,17 +289,17 @@
 					padding-bottom: 4px;
 				}
 
-				> .articleTitle {
+				> .title {
 					font-size: 20px;
 					font-weight: bold;
 				}
 
-				> .articlePrice {
+				> .price {
 					font-size: 18px;
 					font-weight: bold;
 				}
 
-				> .articleInfo {
+				> .info {
 					font-size: 17px;
 
 					padding: 16px 0px;
@@ -286,14 +312,14 @@
 				width: 677px;
 
 				margin: 0 auto;
-				padding-top: 32px;
+				padding-top: 22px;
 
 				> .title {
 					width: 100%;
 
 					text-align: left;
 
-					padding-bottom: 32px;
+					padding-bottom: 22px;
 
 					> span {
 						display: inline-block;
@@ -329,24 +355,23 @@
 					flex-wrap: wrap;
 
 					> .articles {
-						width: calc(100% / 3);
+						width: calc(33% - 16px);
 						
-						display: flex;
-
+						margin-right: 27px;
 						margin-bottom: 56px;
 
 						> div {
-							display: block;
-
+							width: 100%;
+							
 							cursor: pointer;
 							
 							> img {
-								width: 208px;
+								width: 100%;
 								height: 208px;
 
 								margin-bottom: 10px;
 
-								border-radius: 10px;
+								border-radius: 12px;
 							}
 
 							
@@ -370,6 +395,10 @@
 							}
 						}
 					}
+
+					> .articles.right {
+						margin-right: 0px;
+					}
 				}
 			}
 		}
@@ -390,9 +419,10 @@ import ContentsJsonFile from '@/assets/contents.json'
 export default class Articles extends Vue {
 	products: any = ContentsJsonFile.products
 	duplicatedProducts: any = []
-	selectedProduct: any = []
+	selectedProduct: any = {}
 	articleID: any = this.$route.query.id
 	imageIndex: number = 0
+	maxImageIndex: number = 0
 	tempIndex: string = '1'
 	
 
@@ -406,26 +436,70 @@ export default class Articles extends Vue {
 			return !(this.articleID === el.id)
 		})
 
-		this.selectedProduct = this.products.filter((el: { id: any; }) => {
-			return this.articleID === el.id
-		})
+		for (var i = 0; i < this.products.length; i++) {
+			if (this.products[i].id == this.articleID) {
+				this.selectedProduct = this.products[i]
+			}
+		}
+
+		this.maxImageIndex = this.selectedProduct.images.length
 	}
 
 	hiddenCheck() {
-		if (this.selectedProduct[0]?.is_hidden) {
-			if (this.selectedProduct[0].is_hidden == !null) {
-				return true
-			}
-		}
-		return false
-		// return this.checkSelected.hasOwnProperty("is_hidden")
-	}
-
-	checkImageIndex() {
-		if (this.selectedProduct[0]?.images.length <= 1) {
+		if (this.selectedProduct.is_hidden == null) {
 			return false
 		}
 		return true
+	}
+
+	selectedException() {
+		if (this.selectedProduct == null) {
+			return false
+		}
+
+		return true
+	}
+
+	imagesException() {
+		if(this.selectedProduct.images && this.selectedProduct.images.length > 0) {
+			return true
+        }	
+
+		return false
+	}
+
+	thumbnailException() {
+		if (!this.selectedProduct.registered_by) {
+			return
+		}
+		
+		if (this.selectedProduct.registered_by.thumbnail == null) {
+			return require('@/assets/default.png')
+		}
+
+		return this.selectedProduct.registered_by.thumbnail
+	}
+
+	registeredByException() {
+		if (!this.selectedProduct.registered_by) {
+			return false
+		}
+
+		var registered = this.selectedProduct.registered_by
+
+		if (!registered.name || !registered.temperature || !registered.location) {
+			return false
+		}
+
+		return true
+	}
+
+	categoryAndDateExcetion() {
+		if (this.selectedProduct.category && this.selectedProduct.registered_date) {
+			return true
+		}
+
+		return false
 	}
 
 	minusImageIndex() {
@@ -459,67 +533,10 @@ export default class Articles extends Vue {
 			top: 0
 		})
 	}
-
-	checkSelected() {
-		if (this.selectedProduct[0] == null) {
-			return
-		}
-
-		return this.selectedProduct[0]
-	}
-
-	checkSelectedRegister() {
-
-	}
    
-	checkSelectedThumbnail() {
-		if (this.selectedProduct[0]?.registered_by.thumbnail == null) {
-			return require('@/assets/default.png')
-		}
-
-		return this.selectedProduct[0]?.registered_by.thumbnail
-	}
-
-	checkSelectedImageIndex() {
-		return this.selectedProduct[0]?.images[this.imageIndex]
-	}
-
-	checkSelectedImage() {
-		return this.selectedProduct[0]?.images
-	}
-
-	setBar() {
-		switch(this.tempIndex) {
-			case '1':
-				// @ts-ignore
-				return this.$style.barWidth1
-				break
-			case '2':
-				// @ts-ignore
-				return this.$style.barWidth2
-				break
-			case '3':
-				// @ts-ignore
-				return this.$style.barWidth3
-				break
-			case '4':
-				// @ts-ignore
-				return this.$style.barWidth4
-				break
-			case '5':
-				// @ts-ignore
-				return this.$style.barWidth5
-				break
-			case '6':
-				// @ts-ignore
-				return this.$style.barWidth6
-				break
-		}
-		
-	}
 
 	temperatureFace() {
-		var temperature = this.selectedProduct[0]?.registered_by.temperature
+		var temperature = this.selectedProduct.registered_by.temperature
 
 		switch(true) {
 			case (temperature <= 10):
@@ -543,11 +560,24 @@ export default class Articles extends Vue {
 		}
 	}
 
+	lrCheck(index: number) {
+		if (((index + 1) % 3) == 0) {
+			// @ts-ignore
+			return this.$style.right
+		}
+
+		return
+	}
+
 	cuttingName(name: string): string {
 		return name.substring(0,16) + '...'
 	}
 
 	priceType(price: number): string {
+		if (!this.selectedProduct.price) {
+			return "알 수 없음"
+		}
+
 		var priceComma = String(price).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 		return priceComma
@@ -580,9 +610,9 @@ export default class Articles extends Vue {
         return Math.floor(betweenTimeDay / 365) + '년 전'
 	}
 
-	imageView(id: any, address: any) {
+	imageView() {
 		this.scrollToTop()
-		return	this.$router.push({name: 'imageview', query: {id : id, address : address}});
+		return	this.$router.push({name: 'imageview', query: {id : this.selectedProduct.id, address : this.selectedProduct.images[this.imageIndex]}});
 	}
 }
 </script>

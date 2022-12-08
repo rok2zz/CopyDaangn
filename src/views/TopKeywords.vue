@@ -10,12 +10,12 @@
 						<span>{{ index + 1 }}</span>
 					</span>
 					<span :class="[$style.search, 'general-font-color-basic']" v-on:click="daangnSearch(item.word)">{{ item.word }}</span>
-					<span :class="$style.rankingPointer" v-if="changeRanking(item.updown)">
-						<span :class="[$style.pointer, 'general-pointer-color-up']" v-if="item.updown.pointer == '↑'">{{ item.updown.pointer }}</span>
-						<span :class="[$style.pointer, 'general-pointer-color-down']" v-else>{{ item.updown.pointer }}</span>
+					<span :class="$style.pointer" v-if="changeRanking(item.updown)">
+						<span class="general-pointer-color-up" v-if="item.updown.pointer == '↑'">{{ item.updown.pointer }}</span>
+						<span class="general-pointer-color-down" v-else>{{ item.updown.pointer }}</span>
 					</span>
-					<span :class="$style.rankingChange" v-if="changeRanking(item.updown)">{{ item.updown.number }}</span>
-					<span :class="$style.rankingChange" v-else>-</span>
+					<span v-if="changeRanking(item.updown)">{{ item.updown.number }}</span>
+					<span v-else>-</span>
 				</div>
 			</div>
 		</div>
