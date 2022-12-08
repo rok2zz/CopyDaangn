@@ -20,7 +20,7 @@
 							<input v-on:keydown="keydownHandler" :class="[$style.searchInput, 'general-font-color-black-gray', 'background-color-black-white']" type="text" placeholder="물품이나 동네를 검색해보세요" v-model="searchQuery">
 						</div>
 						<div :class="$style.chat">
-							<button :class="[$style.chatBtn, 'general-font-color-black-white', 'background-color-black-white-basic', 'border-top-color']">채팅하기</button>
+							<button :class="[$style.chatBtn, 'general-font-color-black-white', 'background-color-black-white-basic', 'change-border-color']">채팅하기</button>
 						</div>
 					</div>
 				</div>
@@ -28,7 +28,7 @@
 			<div :class="$style.mainContainer">
 				<router-view/>
 			</div>
-			<div :class="[$style.footerContainer, 'border-top-color']">
+			<div :class="[$style.footerContainer, 'change-border-top-color']">
 				<div :class="$style.footer">
 					<div :class="[$style.linkFooter, 'general-font-color-black-white']">
 						<div :class="$style.leftLinkFooter">
@@ -57,7 +57,7 @@
 							</div>
 						</div>
 					</div>
-					<div :class="[$style.infoFooter, 'footer-font-color-gray-8b94', 'border-top-color']">
+					<div :class="[$style.infoFooter, 'footer-font-color-gray-8b94', 'change-border-top-color']">
 						<div :class="$style.leftInfoFooter">
 							<div :class="$style.infoDiv">
 								<span v-for="(item, index) in infoFooter" :key="index">
@@ -107,11 +107,13 @@
 .index {
 
 	> .container {
-		> .headContainer {			
+		> .headContainer {		
+			width: 100%;	
 			height: 64px;
 
 			position: fixed;
 			top: 0;
+			left: 0;
 			z-index: 2;
 
 			> .header {
@@ -125,6 +127,7 @@
 				padding: 12px 16px;
 
 				> .leftHeader {
+					width: 100%;
 					display: flex;
 
 					> .logo {
@@ -147,8 +150,6 @@
 
 				> .rightHeader {
 					display: flex;
-					position: fixed;
-					right: 16px;
 					
 					> .search {
 						padding-right: 12px;
@@ -180,7 +181,6 @@
 
 							padding: 5px;
 
-							border: 1px solid;
 							border-radius: 3px;							
 						}
 					}
@@ -189,7 +189,7 @@
 		}
 		
 		> .mainContainer {
-			min-width: 1024px;
+			min-width: 1200px;
 
 			padding-top: 64px;
 
@@ -198,9 +198,7 @@
 		}
 
 		> .footerContainer {
-			min-width: 1024px;
-
-			border-top: 1px solid;
+			min-width: 1200px;
 
 			> .footer {
 				width: 768px;
@@ -272,8 +270,6 @@
 					padding-bottom: 100px;
 
 					font-size: 13px;
-
-					border-top: 1px solid;
 
 					> .leftInfoFooter {
 
@@ -374,7 +370,8 @@ export default class HomeView extends Vue {
 				break
 		}
 	}
-	@Watch('$router')
+
+	@Watch('$route.path')
 	scrollToTop() {
 		window.scrollTo({
 			top: 0,
@@ -405,7 +402,7 @@ export default class HomeView extends Vue {
 
 		this.$store.commit('setSearchQuery', this.searchQuery)
 
-		this.$router.push({name: 'search', query: {q : this.searchQuery}});
+		this.$router.push({name: 'search', query: {q: this.searchQuery}});
 	}
 }
 </script>

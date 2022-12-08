@@ -1,6 +1,6 @@
 <template>
 	<div :class="$style.index">
-		<div :class="[$style.container, 'general-font-color-black-2529']">
+		<div :class="[$style.container, 'general-font-color-basic']">
 			<div :class="$style.hiddenPage" v-if="hiddenCheck()">
 				<span>숨겨져 있는 게시글은 볼 수 없습니당 :(</span>
 			</div>
@@ -32,10 +32,10 @@
 					</div>
 					<div :class="$style.mannerContainer">
 						<div :class="$style.mannerTemparature">
-							<div :class="[$style.manner, 'change-font-color-' + tempIndex]">
+							<div :class="[$style.manner, 'change-font-color-temperature-' + tempIndex]">
 								<span>{{ checkSelected()?.registered_by?.temperature }}°C</span>
 								<div :class="[$style.grayBar, 'background-color-gray-ecef']">
-									<div :class="[$style.changeBar, setBar(),'change-bar-color-' + tempIndex]"></div>
+									<div :class="[$style.changeBar, setBar(),'change-bar-color-temperature-' + tempIndex]"></div>
 								</div>
 							</div>
 							<div :class="$style.mannerFace">
@@ -45,7 +45,7 @@
 						<span class="general-font-color-gray-8e96">매너온도</span>
 					</div>
 				</div>
-				<div :class="[$style.articleInfoContainer, 'border-top-color']">
+				<div :class="[$style.articleInfoContainer, 'general-border-bottom-color']">
 					<span :class="$style.articleTitle">{{ checkSelected()?.name }}</span>
 					<span class="general-font-color-gray-8e96">{{ checkSelected()?.category }} ∙ {{ timeForToday(checkSelected()?.registered_date) }}</span>
 					<span :class="$style.articlePrice">{{ priceType(checkSelected()?.price) }}원</span>
@@ -54,22 +54,22 @@
 				</div>	
 			</div>
 
-			<div :class="$style.hotArticlesContainer">
-				<div :class="$style.hotArticlesContents">
-					<div :class="$style.hotArticlesTitle">
-						<span :class="$style.hotArticlesTitleSpan">당근마켓 인기중고</span>
-						<span :class="$style.hotArticlesLinkSpan">
+			<div :class="$style.hotArticles">
+				<div :class="$style.contents">
+					<div :class="$style.title">
+						<span :class="$style.titleSpan">당근마켓 인기중고</span>
+						<span :class="$style.linkSpan">
 							<router-link class="general-font-color-carrot" to="/hot_articles">더 구경하기</router-link>
 						</span>
 					</div>
-					<div :class="$style.hotArticlesList">
-						<div :class="$style.hotArticles" v-for="(item, index) in duplicatedProducts.slice(0, 6)" :key="index">
-							<div class="general-font-color-black-2529" v-on:click="updateUrlQuery(item.id)">
+					<div :class="$style.list">
+						<div :class="$style.articles" v-for="(item, index) in duplicatedProducts.slice(0, 6)" :key="index">
+							<div class="general-font-color-basic" v-on:click="updateUrlQuery(item.id)">
 								<img :src="item.images[0]">
-								<span :class="$style.articleTitle" v-if="item.name.length >= 15">{{ cuttingName(item.name) }}</span>
-								<span :class="$style.articleTitle" v-else>{{ item.name }}</span>
-								<span :class="$style.articlePrice">{{ priceType(item.price) }}원</span>
-								<span :class="$style.articleLocation">{{ item.registered_by.location }}</span>
+								<span :class="$style.title" v-if="item.name.length >= 15">{{ cuttingName(item.name) }}</span>
+								<span :class="$style.title" v-else>{{ item.name }}</span>
+								<span :class="$style.price">{{ priceType(item.price) }}원</span>
+								<span>{{ item.registered_by.location }}</span>
 								<span class="general-font-color-gray-8e96">관심 {{ item.likes }} ∙ 채팅 {{ item.chats }}</span>
 							</div>
 						</div>
@@ -224,30 +224,6 @@
 								> .changeBar {
 									height: 4px;
 								}
-
-								> .changeBar.barWidth1 {
-									width: 10px;
-								}
-
-								> .changeBar.barWidth2 {
-									width: 20px;
-								}
-
-								> .changeBar.barWidth3 {
-									width: 35px;
-								}
-
-								> .changeBar.barWidth4 {
-									width: 50px;
-								}
-
-								> .changeBar.barWidth5 {
-									width: 60px;
-								}
-
-								> .changeBar.barWidth6 {
-									width: 80px;
-								}
 							}
 						}
 
@@ -274,8 +250,6 @@
 
 				margin: 0 auto;
 				padding: 32px 0px;
-
-				border-bottom: 1px solid;
 
 				white-space: pre-wrap;
 
@@ -307,14 +281,14 @@
 			}
 		}
 
-		> .hotArticlesContainer {
-			> .hotArticlesContents {
+		> .hotArticles {
+			> .contents {
 				width: 677px;
 
 				margin: 0 auto;
 				padding-top: 32px;
 
-				> .hotArticlesTitle {
+				> .title {
 					width: 100%;
 
 					text-align: left;
@@ -325,14 +299,14 @@
 						display: inline-block;
 					}
 
-					> .hotArticlesTitleSpan {
+					> .titleSpan {
 						width: 50%;
 
 						font-size: 18px;
 						font-weight: bold;
 					}
 
-					> .hotArticlesLinkSpan {
+					> .linkSpan {
 						width: 50%;
 						text-align: right;
 
@@ -348,14 +322,14 @@
 					}
 				}
 
-				> .hotArticlesList {
+				> .list {
 					width: 100%;
 
 					display: flex;
 					flex-wrap: wrap;
 
-					> .hotArticles {
-						width: 33%;
+					> .articles {
+						width: calc(100% / 3);
 						
 						display: flex;
 
@@ -386,11 +360,11 @@
 								padding-bottom: 4px;
 							}
 
-							> .articleTitle {
+							> .title {
 								font-size: 16px;
 							}
 
-							> .articlePrice {
+							> .price {
 								font-size: 15px;
 								font-weight: bold;
 							}
@@ -475,7 +449,7 @@ export default class Articles extends Vue {
 	}
 
 	updateUrlQuery(item: any) {
-		this.$router.push({query: {id : item}})
+		this.$router.push({query: {id: item}})
 		window.location.reload()
 		this.scrollToTop()
 	}

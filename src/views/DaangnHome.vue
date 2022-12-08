@@ -1,6 +1,6 @@
 <template>
   	<div :class="$style.index">
-		<div :class="[$style.container, 'general-font-color-black-2529']">
+		<div :class="[$style.container, 'general-font-color-basic']">
 			<div :class="[$style.landingContainer, $style.mainLanding, 'background-color-carrot-f7f2']">
 				<div :class="[$style.landingContents, $style.landing0]">
 					<div :class="[$style.leftLandingContents, $style.landing0]">
@@ -80,7 +80,7 @@
 					</div>
 					<div :class="$style.hotArticlesList">
 						<div :class="$style.hotArticles" v-for="(item, index) in products" :key="index" >
-							<router-link class="general-font-color-black-2529" :to="{name: 'articles', query: {id : item.id}}"  v-if="index < 4">
+							<router-link class="general-font-color-basic" :to="{name: 'articles', query: {id : item.id}}"  v-if="index < 4">
 								<img :src="item.images[0]">
 								<span :class="$style.articleTitle" v-if="item.name.length >= 15">{{ cuttingName(item.name) }}</span>
 								<span :class="$style.articleTitle" v-else>{{ item.name }}</span>
@@ -91,9 +91,21 @@
 						</div>
 					</div>
 					<div :class="$style.hotArticlesLink">
-						<router-link class="general-font-color-black-2529" to="/hot_articles">
+						<router-link class="general-font-color-basic" to="/hot_articles">
 							<span>인기매물 더 보기</span>
 						</router-link>
+					</div>
+				</div>
+			</div>
+			<div :class="$style.hotKeywords">
+				<div :class="$style.contents">
+					<router-link class="general-font-color-basic" to="/top_keywords">
+						중고거래 인기검색어
+					</router-link>
+					<div :class="$style.keywordsList">
+						<span v-for="(item, index) in keywords.slice(0, 10)" :key="index">
+							<span class="general-font-color-basic" v-on:click="daangnSearch(item.word)">{{ item.word }}</span>
+						</span>
 					</div>
 				</div>
 			</div>
@@ -159,6 +171,7 @@
 
 								> .iconSpan {
 									font-size: 14px;
+									font-weight: bold;
 
 									padding-top: 16px;
 									padding-bottom: 8px;
@@ -307,6 +320,39 @@
 				}
 			}
 		}
+
+		> .hotKeywords {
+			padding: 40px 0px;
+
+			> .contents {
+				width: 1024px;
+				
+				margin: 0 auto;
+				text-align: center;
+
+				> .keywordsList {
+					width: 928px;
+					height: 56px;
+
+					display: flex;
+					align-items: center;
+
+					margin: 0 auto;
+
+					> span {
+						width: 10%;
+						
+						> span {
+							cursor: pointer;
+						}
+
+						> span:hover {
+							text-decoration: underline;
+						}
+					}
+				}
+			}
+		}
 	}
 }
 </style>
@@ -315,6 +361,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import LandingJsonFile from '@/assets/landing.json'
 import ContentsJsonFile from '@/assets/contents.json'
+import KeywordsJsonFile from '@/assets/top_keywords.json'
 
 @Component({
     components: {
@@ -325,6 +372,7 @@ export default class DaangnHome extends Vue {
 	mode: string = this.$store.getters.getMode
 	landing: any = LandingJsonFile.landing
 	products: any = ContentsJsonFile.products
+	keywords: any = KeywordsJsonFile.keywords
 
 	mounted() {
 		this.$store.commit('setMode', 'light')
@@ -336,6 +384,12 @@ export default class DaangnHome extends Vue {
 		}
 
 		return this.landing[index]
+	}
+
+	daangnSearch(keyword: any) {
+		this.$store.commit('setSearchQuery', keyword)
+
+		this.$router.push({name: 'search', query: {q: keyword}});
 	}
  	
 	cuttingName(name: string): string {

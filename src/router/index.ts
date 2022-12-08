@@ -7,6 +7,7 @@ import HotArticles from '../views/HotArticles.vue'
 import Articles from '../views/Articles.vue'
 import Search from '../views/Search.vue'
 import ImageView from '../views/ImageView.vue'
+import TopKeywords from '../views/TopKeywords.vue'
 
 Vue.use(VueRouter)
 
@@ -45,6 +46,11 @@ const routes: Array<RouteConfig> = [
     path: '/ImageView',
     name: 'imageview',
     component: ImageView
+  },
+  {
+    path: '/top_keywords',
+    name: 'top_keywords',
+    component: TopKeywords
   }
 ]
 

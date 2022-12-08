@@ -7,9 +7,34 @@ body.light {
         > span { color: #ff6f0f; }
     }	
 
+    .general-font-color-basic { color: #212529; }
+
+    .change-font-color-temperature-1 { color: #3E6284; }
+    .change-font-color-temperature-2 { color: #19446C; }
+    .change-font-color-temperature-3 { color: #2069AE; }
+    .change-font-color-temperature-4 { color: #3BA34E; }
+    .change-font-color-temperature-5 { color: #E1970C; }
+    .change-font-color-temperature-6 { color: #DF5D06; }
+    .change-bar-color-temperature-1 { background-color: #3E6284; }
+    .change-bar-color-temperature-2 { background-color: #19446C; }
+    .change-bar-color-temperature-3 { background-color: #2069AE; }
+    .change-bar-color-temperature-4 { background-color: #3BA34E; }
+    .change-bar-color-temperature-5 { background-color: #E1970C; }
+    .change-bar-color-temperature-6 { background-color: #DF5D06; }
+
+    .general-border-bottom-color { border-bottom: 1px solid #E9ECEF; }
+    .change-border-top-color { border-top: 1px solid #EAEBEE; }
+    .change-border-color { border: 1px solid #D1D3D8; }
+
+    .general-pointer-color-up { color: #E03131; }
+    .general-pointer-color-down { color: #186EC0; }
+    
+
+    
+
     .general-font-color { color: #212124; }
     .general-font-color-black-gray { color: #212124; }
-    .general-font-color-black-2529 { color: #212529; }
+    .general-font-color-basic { color: #212529; }
     .general-font-color-black-white { color: #212124; }
     .general-font-color-gray-8e96 { color: #868E96; }
     .general-font-color-carrot { color: #FF8A3D; }
@@ -17,25 +42,10 @@ body.light {
     .footer-font-color-gray-5159 { color: #4D5159; }
     .footer-font-color-gray-black { color: #4D5159; }
 
-    .change-font-color-1 { color: #3E6284; }
-    .change-font-color-2 { color: #19446C; }
-    .change-font-color-3 { color: #2069AE; }
-    .change-font-color-4 { color: #3BA34E; }
-    .change-font-color-5 { color: #E1970C; }
-    .change-font-color-6 { color: #DF5D06; }
-
-    
-    .border-color-black-white { border-color: #EAEBEE; }
-    .border-top-color { border-color: #E9ECEF; }
-
     .general-hover-color-white { background-color: #F2F3F6; }
 
-    .change-bar-color-1 { background-color: #3E6284; }
-    .change-bar-color-2 { background-color: #19446C; }
-    .change-bar-color-3 { background-color: #2069AE; }
-    .change-bar-color-4 { background-color: #3BA34E; }
-    .change-bar-color-5 { background-color: #E1970C; }
-    .change-bar-color-6 { background-color: #DF5D06; }
+
+   
 
     .background-color-black-white-basic { background-color: #FFFFFF;}
     .background-color-black-white { background-color: #F2F3F6;}
@@ -54,16 +64,7 @@ body.dark {
     .router-link-exact-active {
         > span { color: #ff6f0f; }
     }	
-
-    .general-font-color { color: #212124; }
-    .general-font-color-black-gray { color: #2B2E33; }
-    .general-font-color-black-2529 { color: #212529; }
-    .general-font-color-black-white { color: #EAEBEE; }
-    .general-font-color-gray-8e96 { color: #868E96; }
-    .general-font-color-carrot { color: #FF8A3D; }
-    .footer-font-color-gray-8b94 { color: #868B94; }
-    .footer-font-color-gray-5159 { color: #4D5159; }
-    .footer-font-color-gray-black { color: #ADB1BA; }
+    .general-font-color-basic { color: #212529; }
 
     .change-font-color-1 { color: #3E6284; }
     .change-font-color-2 { color: #19446C; }
@@ -71,18 +72,34 @@ body.dark {
     .change-font-color-4 { color: #3BA34E; }
     .change-font-color-5 { color: #E1970C; }
     .change-font-color-6 { color: #DF5D06; }
+    .change-bar-color-temperature-1 { background-color: #3E6284; }
+    .change-bar-color-temperature-2 { background-color: #19446C; }
+    .change-bar-color-temperature-3 { background-color: #2069AE; }
+    .change-bar-color-temperature-4 { background-color: #3BA34E; }
+    .change-bar-color-temperature-5 { background-color: #E1970C; }
+    .change-bar-color-temperature-6 { background-color: #DF5D06; }
 
-    .border-color-black-white { border-color: #50545C; }
-    .border-top-color { border-color: #34373D; }
+    .general-pointer-color-up { color: #E03131; }
+    .general-pointer-color-down { color: #186EC0; }
+
+    .general-border-bottom-color { border-bottom: 1px solid #E9ECEF; }
+    .change-border-top-color { border-top: 1px solid #34373D; }
+    .change-border-color { border: 1px solid #50545C; }
+
+
+
+
+
+    .general-font-color { color: #212124; }
+    .general-font-color-black-gray { color: #2B2E33; }
+    .general-font-color-black-white { color: #EAEBEE; }
+    .general-font-color-gray-8e96 { color: #868E96; }
+    .general-font-color-carrot { color: #FF8A3D; }
+    .footer-font-color-gray-8b94 { color: #868B94; }
+    .footer-font-color-gray-5159 { color: #4D5159; }
+    .footer-font-color-gray-black { color: #ADB1BA; }
 
     .general-hover-color-white { background-color: #2B2E33; }
-
-    .change-bar-color-1 { background-color: #3E6284; }
-    .change-bar-color-2 { background-color: #19446C; }
-    .change-bar-color-3 { background-color: #2069AE; }
-    .change-bar-color-4 { background-color: #3BA34E; }
-    .change-bar-color-5 { background-color: #E1970C; }
-    .change-bar-color-6 { background-color: #DF5D06; }
 
     .background-color-black-white-basic { background-color: #17171A;}
     .background-color-black-white { background-color: #2B2E33; }

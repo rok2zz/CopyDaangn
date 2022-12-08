@@ -36,5 +36,10 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 })
 export default class Hot_Articles extends Vue {
 	searchQuery: any = this.$route.query.q
+	mode: string = this.$store.getters.getMode
+
+	mounted() {
+		this.$store.commit('setMode', 'light')
+	}
 }
 </script>
