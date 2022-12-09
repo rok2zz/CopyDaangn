@@ -14,7 +14,7 @@ body.light {
     .general-font-color-search { color: #868E96; }
     .general-font-color-footer { color: #868B94; }
 
-    .change-font-color-search { color: #212124; }
+    .change-font-color-basic { color: #212124; }
     .change-font-color-footer { color: #4D5159; }
     .change-font-color-link { color: #212124; }
 
@@ -34,7 +34,7 @@ body.light {
 
     .general-border-bottom-color { border-bottom-color: #E9ECEF; }
     .change-border-top-color { border-top-color: #EAEBEE; }
-    .change-border-color { border-color: 1px solid #D1D3D8; }
+    .change-border-color { border-color: #D1D3D8; }
     .general-border-color { border-color: #E9ECEF; }
 
     .general-pointer-color-up { color: #E03131; }
@@ -46,8 +46,10 @@ body.light {
     .general-background-color-light { background-color: #FFFFFF; }
     .general-background-color-jobs { background-color: #FFE2D2;}
     .general-background-color-realty { background-color: #D2EDFA; }
+    .general-background-color-imageview { background-color: black; }
 
     .change-background-color-basic { background-color: #FFFFFF; }
+    .change-background-color-search { background-color: #F2F3F6; }
 }
 
 body.dark {
@@ -56,6 +58,7 @@ body.dark {
     .router-link-exact-active {
         > span { color: #ff6f0f; }
     }	
+
     .general-font-color-basic { color: #212529; }
     .general-font-color-basic-2 { color: #868E96; }
     .general-font-color-basic-3 { color: #212124; }
@@ -63,7 +66,7 @@ body.dark {
     .general-font-color-search { color: #868E96; }
     .general-font-color-footer { color: #868B94; }
 
-    .change-font-color-search { color: #EAEBEE; }
+    .change-font-color-basic { color: #EAEBEE; }
     .change-font-color-footer { color: #ADB1BA; }
     .change-font-color-link { color: #EAEBEE; }
 
@@ -85,10 +88,10 @@ body.dark {
     .general-pointer-color-up { color: #E03131; }
     .general-pointer-color-down { color: #186EC0; }
 
-    .general-border-bottom-color { border-bottom: 1px solid #E9ECEF; }
-    .change-border-top-color { border-top: 1px solid #34373D; }
-    .change-border-color { border: 1px solid #50545C; }
-    .general-border-color { border: 1px solid #E9ECEF; }
+    .general-border-bottom-color { border-bottom-color: #E9ECEF; }
+    .change-border-top-color { border-top-color: #34373D; }
+    .change-border-color { border-color: #50545C; }
+    .general-border-color { border-color:  #E9ECEF; }
 
     .general-background-color-landing-1 { background-color: #FBF7F2; }
     .general-background-color-landing-3 { background-color: #E6F3E6; }
@@ -96,6 +99,8 @@ body.dark {
     .general-background-color-light { background-color: #FFFFFF; }
     .general-background-color-jobs { background-color: #FFE2D2;}
     .general-background-color-realty { background-color: #D2EDFA; }
+    .general-background-color-imageview { background-color: black; }
 
     .change-background-color-basic { background-color: #17171A; }
+    .change-background-color-search { background-color: #2B2E33;}
 }

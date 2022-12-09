@@ -1,0 +1,29 @@
+당근 고칠거 12.09
+
+app.vue
+1. 검색창 백그라운드 색, 채팅하기 버튼 보더, 백그라운드 색 / 수정 O
+
+daangnhome.vue
+2. 인기매물 더보기, 중고거래 인기검색어 bold / 수정 O
+3. 중고거래 인기매물 백그라운드 컬러 없음 / 수정 O
+
+articles.vue
+4. 게이지 바 구현 / 구현 O
+
+jobs.vue
+5. 배너 백그라운드 컬러 오류 / 수정 O
+
+코드
+1. router-link-exact-active 템플릿에 적지 않기 / 수정 O
+2. <router-view /> 띄어쓰기 / 수정 O
+3. 낙타표기법으로 수정 / 수정 O
+4. 화살표 부분 number 만으로 구현 / 수정 O
+5. boolean을 리턴할 경우 함수이름 뒤에 리턴타입 명시 / 수정 O
+6. 함수 이름 작명시 앞에 is 붙임 / 수정 O
+7. 함수이름의 목적을 명확히 / 수정 O
+8. 코드의 반복 - minus, plus 부분 수정 / 수정 O
+9. 새로고침 기능을 watch로 변경 / watch + <router-view :key="$route.fullPath" /> 사용 O 
+   watch 에 $router.go(0)으로 reload 하니까 스크롤이 고정되는 문제 발생 / watch만으로는 해결 X
+10. 하트 특수문자말고 이미지 사용 / 수정 O
+11. tempIndex 가변 불변 작성방법 수정 / 수정 O
+12. 파일명과 스크립트의 클래스명 같게 수정 / 수정 O

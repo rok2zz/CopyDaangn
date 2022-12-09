@@ -6,8 +6,8 @@
 					<div :class="$style.title">
 						<span>중고거래 인기매물</span>
 					</div>
-					<div :class="$style.list" v-if="hotArticlesException()">
-						<div :class="$style.articles" v-for="(item, index) in products" :key="index">
+					<div :class="$style.list" v-if="isProductsLoaded()">
+						<div :class="[$style.articles, lrCheck(index)]" v-for="(item, index) in products" :key="index">
 							<router-link class="general-font-color-basic" :to="{name: 'articles', query: {id : item.id}}">
 								<img :src="item.images[imageIndex]">
 								<span :class="$style.title" v-if="item.name.length >= 15">{{ cuttingName(item.name) }}</span>
@@ -30,18 +30,18 @@
 	> .container {
 
 		> .hotArticles {
-			padding: 60px 0px;
-			padding-top: 30px;
+			padding-bottom: 60px;
 
 			> .contents {
-				width: 1024px;
+				width: 980px;
 
 				margin: 0 auto;
 
 				> .title {
 					text-align: center;
 
-					font-size: 40px;
+					font-size: 32px;
+					font-weight: bold;
 					
 					padding-bottom: 80px;
 				}
@@ -51,19 +51,19 @@
 					flex-wrap: wrap;
 
 					> .articles {
-						width: 212px;
+						width: 201px;
 						
 						display: flex;
 
-						margin: 0px 22px;
+						margin-right: 56px;
 						margin-bottom: 56px;
 
 						> a {
 							display: block;
 							
 							> img {
-								width: 212px;
-								height: 212px;
+								width: 100%;
+								height: 201px;
 
 								margin-bottom: 10px;
 
@@ -92,6 +92,9 @@
 						}
 					}
 
+					> .articles.right {
+						margin-right: 0px;
+					}
 				}
 
 				> .hotArticlesLink {
@@ -117,15 +120,24 @@ import ContentsJsonFile from '@/assets/contents.json'
 		// HelloWorld,
 	},
 })
-export default class Hot_Articles extends Vue {
+export default class HotArticles extends Vue {
 	products: any = ContentsJsonFile.products
 	imageIndex: number = 0
 
-	hotArticlesException() {
+	isProductsLoaded(): boolean {
 		if (this.products == null) {
 			return false
 		}
 		return true
+	}
+
+	lrCheck(index: number) {
+		if (((index + 1) % 4) == 0) {
+			// @ts-ignore
+			return this.$style.right
+		}
+
+		return
 	}
 
 	cuttingName(name: string): string {

@@ -1,32 +1,34 @@
 <template>
 	<div :class="$style.index">
 		<div :class="[$style.container, 'general-font-color-basic']">
-			<div :class="$style.hiddenPage" v-if="hiddenCheck()">
+			<div :class="$style.hiddenPage" v-if="isHidden()">
 				<span>숨겨져 있는 게시글은 볼 수 없습니당 :(</span>
 			</div>
-			<div :class="$style.nonHiddenPage" v-else-if="selectedException()">
+			<div :class="$style.nonHiddenPage" v-else-if="isProductLoaded()">
 				<div :class="$style.articleImage">
-					<button class="general-background-color-light" v-on:click="minusImageIndex">
+					<button class="general-background-color-light" v-on:click="updateImageIndex(false)">
 						<img :src="require('@/assets/chvron_left.svg')">
 					</button>
-					<div :class="$style.infoImage" v-if="imagesException()">
-						<img :src="selectedProduct.images[imageIndex]" v-on:click="imageView()">
+					<div :class="$style.infoImage" v-if="isImageLoaded()">
+						<router-link :to="{name: 'imageview', query: {id : selectedProduct.id, address : selectedProduct.images[imageIndex]}}">
+							<img :src="selectedProduct.images[imageIndex]">
+						</router-link>
 						<div :class="$style.infoImageBtn" v-if="maxImageIndex > 1">
 							<span :class="$style.btnSpan" v-for="(item, index) in maxImageIndex" :key="index">
-								<button :class="$style.imageBtn" v-if="index == imageIndex" v-on:click="btnImageIndex(index)"></button>
-								<button v-else v-on:click="btnImageIndex(index)"></button>
+								<button :class="$style.imageBtn" v-if="index == imageIndex" v-on:click="updateImageBtn(index)"></button>
+								<button v-else v-on:click="updateImageBtn(index)"></button>
 							</span>
 						</div>
 					</div>
-					<button class="general-background-color-light" v-on:click="plusImageIndex">
+					<button class="general-background-color-light" v-on:click="updateImageIndex(true)">
 						<img :src="require('@/assets/chvron_right.svg')">
 					</button>
 				</div>
 				
-				<div :class="[$style.userInfo, 'general-border-bottom-color']" v-if="registeredByException()">
+				<div :class="[$style.userInfo, 'general-border-bottom-color']" v-if="isRegisteredByExists()">
 					<div :class="$style.contents">
 						<div :class="$style.user">
-							<img :src="thumbnailException()">
+							<img :src="isThumbnailExists()">
 							<div :class="$style.info">
 								<span :class="$style.userName">{{ selectedProduct.registered_by.name }}</span>
 								<span :class="$style.userLocation">{{selectedProduct.registered_by.location }}</span>
@@ -38,7 +40,7 @@
 								<div :class="[$style.manner, 'change-font-color-temperature-' + tempIndex]">
 									<span>{{ selectedProduct.registered_by.temperature }}°C</span>
 									<div :class="[$style.grayBar, 'change-bar-color-temparature-0']">
-										<div :class="[$style.changeBar,'change-bar-color-temperature-' + tempIndex]"></div>
+										<div :style="getBarStyle()" :class="'change-bar-color-temperature-' + tempIndex"></div>
 									</div>
 								</div>
 								<div :class="$style.face">
@@ -52,7 +54,7 @@
 
 				<div :class="[$style.articleInfo, 'general-border-bottom-color']">
 					<span :class="$style.title">{{ selectedProduct.name }}</span>
-					<span class="general-font-color-basic-2" v-if="categoryAndDateExcetion()">{{ selectedProduct.category }} ∙ {{ timeForToday(selectedProduct.registered_date) }}</span>
+					<span class="general-font-color-basic-2" v-if="isCategoryAndDateExists()">{{ selectedProduct.category }} ∙ {{ timeForToday(selectedProduct.registered_date) }}</span>
 					<span class="general-font-color-basic-2" v-else>알 수 없음</span>
 					<span :class="$style.price">{{ priceType(selectedProduct.price) }}원</span>
 					<span :class="$style.info">{{ selectedProduct.description }}</span>
@@ -70,14 +72,14 @@
 					</div>
 					<div :class="$style.list">
 						<div :class="[$style.articles, lrCheck(index)]" v-for="(item, index) in duplicatedProducts.slice(0, 6)" :key="index">
-							<div class="general-font-color-basic" v-on:click="updateUrlQuery(item.id)">
+							<router-link class="general-font-color-basic" :to="{query: {id: item.id}}">
 								<img :src="item.images[0]">
 								<span :class="$style.title" v-if="item.name.length >= 15">{{ cuttingName(item.name) }}</span>
 								<span :class="$style.title" v-else>{{ item.name }}</span>
 								<span :class="$style.price">{{ priceType(item.price) }}원</span>
 								<span>{{ item.registered_by.location }}</span>
 								<span class="general-font-color-basic-2">관심 {{ item.likes }} ∙ 채팅 {{ item.chats }}</span>
-							</div>
+							</router-link>
 						</div>
 					</div>
 				</div>
@@ -125,15 +127,18 @@
 
 					position: relative;
 
-					> img {
-						width: 677px;
-						height: 500px;
+					> a {
 
-						border-radius: 10px;
+						> img {
+							width: 677px;
+							height: 500px;
 
-						object-fit: cover;
+							border-radius: 10px;
 
-						cursor: pointer;
+							object-fit: cover;
+
+							cursor: pointer;
+						}
 					}
 
 					> .infoImageBtn {
@@ -234,7 +239,7 @@
 
 									margin-top: 5px;
 
-									> .changeBar {
+									> div {
 										height: 4px;
 									}
 								}
@@ -360,7 +365,7 @@
 						margin-right: 27px;
 						margin-bottom: 56px;
 
-						> div {
+						> a {
 							width: 100%;
 							
 							cursor: pointer;
@@ -410,6 +415,7 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import ContentsJsonFile from '@/assets/contents.json'
+import router from '@/router';
 
 @Component({
 	components: {
@@ -419,14 +425,18 @@ import ContentsJsonFile from '@/assets/contents.json'
 export default class Articles extends Vue {
 	products: any = ContentsJsonFile.products
 	duplicatedProducts: any = []
-	selectedProduct: any = {}
-	articleID: any = this.$route.query.id
+	selectedProduct: any = undefined
+	articleID: any = undefined
 	imageIndex: number = 0
 	maxImageIndex: number = 0
 	tempIndex: string = '1'
-	
 
 	mounted() {
+		this.init()
+	}
+
+	init() {
+		this.articleID = this.$route.query.id
 		this.copyProducts()
 		this.temperatureFace()
 	}
@@ -445,14 +455,19 @@ export default class Articles extends Vue {
 		this.maxImageIndex = this.selectedProduct.images.length
 	}
 
-	hiddenCheck() {
+	isHidden(): boolean {
+		if (!this.selectedProduct) { 
+			return true
+		}
+
 		if (this.selectedProduct.is_hidden == null) {
 			return false
 		}
+
 		return true
 	}
 
-	selectedException() {
+	isProductLoaded(): boolean {
 		if (this.selectedProduct == null) {
 			return false
 		}
@@ -460,15 +475,15 @@ export default class Articles extends Vue {
 		return true
 	}
 
-	imagesException() {
-		if(this.selectedProduct.images && this.selectedProduct.images.length > 0) {
+	isImageLoaded(): boolean {
+		if (this.selectedProduct.images && this.selectedProduct.images.length > 0) {
 			return true
         }	
 
 		return false
 	}
 
-	thumbnailException() {
+	isThumbnailExists() {
 		if (!this.selectedProduct.registered_by) {
 			return
 		}
@@ -480,7 +495,7 @@ export default class Articles extends Vue {
 		return this.selectedProduct.registered_by.thumbnail
 	}
 
-	registeredByException() {
+	isRegisteredByExists(): boolean {
 		if (!this.selectedProduct.registered_by) {
 			return false
 		}
@@ -494,7 +509,7 @@ export default class Articles extends Vue {
 		return true
 	}
 
-	categoryAndDateExcetion() {
+	isCategoryAndDateExists(): boolean {
 		if (this.selectedProduct.category && this.selectedProduct.registered_date) {
 			return true
 		}
@@ -502,61 +517,48 @@ export default class Articles extends Vue {
 		return false
 	}
 
-	minusImageIndex() {
-		if (this.imageIndex == 0) {
-			this.imageIndex = this.selectedProduct[0]?.images.length - 1
+	getBarStyle() {
+		return 'width:' + this.selectedProduct.registered_by.temperature + '%;';
+	}
+
+	updateImageIndex(isUp: boolean) {
+		if (isUp) {
+			this.imageIndex += 1
 		} else {
 			this.imageIndex -= 1
 		}
-	}
 
-	plusImageIndex() {
-		if (this.imageIndex == this.selectedProduct[0]?.images.length - 1) {
+		if (this.imageIndex < 0) {
+			this.imageIndex = this.maxImageIndex
+		} else if (this.imageIndex >= this.maxImageIndex) {
 			this.imageIndex = 0
-		} else {
-			this.imageIndex += 1
 		}
 	}
 
-	btnImageIndex(index: number) {
+	updateImageBtn(index: number) {
 		this.imageIndex = index
 	}
 
-	updateUrlQuery(item: any) {
-		this.$router.push({query: {id: item}})
-		window.location.reload()
-		this.scrollToTop()
+	@Watch('$route.query')
+	updateUrlQuery() {
+		this.init()
 	}
-
-	scrollToTop() {
-		window.scrollTo({
-			top: 0
-		})
-	}
-   
 
 	temperatureFace() {
 		var temperature = this.selectedProduct.registered_by.temperature
 
-		switch(true) {
-			case (temperature <= 10):
-				this.tempIndex = '1'
-				break
-			case (10 < temperature) && (temperature <=  20):
-				this.tempIndex = '2'
-				break
-			case (20 < temperature) && (temperature <=  37):
-				this.tempIndex = '3'
-				break
-			case (37 < temperature) && (temperature <=  45):
-				this.tempIndex = '4'
-				break
-			case (45 < temperature) && (temperature <=  60):
-				this.tempIndex = '5'
-				break
-			case (60 < temperature):
-				this.tempIndex = '6'
-				break
+		if (temperature <= 10) {
+			this.tempIndex = '1'
+		} else if (10 < temperature && temperature <= 20) {
+			this.tempIndex = '2'
+		} else if (20 < temperature && temperature <= 37) {
+			this.tempIndex = '3'
+		} else if (37 < temperature && temperature <= 45) {
+			this.tempIndex = '4'
+		} else if (45 < temperature && temperature <= 60) {
+			this.tempIndex = '5'
+		} else if (60 < temperature) {
+			this.tempIndex = '6'
 		}
 	}
 
@@ -570,7 +572,7 @@ export default class Articles extends Vue {
 	}
 
 	cuttingName(name: string): string {
-		return name.substring(0,16) + '...'
+		return name.substring(0, 16) + '...'
 	}
 
 	priceType(price: number): string {
@@ -608,11 +610,6 @@ export default class Articles extends Vue {
         }
 
         return Math.floor(betweenTimeDay / 365) + '년 전'
-	}
-
-	imageView() {
-		this.scrollToTop()
-		return	this.$router.push({name: 'imageview', query: {id : this.selectedProduct.id, address : this.selectedProduct.images[this.imageIndex]}});
 	}
 }
 </script>

@@ -5,7 +5,7 @@
 				<div :class="$style.header">
 					<div :class="$style.leftHeader">
 						<div :class="$style.logo">
-							<router-link class="router-link-exact-active" to="/">
+							<router-link to="/">
 								<img :src="require('@/assets/logo.svg')">
 							</router-link>
 						</div>
@@ -17,16 +17,16 @@
 					</div>
 						<div :class="$style.rightHeader">
 						<div :class="$style.search">
-							<input v-on:keydown="keydownHandler" :class="[$style.searchInput, 'change-font-color-search', 'background-color-black-white']" type="text" placeholder="물품이나 동네를 검색해보세요" v-model="searchQuery">
+							<input v-on:keydown="keydownHandler" :class="[$style.searchInput, 'change-font-color-basic', 'change-background-color-search']" type="text" placeholder="물품이나 동네를 검색해보세요" v-model="searchQuery">
 						</div>
 						<div :class="$style.chat">
-							<button :class="[$style.chatBtn, 'general-font-color-black-white', 'background-color-black-white-basic', 'change-border-color']">채팅하기</button>
+							<button :class="[$style.chatBtn, 'change-font-color-basic', 'change-background-color-basic', 'change-border-color']">채팅하기</button>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div :class="$style.mainContainer">
-				<router-view/>
+				<router-view />
 			</div>
 			<div :class="[$style.footerContainer, 'change-border-top-color']">
 				<div :class="$style.footer">
@@ -145,6 +145,12 @@
 							font-size: 18px;
 							font-weight: bold;
 						}
+
+						:global {
+							.router-link-exact-active {
+
+							}
+						}
 					}				
 				}
 
@@ -169,6 +175,11 @@
 								display: none;
 							}
 						}
+
+						
+						> .searchInput:focus {
+							outline: none;
+						}
 					}
 
 					> .chat {
@@ -178,6 +189,7 @@
 							height: 40px;
 
 							font-size: 16px;
+							font-weight: bold;
 
 							padding: 5px;
 
@@ -196,7 +208,6 @@
 			padding-top: 64px;
 
 			position: relative;
-			z-index: 1;
 		}
 
 		> .footerContainer {
@@ -353,7 +364,7 @@ import { watch } from 'vue'
 		// HelloWorld,
 	},
 })
-export default class HomeView extends Vue {
+export default class App extends Vue {
 	searchQuery: string = ""
 	mode: string = this.$store.getters.getMode
 	linkAddress: any = LinkJsonFile.link
@@ -386,6 +397,14 @@ export default class HomeView extends Vue {
 			behavior: 'smooth'
 		})
 	}
+
+	@Watch('$route.query')
+	scrollToTop2() {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		})
+	} 
 
 	downloadClass(style: string) {
 		if (style == "marginLeft") {

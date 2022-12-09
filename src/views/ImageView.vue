@@ -1,6 +1,6 @@
 <template>
 	<div :class="$style.index">
-		<div :class="$style.container">
+		<div :class="[$style.container, 'general-background-color-imageview']">
 			<div :class="$style.contents">
 				<img :class="$style.bigImage" :src="imageAddress">
 				<img :class="$style.close" :src="require('@/assets/close.svg')" v-on:click="closeImageView">
@@ -14,15 +14,21 @@
 .index {
 	> .container {
 		width: 100%;
+		height: 100%;
 
-		position: relative;
+		display: flex;
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		align-items: center;
 
-		background-color: black;
+		z-index: 3;
+
 		> .contents {
 			width: 768px;
 
 			margin: 0 auto;
-			padding: 300px 0px;
+			
 
 			> .bigImage {
 				width: 768px;
@@ -30,7 +36,7 @@
 
 			> .close {
 				position: absolute;
-				top: 250px;
+				top: 20px;
 				right: 80px;
 				cursor: pointer;
 			}
@@ -49,7 +55,7 @@ import ContentsJsonFile from '@/assets/contents.json'
 		// HelloWorld,
 	},
 })
-export default class Hot_Articles extends Vue {
+export default class ImageView extends Vue {
 	articleID: any = this.$route.query.id
 	imageAddress: any = this.$route.query.address
 

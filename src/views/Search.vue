@@ -15,7 +15,7 @@
 					<div :class="$style.title">
 						<span :class="$style.titleSpan">인기 중고</span>
 					</div>
-					<div :class="$style.list" v-if="hotArticlesException()">
+					<div :class="$style.list" v-if="isHotArticlesExists()">
 						<div :class="[$style.articles, lrCheck(index)]" v-for="(item, index) in products.slice(0, 6)" :key="index">
 							<router-link class="general-font-color-basic" :to="{name: 'articles', query: {id : item.id}}">								
 								<img :class="$style.right" :src="item.images[imageIndex]" v-if="(index % 3) == 0">
@@ -25,7 +25,9 @@
 								<span class="general-font-color-search">{{ item.registered_by.location }}</span>
 								<span :class="[$style.priceLike, 'general-font-color-emphasize']">
 									<span :class="$style.price">{{ priceType(item.price) }}원</span>
-									<span>♡<span class="general-font-color-basic">{{ item.likes }}</span></span>
+									<span class="general-font-color-basic">
+										<img :src="require('@/assets/heart_small.svg')">{{ item.likes }}
+									</span>
 								</span>
 							</router-link>
 						</div>
@@ -41,7 +43,6 @@
 	
 	> .container {
 		padding: 30px 0px 40px 0px;
-		margin-top: 24px;
 
 		> .searchResult {
 			width: 800px;
@@ -102,7 +103,7 @@
 
 					text-align: left;
 
-					padding-bottom: 32px;
+					padding-bottom: 20px;
 
 					> span {
 						display: inline-block;
@@ -123,7 +124,7 @@
 					flex-wrap: wrap;
 
 					> .articles {
-						width: calc(33% - 34px);
+						width: 217px;
 
 						margin-right: 34px;
 
@@ -138,9 +139,7 @@
 							
 							> img {
 								width: 100%;
-								height: 187px;
-
-								margin-bottom: 10px;
+								height: 160px;
 
 								border-radius: 12px;
 							}
@@ -151,16 +150,27 @@
 								display: inline-block;
 								
 								font-size: 14px;
-
-								padding-bottom: 4px;
 							}
 
 							> .title {
 								font-size: 16px;
+								font-weight: bold;
 							}
 
 							> .priceLike {
 								display: flex;
+
+								padding-top: 6px;
+								
+								> span {
+									display: flex;
+									
+									> img {
+										width: 13px;
+
+										margin-right: 2px;
+									}
+								}
 
 								> .price {				
 									width: 100%;
@@ -193,7 +203,7 @@ import ContentsJsonFile from '@/assets/contents.json'
 		// HelloWorld,
 	},
 })
-export default class Hot_Articles extends Vue {
+export default class Search extends Vue {
 	searchQuery: any = this.$route.query.q
 	mode: string = this.$store.getters.getMode
 	products: any = ContentsJsonFile.products
@@ -203,7 +213,7 @@ export default class Hot_Articles extends Vue {
 		this.$store.commit('setMode', 'light')
 	}
 
-	hotArticlesException() {
+	isHotArticlesExists(): boolean {
 		if (this.products == null) {
 			return false
 		}

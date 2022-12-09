@@ -86,12 +86,12 @@
 				</div>
 			</div>
 
-			<div :class="[$style.hotArticles, 'background-color-gray']">
+			<div :class="[$style.hotArticles, 'general-background-color-search']">
 				<div :class="$style.contents">
 					<div :class="$style.title">
 						<span>중고거래 인기매물</span>
 					</div>
-					<div :class="$style.list" v-if="hotArticlesException()">
+					<div :class="$style.list" v-if="isHotArticlesExists()">
 						<div :class="$style.articles" v-for="(item, index) in products.slice(0, 4)" :key="index" >
 							<router-link class="general-font-color-basic" :to="{name: 'articles', query: {id : item.id}}">
 								<img :src="item.images[imageIndex]">
@@ -117,7 +117,7 @@
 					<router-link class="general-font-color-basic" to="/top_keywords">
 						중고거래 인기검색어
 					</router-link>
-					<div :class="$style.keywordsList" v-if="keywordsException()">
+					<div :class="$style.keywordsList" v-if="isKeywordsExists()">
 						<span v-for="(item, index) in keywords.slice(0, 10)" :key="index">
 							<span class="general-font-color-basic" v-on:click="daangnSearch(item.word)">{{ item.word }}</span>
 						</span>
@@ -206,7 +206,7 @@
 				> .leftLanding.landing1 {
 					width: 35%;
 
-					padding-left: 30px;
+					padding-left: 60px;
 					padding-bottom: 130px;
 				}
 
@@ -346,6 +346,7 @@
 					text-align: center;
 
 					font-size: 16px;
+					font-weight: bold;
 
 					padding-bottom: 120px;
 				}
@@ -360,6 +361,10 @@
 				
 				margin: 0 auto;
 				text-align: center;
+
+				> a {
+					font-weight: bold;
+				}
 
 				> .keywordsList {
 					width: 928px;
@@ -391,7 +396,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import ContentsJsonFile from '@/assets/contents.json'
-import KeywordsJsonFile from '@/assets/top_keywords.json'
+import KeywordsJsonFile from '@/assets/topKeywords.json'
 
 @Component({
     components: {
@@ -408,7 +413,7 @@ export default class DaangnHome extends Vue {
 		this.$store.commit('setMode', 'light')
 	}
 
-	hotArticlesException() {
+	isHotArticlesExists(): boolean {
 		if (this.products == null) {
 			return false
 		}
@@ -416,7 +421,7 @@ export default class DaangnHome extends Vue {
 		return true
 	}
 
-	keywordsException() {
+	isKeywordsExists(): boolean {
 		if (this.keywords == null) {
 			return false
 		}

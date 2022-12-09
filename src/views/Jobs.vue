@@ -1,7 +1,7 @@
 <template>
 	<div :class="$style.index">
 		<div :class="$style.container">
-			<div :class="[$style.contents, 'background-color-jobs']">
+			<div :class="[$style.contents, 'general-background-color-jobs']">
 				<div :class="$style.albaBanner">
 					<div :class="[$style.leftBanner, 'general-font-color-basic-3']">
 						<span :class="$style.bannerSpan">우리 동네에서 찾는 <br> 당근알바</span>

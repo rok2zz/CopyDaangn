@@ -10,12 +10,11 @@
 						<span>{{ index + 1 }}</span>
 					</span>
 					<span :class="[$style.search, 'general-font-color-basic']" v-on:click="daangnSearch(item.word)">{{ item.word }}</span>
-					<span :class="$style.pointer" v-if="changeRanking(item.updown)">
-						<span class="general-pointer-color-up" v-if="item.updown.pointer == '↑'">{{ item.updown.pointer }}</span>
-						<span class="general-pointer-color-down" v-else>{{ item.updown.pointer }}</span>
+					<span :class="$style.pointer" v-if="changeRanking(item.changes)">
+						<span v-if="item.changes > 0"><span class="general-pointer-color-up">↑</span>{{ item.changes }}</span>
+						<span v-else-if="item.changes < 0"><span class="general-pointer-color-down">↓</span>{{ -item.changes }}</span>
+						<span v-else-if="item.changes == 0">-</span>
 					</span>
-					<span v-if="changeRanking(item.updown)">{{ item.updown.number }}</span>
-					<span v-else>-</span>
 				</div>
 			</div>
 		</div>
@@ -53,6 +52,8 @@
 
 				padding: 10px 16px;
 
+				border-bottom-width: 1px;
+				border-bottom-style: solid;
 
 				> span {
 					font-size: 17px;
@@ -90,14 +91,14 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import KeywordsJsonFile from '@/assets/top_keywords.json'
+import KeywordsJsonFile from '@/assets/topKeywords.json'
 
 @Component({
 	components: {
 		// HelloWorld,
 	},
 })
-export default class Hot_Keywords extends Vue {
+export default class TopKeywords extends Vue {
 	keywords: any = KeywordsJsonFile.keywords
 
 	mounted() {
@@ -110,8 +111,8 @@ export default class Hot_Keywords extends Vue {
 		this.$router.push({name: 'search', query: {q: keyword}});
 	}
  	
-	changeRanking(item: any) {
-		if (item == "none") {
+	changeRanking(item: any): boolean {
+		if (item == null) {
 			return false
 		}
 
