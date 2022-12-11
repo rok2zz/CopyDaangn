@@ -7,7 +7,7 @@
 						<span>중고거래 인기매물</span>
 					</div>
 					<div :class="$style.list">
-						<HotArticlesList :sliceIndex="8" />
+						<HotArticlesList :sliceIndex="8" :products="products" />
 					</div>
 				</div>
 			</div>
@@ -58,12 +58,16 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { Product } from '@/structure/types';
 import HotArticlesList from '@/components/HotArticlesList.vue';
+import ContentsJsonFile from '@/assets/contents.json'
 
 @Component({
 	components: {
 		HotArticlesList
 	},
 })
-export default class HotArticles extends Vue {}
+export default class HotArticles extends Vue {
+	products: Product[] = ContentsJsonFile.products as any
+}
 </script>

@@ -49,7 +49,7 @@
 						<div :class="$style.rightLinkFooter">
 							<span>당근마켓 앱 다운로드</span>
 							<div :class="$style.downloadBtn">
-								<div :class="downloadClass(item.style)" v-for="(item, index) in downloadFooter" :key="index">
+								<div v-for="(item, index) in downloadFooter" :key="index">
 									<a :href="item.downloadLink" target="_blank">
 										<img :src="require('@/assets/button_' + item.downloadImage)">
 									</a>
@@ -274,7 +274,7 @@
 						> .downloadBtn {
 							display: flex;
 
-							> .download {
+							> div:nth-child(2) {
 								margin-left: 10px;
 							}
 						}	
@@ -354,25 +354,21 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
+import { linkAddress, link, download, info, inquiry, read } from './structure/types'
 import LinkFooterJsonFile from '@/assets/linkFooter.json'
 import LinkJsonFile from '@/assets/link.json'
 import InfoFooterJsonFile from '@/assets/infoFooter.json'
-import { watch } from 'vue'
 
-@Component({
-	components: {
-		// HelloWorld,
-	},
-})
+@Component
 export default class App extends Vue {
 	searchQuery: string = ""
 	mode: string = this.$store.getters.getMode
-	linkAddress: any = LinkJsonFile.link
-	linkFooter: any = LinkFooterJsonFile.link
-	downloadFooter: any = LinkFooterJsonFile.download
-	infoFooter: any = InfoFooterJsonFile.info
-	inquiryFoorer: any = InfoFooterJsonFile.inquiry
-	readFooter: any = InfoFooterJsonFile.read
+	linkAddress: linkAddress[] = LinkJsonFile.link as any
+	linkFooter: link[] = LinkFooterJsonFile.link as any
+	downloadFooter: download[] = LinkFooterJsonFile.download as any
+	infoFooter: info[] = InfoFooterJsonFile.info as any
+	inquiryFoorer: inquiry[] = InfoFooterJsonFile.inquiry as any
+	readFooter: read[] = InfoFooterJsonFile.read as any
 
 	@Watch('$store.state.mode')
 	modeChange() {
@@ -391,6 +387,15 @@ export default class App extends Vue {
 	}
 
 	@Watch('$route.path')
+	updatePath() {
+		this.scrollToTop()
+	}
+
+	@Watch('$route.query')
+	updateQuery() {
+		this.scrollToTop()
+	} 
+
 	scrollToTop() {
 		window.scrollTo({
 			top: 0,
@@ -398,31 +403,14 @@ export default class App extends Vue {
 		})
 	}
 
-	@Watch('$route.query')
-	scrollToTop2() {
-		window.scrollTo({
-			top: 0,
-			behavior: 'smooth'
-		})
-	} 
-
-	downloadClass(style: string) {
-		if (style == "marginLeft") {
-			// @ts-ignore
-			return this.$style.download
-		} else {
-			return ''
-		}
-	}
-
 	keydownHandler(e: KeyboardEvent) {
 		if (e.key == "Enter") {
-			this.daangnSearch()
+			this.updateSearchQuery()
 			this.searchQuery = ""
 		}
 	}
 
-	daangnSearch() {
+	updateSearchQuery() {
 		if (this.searchQuery == "") {
 			return alert('검색어를 입력하세요.')
 		}

@@ -5,12 +5,13 @@
 				<span>숨겨져 있는 게시글은 볼 수 없습니당 :(</span>
 			</div>
 			<div :class="$style.nonHiddenPage" v-else-if="isProductLoaded()">
+				<!-- 메인 이미지 -->
 				<div :class="$style.articleImage">
-					<button class="general-background-color-light" v-on:click="updateImageIndex(-1)">
+					<button class="general-background-color-light" v-on:click="updateImageIndex(-1)" v-if="maxImageIndex != 0">
 						<img :src="require('@/assets/chvron_left.svg')">
 					</button>
 					<div :class="$style.infoImage" v-if="isImageLoaded()">
-						<router-link :to="{name: 'imageview', query: {id : selectedProduct?.id, address : selectedProduct?.images[imageIndex]}}">
+						<router-link :to="updateImageQuery(getSelectedProduct())">
 							<img :src="selectedProduct?.images[imageIndex]">
 						</router-link>
 						<div :class="$style.infoImageBtn" v-if="maxImageIndex > 1">
@@ -20,25 +21,25 @@
 							</span>
 						</div>
 					</div>
-					<button class="general-background-color-light" v-on:click="updateImageIndex(1)">
+					<button class="general-background-color-light" v-on:click="updateImageIndex(1)" v-if="maxImageIndex != 0">
 						<img :src="require('@/assets/chvron_right.svg')">
 					</button>
 				</div>
-				
+				<!-- 유저 정보 -->
 				<div :class="[$style.userInfo, 'general-border-bottom-color']" v-if="isRegisteredByExists()">
 					<div :class="$style.contents">
 						<div :class="$style.user">
 							<img :src="getThumbnail()">
 							<div :class="$style.info">
-								<span :class="$style.userName">{{ selectedProduct?.registered_by.name }}</span>
-								<span :class="$style.userLocation">{{selectedProduct?.registered_by.location }}</span>
+								<span :class="$style.userName">{{ getRegisteredBy().name }}</span>
+								<span :class="$style.userLocation">{{ getRegisteredBy().location }}</span>
 							</div>
 						</div>
 
 						<div :class="$style.mannerInfo">
 							<div :class="$style.mannerTemparature">
 								<div :class="[$style.manner, 'change-font-color-temperature-' + tempIndex]">
-									<span>{{ selectedProduct?.registered_by.temperature }}°C</span>
+									<span>{{ getRegisteredBy().temperature }}°C</span>
 									<div :class="[$style.grayBar, 'change-bar-color-temparature-0']">
 										<div :style="getBarStyle()" :class="'change-bar-color-temperature-' + tempIndex"></div>
 									</div>
@@ -51,17 +52,17 @@
 					</div>
 					<span class="general-font-color-basic-2">매너온도</span>
 				</div>
-
+				<!-- 물품 정보 -->
 				<div :class="[$style.articleInfo, 'general-border-bottom-color']">
-					<span :class="$style.title">{{ selectedProduct?.name }}</span>
-					<span class="general-font-color-basic-2" v-if="isCategoryAndDateExists()">{{ selectedProduct?.category }} ∙ {{ getTime(selectedProduct) }}</span>
+					<span :class="$style.title">{{ getSelectedProduct().name }}</span>
+					<span class="general-font-color-basic-2" v-if="isCategoryAndDateExists()">{{ getSelectedProduct().category }} ∙ {{ getTime(getSelectedProduct()) }}</span>
 					<span class="general-font-color-basic-2" v-else>알 수 없음</span>
-					<span :class="$style.price">{{ 1 }}원</span>
-					<span :class="$style.info">{{ selectedProduct?.description }}</span>
-					<span class="general-font-color-basic-2">관심 {{ selectedProduct?.likes }} ∙ 채팅 {{ selectedProduct?.chats }} ∙ 조회 {{ selectedProduct?.views }}</span>
+					<span :class="$style.price">{{ getPrice(getSelectedProduct()) }}원</span>
+					<span :class="$style.info">{{ getSelectedProduct().description }}</span>
+					<span class="general-font-color-basic-2">관심 {{ getSelectedProduct().likes }} ∙ 채팅 {{ getSelectedProduct().chats }} ∙ 조회 {{ getSelectedProduct().views }}</span>
 				</div>	
 			</div>
-
+			<!-- 인기 품목 -->
 			<div :class="$style.hotArticles">
 				<div :class="$style.contents">
 					<div :class="$style.title">
@@ -71,7 +72,7 @@
 						</span>
 					</div>
 					<div :class="$style.list">
-						<HotArticlesList :sliceIndex="6" :row="3" />
+						<HotArticlesList :sliceIndex="6" :row="3" :products="duplicatedProducts" />
 					</div>
 				</div>
 			</div>
@@ -360,9 +361,8 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import ContentsJsonFile from '@/assets/contents.json'
-import router from '@/router';
 import { cutName, unwrapQuery, timeForToday, priceType } from '@/utils/format';
-import { Product, QueryID } from '@/structure/types';
+import { Product, QueryID, User } from '@/structure/types';
 import HotArticlesList from '@/components/HotArticlesList.vue';
 
 @Component({
@@ -409,15 +409,27 @@ export default class Articles extends Vue {
 			return false
 		}
 
-		return this.selectedProduct.is_hidden
+		if (this.selectedProduct.is_hidden == null) {
+			return false
+		}
+
+		return true
 	}
 
 	isProductLoaded(): boolean {
 		return this.selectedProduct != null
 	}
-
+	
 	isImageLoaded(): boolean {
 		return this.selectedProduct?.images && this.selectedProduct.images.length > 0 ? true : false
+	}
+
+	getSelectedProduct(): Product {
+		return this.selectedProduct ?? {} as Product
+	}
+
+	getRegisteredBy(): User {
+		return this.selectedProduct?.registered_by ?? {} as User
 	}
 
 	getThumbnail(): string {
@@ -471,7 +483,7 @@ export default class Articles extends Vue {
 		this.init()
 	}
 
-	temperatureFace() {		
+	temperatureFace(): void {		
 		var temperature = this.selectedProduct?.registered_by.temperature
 
 		if (!temperature) return
@@ -507,8 +519,8 @@ export default class Articles extends Vue {
 		return priceType(product)
 	}
 
-	getTime(product: Product): string | undefined {
-		return timeForToday(product?.registered_date)
+	getTime(product: Product): string {
+		return timeForToday(product.registered_date)
 	}
 
 }

@@ -26,10 +26,10 @@
 							<span :class="$style.title">우리 동네<br>중고 직거래 마켓</span>
 							<span>동네 주민들과 가깝고 따뜻한 거래를 지금 경험해보세요</span>
 							<div :class="$style.landingBtn">
-								<router-link :class="$style.articlesBtn" to="/hot_articles">
+								<router-link to="/hot_articles">
 									<button class="general-font-color-basic">인기매물 보기</button>
 								</router-link>
-								<router-link :class="$style.trustBtn" to="/">
+								<router-link to="/">
 									<button class="general-font-color-basic">믿을 수 있는 중고거래</button>
 								</router-link>
 							</div>
@@ -95,7 +95,7 @@
 						<span>중고거래 인기매물</span>
 					</div>
 					<div :class="$style.list">
-						<HotArticlesList :sliceIndex="4" />
+						<HotArticlesList :sliceIndex="4" :products="products"/>
 					</div>
 					<div :class="$style.link">
 						<router-link class="general-font-color-basic" to="/hot_articles">
@@ -234,7 +234,7 @@
 								}
 							}
 
-							> .trustBtn {
+							> a:nth-child(2) {
 								margin-left: 16px;
 							}
 						}

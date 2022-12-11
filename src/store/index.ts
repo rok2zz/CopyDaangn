@@ -12,7 +12,7 @@ export default new Vuex.Store({
 		getMode(state) {
 			return state.mode
 		},
-		setSearchQuery(state) {
+		getSearchQuery(state) {
 			return state.searchQuery
 		}
 	},
@@ -20,7 +20,7 @@ export default new Vuex.Store({
 		setMode(state, value) {
 			state.mode = value
 		},
-		getSearchQuery(state, value) {
+		setSearchQuery(state, value) {
 			state.searchQuery = value
 		}
 	},

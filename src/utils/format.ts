@@ -25,9 +25,9 @@ export function priceType(val: Product): string {
     return priceComma
 }
 
-export function timeForToday(val: number | undefined) {
-    if (!val) return
-    
+export function timeForToday(val: number | undefined): string {
+    if (!val) return ""
+
     var today = new Date();
     var timeValue = new Date(val * 1000);
 

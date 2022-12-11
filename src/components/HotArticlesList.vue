@@ -1,6 +1,6 @@
 <template>
 	<div :class="$style.index" v-if="isHotArticlesExists()">
-		<div :class="[$style.articles, getStyleRow()]" v-for="(item, index) in products.slice(0, sliceIndex)" :key="index">
+		<div :class="[$style.articles, getStyleRow()]" v-for="(item, index) in getProducts().slice(0, sliceIndex)" :key="index">
 			<router-link class="general-font-color-basic" :to="updateQueryID(item)">
 				<img :src="item.images[imageIndex]">
 				<span :class="$style.title">{{ getName(item) }}</span>
@@ -68,11 +68,11 @@
 	> .articles.row3 {
 		width: calc(33% - 16px);
 		
-		margin-right: 20px;
+		margin-right: 27px;
 		margin-bottom: 56px;
 
 		> a {
-			width: 100%; v
+			width: 100%; 
 			
 			cursor: pointer;
 			
@@ -107,7 +107,7 @@
 		}
 	}
 
-	> .aritcles.row3:nth-child(3n) {
+	> .articles.row3:nth-child(3n) {
 		margin-right: 0px;
 	}
 }
@@ -115,16 +115,15 @@
 </style>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import { Product, QueryID } from '@/structure/types';
 import { cutName, priceType } from '@/utils/format';
-import ContentsJsonFile from '@/assets/contents.json'
 
 @Component
 export default class HotArticlesList extends Vue {
 	@Prop() sliceIndex?: number = undefined
-	@Prop() row?: number = 4
-	products: Product[] = ContentsJsonFile.products as any
+	@Prop() row?: number = undefined
+	@Prop() products?: Product[] = undefined
 	imageIndex: number = 0
 
 	isHotArticlesExists(): boolean {
@@ -133,6 +132,10 @@ export default class HotArticlesList extends Vue {
 
 	updateQueryID(item: Product): QueryID {
 		return {name: 'articles', query: {id : item.id}}
+	}
+
+	getProducts(): Product[] {
+		return this.products ?? []
 	}
 
 	getName(item: Product): string {

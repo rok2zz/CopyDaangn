@@ -1,6 +1,7 @@
 <template>
 	<div :class="$style.index">
 		<div :class="[$style.container, 'general-font-color-basic','general-background-color-search']">
+			<!-- 검색 결과 -->
 			<div :class="[$style.searchResult, 'general-background-color-light','general-border-color']">
 				<div :class="$style.contents">
 					<span>
@@ -10,6 +11,7 @@
 					<span :class="[$style.searchAgain, 'general-font-color-emphasize']">다시 검색하기</span>
 				</div>
 			</div>
+			<!-- 인기 품목 -->
 			<div :class="[$style.hotArticles, 'general-background-color-light','general-border-color']">
 				<div :class="$style.contents">
 					<div :class="$style.title">

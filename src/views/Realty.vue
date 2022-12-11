@@ -77,7 +77,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 @Component
 export default class Realty extends Vue {	
 	mounted() {
-		this.$store.commit('setMode', "dark")
+		this.$store.commit('setMode', 'dark')
 	}
 }
 </script>
