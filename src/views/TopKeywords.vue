@@ -5,17 +5,7 @@
 				<span :class="$style.title">
 					오늘의 중고 인기 검색어
 				</span>
-				<div :class="[$style.rankingList, 'general-border-bottom-color']" v-for="(item, index) in keywords" :key="index">
-					<span :class="$style.ranking">
-						<span>{{ index + 1 }}</span>
-					</span>
-					<span :class="[$style.search, 'general-font-color-basic']" v-on:click="daangnSearch(item.word)">{{ item.word }}</span>
-					<span :class="$style.pointer" v-if="changeRanking(item.changes)">
-						<span v-if="item.changes > 0"><span class="general-pointer-color-up">↑</span>{{ item.changes }}</span>
-						<span v-else-if="item.changes < 0"><span class="general-pointer-color-down">↓</span>{{ -item.changes }}</span>
-						<span v-else-if="item.changes == 0">-</span>
-					</span>
-				</div>
+				<keywords />
 			</div>
 		</div>
 	</div>
@@ -43,46 +33,6 @@
 
 				padding-bottom: 40px;
 			}
-
-			> .rankingList {
-				width: 414px;
-
-				display: flex;
-				margin: 0 auto;
-
-				padding: 10px 16px;
-
-				border-bottom-width: 1px;
-				border-bottom-style: solid;
-
-				> span {
-					font-size: 17px;
-				}
-
-				> .ranking {
-					width: 25px;
-
-					font-weight: bold;
-					font-style: oblique;
-
-					margin-right: 24px;
-
-					text-align: right;
-
-				}
-
-				> .search {
-					width: 100%;
-
-					text-align: left;
-
-					cursor: pointer;
-				}
-
-				> .search:hover {
-					text-decoration: underline;
-				}
-			}
 		}
 	}
 }
@@ -91,32 +41,17 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import KeywordsJsonFile from '@/assets/topKeywords.json'
+import Keywords from '@/components/Keywords.vue'
 
 @Component({
 	components: {
-		// HelloWorld,
+		Keywords
 	},
 })
 export default class TopKeywords extends Vue {
-	keywords: any = KeywordsJsonFile.keywords
 
 	mounted() {
 		this.$store.commit('setMode', 'light')
-	}
-
-	daangnSearch(keyword: any) {
-		this.$store.commit('setSearchQuery', keyword)
-
-		this.$router.push({name: 'search', query: {q: keyword}});
-	}
- 	
-	changeRanking(item: any): boolean {
-		if (item == null) {
-			return false
-		}
-
-		return true
 	}
 }
 </script>

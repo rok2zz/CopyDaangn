@@ -15,22 +15,8 @@
 					<div :class="$style.title">
 						<span :class="$style.titleSpan">인기 중고</span>
 					</div>
-					<div :class="$style.list" v-if="isHotArticlesExists()">
-						<div :class="[$style.articles, lrCheck(index)]" v-for="(item, index) in products.slice(0, 6)" :key="index">
-							<router-link class="general-font-color-basic" :to="{name: 'articles', query: {id : item.id}}">								
-								<img :class="$style.right" :src="item.images[imageIndex]" v-if="(index % 3) == 0">
-								<img :src="item.images[imageIndex]" v-else>
-								<span :class="$style.title" v-if="item.name.length >= 12">{{ cuttingName(item.name) }}</span>
-								<span :class="$style.title" v-else>{{ item.name }}</span>
-								<span class="general-font-color-search">{{ item.registered_by.location }}</span>
-								<span :class="[$style.priceLike, 'general-font-color-emphasize']">
-									<span :class="$style.price">{{ priceType(item.price) }}원</span>
-									<span class="general-font-color-basic">
-										<img :src="require('@/assets/heart_small.svg')">{{ item.likes }}
-									</span>
-								</span>
-							</router-link>
-						</div>
+					<div :class="$style.list">
+						<SearchHotArticles />
 					</div>
 				</div>
 			</div>
@@ -122,69 +108,6 @@
 
 					display: flex;
 					flex-wrap: wrap;
-
-					> .articles {
-						width: 217px;
-
-						margin-right: 34px;
-
-						margin-bottom: 56px;
-
-						> a {
-							display: block;
-
-							text-decoration: none;
-
-							cursor: pointer;
-							
-							> img {
-								width: 100%;
-								height: 160px;
-
-								border-radius: 12px;
-							}
-							
-							> span {
-								width: 100%;
-
-								display: inline-block;
-								
-								font-size: 14px;
-							}
-
-							> .title {
-								font-size: 16px;
-								font-weight: bold;
-							}
-
-							> .priceLike {
-								display: flex;
-
-								padding-top: 6px;
-								
-								> span {
-									display: flex;
-									
-									> img {
-										width: 13px;
-
-										margin-right: 2px;
-									}
-								}
-
-								> .price {				
-									width: 100%;
-													
-									font-size: 15px;
-									font-weight: bold;
-								}
-							}
-						}
-					}
-
-					> .articles.right {
-						margin-right: 0px;
-					}
 				}
 			}
 		}
@@ -195,48 +118,19 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import ContentsJsonFile from '@/assets/contents.json'
+import SearchHotArticles from '@/components/SearchHotArticles.vue';
 
 
 @Component({
 	components: {
-		// HelloWorld,
+		SearchHotArticles
 	},
 })
 export default class Search extends Vue {
 	searchQuery: any = this.$route.query.q
-	mode: string = this.$store.getters.getMode
-	products: any = ContentsJsonFile.products
-	imageIndex: number = 0
 
 	mounted() {
 		this.$store.commit('setMode', 'light')
-	}
-
-	isHotArticlesExists(): boolean {
-		if (this.products == null) {
-			return false
-		}
-		return true
-	}
-
-	lrCheck(index: number) {
-		if (((index + 1) % 3) == 0) {
-			// @ts-ignore
-			return this.$style.right
-		}
-
-		return
-	}
-
-	cuttingName(name: string): string {
-		return name.substring(0, 14) + '...'
-	}
-
-	priceType(price: number): string {
-		var priceComma = String(price).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-		return priceComma
 	}
 }
 </script>

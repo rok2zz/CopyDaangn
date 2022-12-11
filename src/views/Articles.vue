@@ -6,12 +6,12 @@
 			</div>
 			<div :class="$style.nonHiddenPage" v-else-if="isProductLoaded()">
 				<div :class="$style.articleImage">
-					<button class="general-background-color-light" v-on:click="updateImageIndex(false)">
+					<button class="general-background-color-light" v-on:click="updateImageIndex(-1)">
 						<img :src="require('@/assets/chvron_left.svg')">
 					</button>
 					<div :class="$style.infoImage" v-if="isImageLoaded()">
-						<router-link :to="{name: 'imageview', query: {id : selectedProduct.id, address : selectedProduct.images[imageIndex]}}">
-							<img :src="selectedProduct.images[imageIndex]">
+						<router-link :to="{name: 'imageview', query: {id : selectedProduct?.id, address : selectedProduct?.images[imageIndex]}}">
+							<img :src="selectedProduct?.images[imageIndex]">
 						</router-link>
 						<div :class="$style.infoImageBtn" v-if="maxImageIndex > 1">
 							<span :class="$style.btnSpan" v-for="(item, index) in maxImageIndex" :key="index">
@@ -20,7 +20,7 @@
 							</span>
 						</div>
 					</div>
-					<button class="general-background-color-light" v-on:click="updateImageIndex(true)">
+					<button class="general-background-color-light" v-on:click="updateImageIndex(1)">
 						<img :src="require('@/assets/chvron_right.svg')">
 					</button>
 				</div>
@@ -28,17 +28,17 @@
 				<div :class="[$style.userInfo, 'general-border-bottom-color']" v-if="isRegisteredByExists()">
 					<div :class="$style.contents">
 						<div :class="$style.user">
-							<img :src="isThumbnailExists()">
+							<img :src="getThumbnail()">
 							<div :class="$style.info">
-								<span :class="$style.userName">{{ selectedProduct.registered_by.name }}</span>
-								<span :class="$style.userLocation">{{selectedProduct.registered_by.location }}</span>
+								<span :class="$style.userName">{{ selectedProduct?.registered_by.name }}</span>
+								<span :class="$style.userLocation">{{selectedProduct?.registered_by.location }}</span>
 							</div>
 						</div>
 
 						<div :class="$style.mannerInfo">
 							<div :class="$style.mannerTemparature">
 								<div :class="[$style.manner, 'change-font-color-temperature-' + tempIndex]">
-									<span>{{ selectedProduct.registered_by.temperature }}°C</span>
+									<span>{{ selectedProduct?.registered_by.temperature }}°C</span>
 									<div :class="[$style.grayBar, 'change-bar-color-temparature-0']">
 										<div :style="getBarStyle()" :class="'change-bar-color-temperature-' + tempIndex"></div>
 									</div>
@@ -53,12 +53,12 @@
 				</div>
 
 				<div :class="[$style.articleInfo, 'general-border-bottom-color']">
-					<span :class="$style.title">{{ selectedProduct.name }}</span>
-					<span class="general-font-color-basic-2" v-if="isCategoryAndDateExists()">{{ selectedProduct.category }} ∙ {{ timeForToday(selectedProduct.registered_date) }}</span>
+					<span :class="$style.title">{{ selectedProduct?.name }}</span>
+					<span class="general-font-color-basic-2" v-if="isCategoryAndDateExists()">{{ selectedProduct?.category }} ∙ {{ getTime(selectedProduct) }}</span>
 					<span class="general-font-color-basic-2" v-else>알 수 없음</span>
-					<span :class="$style.price">{{ priceType(selectedProduct.price) }}원</span>
-					<span :class="$style.info">{{ selectedProduct.description }}</span>
-					<span class="general-font-color-basic-2">관심 {{ selectedProduct.likes }} ∙ 채팅 {{ selectedProduct.chats }} ∙ 조회 {{ selectedProduct.views }}</span>
+					<span :class="$style.price">{{ 1 }}원</span>
+					<span :class="$style.info">{{ selectedProduct?.description }}</span>
+					<span class="general-font-color-basic-2">관심 {{ selectedProduct?.likes }} ∙ 채팅 {{ selectedProduct?.chats }} ∙ 조회 {{ selectedProduct?.views }}</span>
 				</div>	
 			</div>
 
@@ -71,16 +71,7 @@
 						</span>
 					</div>
 					<div :class="$style.list">
-						<div :class="[$style.articles, lrCheck(index)]" v-for="(item, index) in duplicatedProducts.slice(0, 6)" :key="index">
-							<router-link class="general-font-color-basic" :to="{query: {id: item.id}}">
-								<img :src="item.images[0]">
-								<span :class="$style.title" v-if="item.name.length >= 15">{{ cuttingName(item.name) }}</span>
-								<span :class="$style.title" v-else>{{ item.name }}</span>
-								<span :class="$style.price">{{ priceType(item.price) }}원</span>
-								<span>{{ item.registered_by.location }}</span>
-								<span class="general-font-color-basic-2">관심 {{ item.likes }} ∙ 채팅 {{ item.chats }}</span>
-							</router-link>
-						</div>
+						<HotArticlesList :sliceIndex="6" :row="3" />
 					</div>
 				</div>
 			</div>
@@ -358,52 +349,6 @@
 
 					display: flex;
 					flex-wrap: wrap;
-
-					> .articles {
-						width: calc(33% - 16px);
-						
-						margin-right: 27px;
-						margin-bottom: 56px;
-
-						> a {
-							width: 100%;
-							
-							cursor: pointer;
-							
-							> img {
-								width: 100%;
-								height: 208px;
-
-								margin-bottom: 10px;
-
-								border-radius: 12px;
-							}
-
-							
-							> span {
-								width: 100%;
-
-								display: inline-block;
-								
-								font-size: 13px;
-
-								padding-bottom: 4px;
-							}
-
-							> .title {
-								font-size: 16px;
-							}
-
-							> .price {
-								font-size: 15px;
-								font-weight: bold;
-							}
-						}
-					}
-
-					> .articles.right {
-						margin-right: 0px;
-					}
 				}
 			}
 		}
@@ -416,17 +361,20 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import ContentsJsonFile from '@/assets/contents.json'
 import router from '@/router';
+import { cutName, unwrapQuery, timeForToday, priceType } from '@/utils/format';
+import { Product, QueryID } from '@/structure/types';
+import HotArticlesList from '@/components/HotArticlesList.vue';
 
 @Component({
 	components: {
-		
+		HotArticlesList
 	},
 })
 export default class Articles extends Vue {
-	products: any = ContentsJsonFile.products
-	duplicatedProducts: any = []
-	selectedProduct: any = undefined
-	articleID: any = undefined
+	products: Product[] = ContentsJsonFile.products as any
+	duplicatedProducts: Product[] = []
+	selectedProduct?: Product = undefined
+	articleID?: string = undefined
 	imageIndex: number = 0
 	maxImageIndex: number = 0
 	tempIndex: string = '1'
@@ -436,7 +384,7 @@ export default class Articles extends Vue {
 	}
 
 	init() {
-		this.articleID = this.$route.query.id
+		this.articleID = unwrapQuery(this.$route.query.id)
 		this.copyProducts()
 		this.temperatureFace()
 	}
@@ -451,52 +399,35 @@ export default class Articles extends Vue {
 				this.selectedProduct = this.products[i]
 			}
 		}
+		if (!this.selectedProduct) return
 
 		this.maxImageIndex = this.selectedProduct.images.length
 	}
 
 	isHidden(): boolean {
-		if (!this.selectedProduct) { 
-			return true
-		}
-
-		if (this.selectedProduct.is_hidden == null) {
+		if (!this.selectedProduct?.is_hidden) {
 			return false
 		}
 
-		return true
+		return this.selectedProduct.is_hidden
 	}
 
 	isProductLoaded(): boolean {
-		if (this.selectedProduct == null) {
-			return false
-		}
-
-		return true
+		return this.selectedProduct != null
 	}
 
 	isImageLoaded(): boolean {
-		if (this.selectedProduct.images && this.selectedProduct.images.length > 0) {
-			return true
-        }	
-
-		return false
+		return this.selectedProduct?.images && this.selectedProduct.images.length > 0 ? true : false
 	}
 
-	isThumbnailExists() {
-		if (!this.selectedProduct.registered_by) {
-			return
-		}
-		
-		if (this.selectedProduct.registered_by.thumbnail == null) {
-			return require('@/assets/default.png')
-		}
-
-		return this.selectedProduct.registered_by.thumbnail
+	getThumbnail(): string {
+		if (!this.selectedProduct?.registered_by) return require('@/assets/default.png')
+	
+		return this.selectedProduct.registered_by.thumbnail ?? require('@/assets/default.png')
 	}
 
 	isRegisteredByExists(): boolean {
-		if (!this.selectedProduct.registered_by) {
+		if (!this.selectedProduct?.registered_by) {
 			return false
 		}
 
@@ -510,27 +441,19 @@ export default class Articles extends Vue {
 	}
 
 	isCategoryAndDateExists(): boolean {
-		if (this.selectedProduct.category && this.selectedProduct.registered_date) {
-			return true
-		}
-
-		return false
+		return this.selectedProduct?.category && this.selectedProduct.registered_date ? true : false
 	}
 
-	getBarStyle() {
-		return 'width:' + this.selectedProduct.registered_by.temperature + '%;';
+	getBarStyle(): string {
+		return 'width:' + this.selectedProduct?.registered_by.temperature + '%;';
 	}
 
-	updateImageIndex(isUp: boolean) {
-		if (isUp) {
-			this.imageIndex += 1
-		} else {
-			this.imageIndex -= 1
-		}
+	updateImageIndex(isUp: number) {
+		this.imageIndex += isUp
 
 		if (this.imageIndex < 0) {
-			this.imageIndex = this.maxImageIndex
-		} else if (this.imageIndex >= this.maxImageIndex) {
+			this.imageIndex = this.maxImageIndex - 1
+		} else if (this.imageIndex >= this.maxImageIndex - 1) {
 			this.imageIndex = 0
 		}
 	}
@@ -539,13 +462,19 @@ export default class Articles extends Vue {
 		this.imageIndex = index
 	}
 
+	updateImageQuery(product: Product): QueryID {		
+		return {name: 'imageview', query: {id : product.id, address : product.images[this.imageIndex]}}
+	}
+
 	@Watch('$route.query')
 	updateUrlQuery() {
 		this.init()
 	}
 
-	temperatureFace() {
-		var temperature = this.selectedProduct.registered_by.temperature
+	temperatureFace() {		
+		var temperature = this.selectedProduct?.registered_by.temperature
+
+		if (!temperature) return
 
 		if (temperature <= 10) {
 			this.tempIndex = '1'
@@ -562,54 +491,25 @@ export default class Articles extends Vue {
 		}
 	}
 
-	lrCheck(index: number) {
-		if (((index + 1) % 3) == 0) {
-			// @ts-ignore
-			return this.$style.right
-		}
-
-		return
+	getImages(product: Product): string {
+		return product.images[this.imageIndex]
 	}
 
-	cuttingName(name: string): string {
-		return name.substring(0, 16) + '...'
+	getName(product: Product): string {
+		return product.name
 	}
 
-	priceType(price: number): string {
-		if (!this.selectedProduct.price) {
-			return "알 수 없음"
-		}
-
-		var priceComma = String(price).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-		return priceComma
+	getCutName(product: Product): string {
+		return cutName(product.name, 16)
 	}
 
-	timeForToday(registered_date: number) {
-		var today = new Date();
-        var timeValue = new Date(registered_date * 1000);
-
-        var betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
-
-        if (betweenTime < 1) {
-			return '방금 전';
-		} else if (betweenTime < 60) {
-            return betweenTime + '분 전'
-		}
-
-        var betweenTimeHour = Math.floor(betweenTime / 60);
-        
-		if (betweenTimeHour < 24) {
-            return betweenTimeHour + '시간 전'
-        }
-
-        var betweenTimeDay = Math.floor(betweenTime / 60 / 24);
-        
-		if (betweenTimeDay < 365) {
-            return betweenTimeDay + '일 전'
-        }
-
-        return Math.floor(betweenTimeDay / 365) + '년 전'
+	getPrice(product: Product): string {
+		return priceType(product)
 	}
+
+	getTime(product: Product): string | undefined {
+		return timeForToday(product?.registered_date)
+	}
+
 }
 </script>

@@ -1,0 +1,27 @@
+boolean 함수 if문 한줄로 줄일 수 있음
+함수 이름 목적에 맞게 변환
+
+.ariticles:nth-child(4n) {하면 4번째마다 다른 속성 적용 }
+first-child / last-child 등등 사용
+nth-first/last() >> 뒤나 앞에서부 
+
+ariticles updateImageIndex maxinded값 수정 -1
+
+lrCheck 없애기
+
+다른 페이지에 있는 같은 함수 합치는법
+아래 타입스크립트 format.ts 임포트
+
+큰 블록에 주석달기
+
+component 
+@Prop() Myvariable?: string  // 외부에서 받을 수 있다
+원래 페이지에서 <mycomponent myvariable="123"> 
+
+
+타입스크립트 기본
+타입변환 방법 String() : JS 가 지원함
+??.toString() : 변수가 지원함
+? as stirng : 둘다아님 ?가 string이 아니면 오류, 실제 변환은아님 string인 척 출력
+
+예외처리를 함수마다 하기 타입 신경써서

@@ -1,6 +1,7 @@
 <template>
   	<div :class="$style.index">
 		<div :class="[$style.container, 'general-font-color-basic']">
+			<!-- 랜딩 -->
 			<div :class="[$style.landing, $style.main, 'general-background-color-landing-1']">
 				<div :class="[$style.contents, $style.landing1]">
 					<div :class="[$style.leftLanding, $style.landing1]">
@@ -14,6 +15,7 @@
 					</div>
 				</div>
 			</div>
+
 			<div :class="$style.landing">
 				<div :class="$style.contents">
 					<div :class="$style.leftLanding">
@@ -86,22 +88,14 @@
 				</div>
 			</div>
 
+			<!-- 인기매물 -->
 			<div :class="[$style.hotArticles, 'general-background-color-search']">
 				<div :class="$style.contents">
 					<div :class="$style.title">
 						<span>중고거래 인기매물</span>
 					</div>
-					<div :class="$style.list" v-if="isHotArticlesExists()">
-						<div :class="$style.articles" v-for="(item, index) in products.slice(0, 4)" :key="index" >
-							<router-link class="general-font-color-basic" :to="{name: 'articles', query: {id : item.id}}">
-								<img :src="item.images[imageIndex]">
-								<span :class="$style.title" v-if="item.name.length >= 15">{{ cuttingName(item.name) }}</span>
-								<span :class="$style.title" v-else>{{ item.name }}</span>
-								<span :class="$style.price">{{ priceType(item.price) }}원</span>
-								<span>{{ item.registered_by.location }}</span>
-								<span class="general-font-color-basic-2">관심 {{ item.likes }} ∙ 채팅 {{ item.chats }}</span>
-							</router-link>
-						</div>
+					<div :class="$style.list">
+						<HotArticlesList :sliceIndex="4" />
 					</div>
 					<div :class="$style.link">
 						<router-link class="general-font-color-basic" to="/hot_articles">
@@ -111,7 +105,7 @@
 				</div>
 			</div>
 
-
+			<!-- 인기 검색어 -->
 			<div :class="$style.hotKeywords">
 				<div :class="$style.contents">
 					<router-link class="general-font-color-basic" to="/top_keywords">
@@ -119,7 +113,7 @@
 					</router-link>
 					<div :class="$style.keywordsList" v-if="isKeywordsExists()">
 						<span v-for="(item, index) in keywords.slice(0, 10)" :key="index">
-							<span class="general-font-color-basic" v-on:click="daangnSearch(item.word)">{{ item.word }}</span>
+							<span class="general-font-color-basic" v-on:click="updateSearchQuery(item)">{{ item.word }}</span>
 						</span>
 					</div>
 				</div>
@@ -395,54 +389,37 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { Keyword, Product } from '@/structure/types';
 import ContentsJsonFile from '@/assets/contents.json'
 import KeywordsJsonFile from '@/assets/topKeywords.json'
+import HotArticlesList from '@/components/HotArticlesList.vue';
 
 @Component({
     components: {
-      // HelloWorld,
+      HotArticlesList
     },
 })
 export default class DaangnHome extends Vue {
 	mode: string = this.$store.getters.getMode
-	products: any = ContentsJsonFile.products
-	keywords: any = KeywordsJsonFile.keywords
-	imageIndex: number = 0
+	products: Product[] = ContentsJsonFile.products as any
+	keywords: Keyword[] = KeywordsJsonFile.keywords
 
 	mounted() {
 		this.$store.commit('setMode', 'light')
 	}
 
 	isHotArticlesExists(): boolean {
-		if (this.products == null) {
-			return false
-		}
-
-		return true
+		return this.products != null
 	}
 
 	isKeywordsExists(): boolean {
-		if (this.keywords == null) {
-			return false
-		}
-
-		return true
+		return this.keywords != null
 	}
 
-	daangnSearch(keyword: any) {
+	updateSearchQuery(keyword: Keyword) {
 		this.$store.commit('setSearchQuery', keyword)
 
-		this.$router.push({name: 'search', query: {q: keyword}});
-	}
- 	
-	cuttingName(name: string): string {
-		return name.substring(0,16) + '...'
-	}
-
-	priceType(price: number): string {
-		var priceComma = String(price).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-		return priceComma
+		this.$router.push({name: 'search', query: {q: keyword.word}});
 	}
 }
 </script>

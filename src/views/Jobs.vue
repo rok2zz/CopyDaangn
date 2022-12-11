@@ -74,11 +74,7 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 
 
-@Component({
-	components: {
-		// HelloWorld,
-	},
-})
+@Component
 export default class Jobs extends Vue {
 	mounted() {
 		this.$store.commit('setMode', "dark")

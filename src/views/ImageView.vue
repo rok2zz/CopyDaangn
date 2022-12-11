@@ -47,17 +47,16 @@
 </style>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
-import ContentsJsonFile from '@/assets/contents.json'
+import { unwrapQuery } from '@/utils/format';
+import { Component, Vue } from 'vue-property-decorator';
 
-@Component({
-	components: {
-		// HelloWorld,
-	},
-})
+@Component
 export default class ImageView extends Vue {
-	articleID: any = this.$route.query.id
-	imageAddress: any = this.$route.query.address
+	imageAddress: string = ""
+
+	mounted() {
+		this.imageAddress = unwrapQuery(this.$route.query.address) 
+	}
 
 	closeImageView() {
 		history.back()
