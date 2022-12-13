@@ -4,10 +4,11 @@
 			<div :class="$style.hiddenPage" v-if="isHidden()">
 				<span>숨겨져 있는 게시글은 볼 수 없습니당 :(</span>
 			</div>
+
 			<div :class="$style.nonHiddenPage" v-else-if="isProductLoaded()">
 				<!-- 메인 이미지 -->
 				<div :class="$style.articleImage">
-					<button class="general-background-color-light" v-on:click="updateImageIndex(-1)" v-if="maxImageIndex != 0">
+					<button class="general-background-color-light" v-on:click="updateImageIndex(-1)" v-if="maxImageIndex != 1">
 						<img :src="require('@/assets/chvron_left.svg')">
 					</button>
 					<div :class="$style.infoImage" v-if="isImageLoaded()">
@@ -21,10 +22,11 @@
 							</span>
 						</div>
 					</div>
-					<button class="general-background-color-light" v-on:click="updateImageIndex(1)" v-if="maxImageIndex != 0">
+					<button class="general-background-color-light" v-on:click="updateImageIndex(1)" v-if="maxImageIndex != 1">
 						<img :src="require('@/assets/chvron_right.svg')">
 					</button>
 				</div>
+
 				<!-- 유저 정보 -->
 				<div :class="[$style.userInfo, 'general-border-bottom-color']" v-if="isRegisteredByExists()">
 					<div :class="$style.contents">
@@ -52,6 +54,7 @@
 					</div>
 					<span class="general-font-color-basic-2">매너온도</span>
 				</div>
+
 				<!-- 물품 정보 -->
 				<div :class="[$style.articleInfo, 'general-border-bottom-color']">
 					<span :class="$style.title">{{ getSelectedProduct().name }}</span>
@@ -60,8 +63,14 @@
 					<span :class="$style.price">{{ getPrice(getSelectedProduct()) }}원</span>
 					<span :class="$style.info">{{ getSelectedProduct().description }}</span>
 					<span class="general-font-color-basic-2">관심 {{ getSelectedProduct().likes }} ∙ 채팅 {{ getSelectedProduct().chats }} ∙ 조회 {{ getSelectedProduct().views }}</span>
+					
+					<!-- 모바일 채팅 -->
+					<div :class="$style.mobile">
+						<button class="general-border-color-chat general-font-color-emphasize general-background-color-light">판매자와 채팅하기</button>
+					</div>
 				</div>	
 			</div>
+
 			<!-- 인기 품목 -->
 			<div :class="$style.hotArticles">
 				<div :class="$style.contents">
@@ -72,7 +81,7 @@
 						</span>
 					</div>
 					<div :class="$style.list">
-						<HotArticlesList :sliceIndex="6" :row="3" :products="duplicatedProducts" />
+						<HotArticlesList :maxLength="6" :row="3" :products="duplicatedProducts" />
 					</div>
 				</div>
 			</div>
@@ -81,6 +90,8 @@
 </template>
 
 <style lang="scss" module>
+@import '@/assets/scss/utils.scss';
+
 .index {
 	
 	> .container {
@@ -92,6 +103,10 @@
 			text-align: center;		
 			
 			padding: 120px 5px;
+
+			@include mobile {
+				width: 100%;
+			}
 		}
 
 		> .nonHiddenPage {
@@ -106,12 +121,22 @@
 				margin: 0 auto;
 				padding-top: 40px;
 
+				@include mobile {
+					width: 100%;
+
+					padding-top: 0px;
+				}
+
 				> button {
 					padding: 0px 10px;
 
 					border: none;
 
 					cursor: pointer;
+
+					@include mobile {
+						display: none;
+					}
 				}
 
 				> .infoImage {
@@ -127,9 +152,15 @@
 
 							border-radius: 10px;
 
-							object-fit: cover;
-
 							cursor: pointer;
+
+							@include mobile {
+								aspect-ratio: 1 / 1;
+								width: 100%;
+								height: initial;
+
+								border-radius: 0px;
+							}
 						}
 					}
 
@@ -140,6 +171,10 @@
 						bottom: 16px;
 						
 						text-align: center;
+
+						@include mobile {
+							display: none;
+						}
 
 						button {
 							width: 8px;
@@ -167,13 +202,19 @@
 			> .userInfo {
 				width: 677px;
 
-
 				margin: 0 auto;
-				margin-top: 25px;
+				padding-top: 25px;
 				padding-bottom: 10px;
 
 				border-bottom-width: 1px;
 				border-bottom-style: solid;
+
+				@include mobile {
+					width: calc(100% - 40px);
+
+					margin: 20px;
+					padding: 0px;
+				}
 
 				> .contents {
 					display: flex;
@@ -276,6 +317,12 @@
 				border-bottom-width: 1px;
 				border-bottom-style: solid;
 
+				@include mobile {
+					width: calc(100% - 40px);
+
+					margin: 10px 20px;
+				}
+
 				> span {
 					width: 100%;
 
@@ -301,6 +348,30 @@
 
 					padding: 16px 0px;
 				}
+
+				> .mobile {
+					width: 100%;
+
+					display: none;
+
+					margin: 24px 0px;
+
+					@include mobile {
+						display: block;
+					}
+
+					> button {
+						width: 100%;
+						height: 50px;
+
+						font-size: 17px;
+						font-weight: bold;
+
+						border-radius: 100px;
+
+						cursor: pointer;
+					}
+				}
 			}
 		}
 
@@ -311,12 +382,22 @@
 				margin: 0 auto;
 				padding-top: 22px;
 
+				@include mobile {
+					width: 100%;
+				}
+
 				> .title {
 					width: 100%;
 
 					text-align: left;
 
 					padding-bottom: 22px;
+
+					@include mobile {
+						width: calc(100% - 40px);
+
+						margin: 10px 20px;
+					}
 
 					> span {
 						display: inline-block;
@@ -360,10 +441,11 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import ContentsJsonFile from '@/assets/contents.json'
-import { cutName, unwrapQuery, timeForToday, priceType } from '@/utils/format';
-import { Product, QueryID, User } from '@/structure/types';
+import { cutName, unwrapQuery, getRelativeTime, priceType } from '@/utils/format';
+import { Product, User } from '@/structure/types';
+import { RawLocation } from 'vue-router';
 import HotArticlesList from '@/components/HotArticlesList.vue';
+import ContentsJsonFile from '@/assets/contents.json'
 
 @Component({
 	components: {
@@ -371,10 +453,10 @@ import HotArticlesList from '@/components/HotArticlesList.vue';
 	},
 })
 export default class Articles extends Vue {
-	products: Product[] = ContentsJsonFile.products as any
+	products: Product[] = ContentsJsonFile.products as Product[]
 	duplicatedProducts: Product[] = []
-	selectedProduct?: Product = undefined
-	articleID?: string = undefined
+	selectedProduct?: Product
+	articleID?: string
 	imageIndex: number = 0
 	maxImageIndex: number = 0
 	tempIndex: string = '1'
@@ -387,6 +469,7 @@ export default class Articles extends Vue {
 		this.articleID = unwrapQuery(this.$route.query.id)
 		this.copyProducts()
 		this.temperatureFace()
+		this.imageIndex = 0
 	}
 
 	copyProducts() {
@@ -405,15 +488,7 @@ export default class Articles extends Vue {
 	}
 
 	isHidden(): boolean {
-		if (!this.selectedProduct?.is_hidden) {
-			return false
-		}
-
-		if (this.selectedProduct.is_hidden == null) {
-			return false
-		}
-
-		return true
+		return this.selectedProduct?.is_hidden ?? false
 	}
 
 	isProductLoaded(): boolean {
@@ -465,7 +540,7 @@ export default class Articles extends Vue {
 
 		if (this.imageIndex < 0) {
 			this.imageIndex = this.maxImageIndex - 1
-		} else if (this.imageIndex >= this.maxImageIndex - 1) {
+		} else if (this.imageIndex > this.maxImageIndex - 1) {
 			this.imageIndex = 0
 		}
 	}
@@ -474,7 +549,7 @@ export default class Articles extends Vue {
 		this.imageIndex = index
 	}
 
-	updateImageQuery(product: Product): QueryID {		
+	updateImageQuery(product: Product): RawLocation {		
 		return {name: 'imageview', query: {id : product.id, address : product.images[this.imageIndex]}}
 	}
 
@@ -520,7 +595,7 @@ export default class Articles extends Vue {
 	}
 
 	getTime(product: Product): string {
-		return timeForToday(product.registered_date)
+		return getRelativeTime(product.registered_date)
 	}
 
 }

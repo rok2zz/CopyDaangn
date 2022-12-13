@@ -1,6 +1,7 @@
 <template>
 	<div :class="$style.index">
 		<div :class="$style.container">
+			<!-- 헤더 영역 -->
 			<div :class="[$style.headContainer, 'change-background-color-basic']">
 				<div :class="$style.header">
 					<div :class="$style.leftHeader">
@@ -15,8 +16,15 @@
 							</router-link>
 						</div>
 					</div>
-						<div :class="$style.rightHeader">
+					
+					<div :class="$style.rightHeader">
 						<div :class="$style.search">
+							<div :class="$style.mobileSearch">
+								<SearchIcon />
+							</div>
+							<div :class="$style.mobileMenu">
+								<MenuIcon />
+							</div>
 							<input v-on:keydown="keydownHandler" :class="[$style.searchInput, 'change-font-color-basic', 'change-background-color-search']" type="text" placeholder="물품이나 동네를 검색해보세요" v-model="searchQuery">
 						</div>
 						<div :class="$style.chat">
@@ -25,38 +33,53 @@
 					</div>
 				</div>
 			</div>
+
+			<!-- 뷰 출력 -->
 			<div :class="$style.mainContainer">
 				<router-view />
 			</div>
+
+			<!-- 푸터 영역 -->
 			<div :class="[$style.footerContainer, 'change-border-top-color']">
 				<div :class="$style.footer">
 					<div :class="[$style.linkFooter, 'change-font-color-link']">
+						<div :class="$style.mobileLinkFooter">
+							<span>당근마켓 앱 다운로드</span>
+							<div v-for="(item, index) in downloadFooter" :key="index">
+								<a class="change-font-color-link" :href="item.link" target="_blank">
+									<span :class="$style.linkSpan">{{ item.name }}↗</span>
+								</a>
+							</div>
+						</div>
+
 						<div :class="$style.leftLinkFooter">
 							<div :class="$style.linkList">
 								<div :class="$style.list" v-for="(item, index) in linkFooter" :key="index">
-									<div :class="$style.routerList">
+									<div>
 										<router-link class="change-font-color-link" :to="'/' + item.inPageLink">{{ item.inPage }}</router-link>
 									</div>
-									<div :class="$style.anchorList">
+									<div>
 										<a class="change-font-color-link" :href="item.outPageLink" target="_blank">{{ item.outPage }}</a>
 									</div>
-									<div :class="$style.anchorList">
+									<div>
 										<a class="change-font-color-link" :href="item.managePageLink" target="_blank">{{ item.managePage }}</a>
 									</div>
 								</div>
 							</div>
 						</div>
+
 						<div :class="$style.rightLinkFooter">
 							<span>당근마켓 앱 다운로드</span>
 							<div :class="$style.downloadBtn">
 								<div v-for="(item, index) in downloadFooter" :key="index">
-									<a :href="item.downloadLink" target="_blank">
-										<img :src="require('@/assets/button_' + item.downloadImage)">
+									<a :href="item.link" target="_blank">
+										<img :src="require('@/assets/button_' + item.image)">
 									</a>
 								</div>
 							</div>
 						</div>
 					</div>
+
 					<div :class="[$style.infoFooter, 'general-font-color-footer', 'change-border-top-color']">
 						<div :class="$style.leftInfoFooter">
 							<div :class="$style.infoDiv">
@@ -67,6 +90,7 @@
 									<span v-else><br></span>
 								</span>
 							</div>
+
 							<div :class="$style.inquiryDiv">
 								<span :class="$style.inquirySpan" v-for="(item, index) in inquiryFoorer" :key="index">
 									<router-link :class="[$style.inquiryAnchor, 'general-font-color-footer']" :to="'/'">
@@ -74,6 +98,7 @@
 									</router-link>
 								</span>
 							</div>
+
 							<div :class="$style.readDiv">
 								<a :href="item.address" :class="[$style.readAnchor, 'general-font-color-footer']" target="_blank" v-for="(item, index) in readFooter" :key="index">
 									<span class="change-font-color-footer" v-if="index == 1">{{ item.info }}</span>
@@ -89,7 +114,7 @@
 </template>
 
 <style lang="scss">
-@import '@/assets/theme.scss';
+@import '@/assets/scss/theme.scss';
 
 * {
 	padding: 0;
@@ -102,7 +127,7 @@
 </style>
 
 <style lang="scss" module>
-@import '@/assets/utils.scss';
+@import '@/assets/scss/utils.scss';
 
 .index {
 
@@ -116,8 +141,15 @@
 			left: 0;
 			z-index: 2;
 
+			@include mobile {
+				width: 100%;
+				min-width: 320px;
+				height: 56px;
+			}
+
 			> .header {
-				width: 1200px;
+				width: 100%;
+				max-width: 1200px;
 				height: 100%;
 
 				display: flex;
@@ -126,9 +158,18 @@
 				margin: 0 auto;
 				padding: 12px 16px;
 
+				@include mobile {
+					width: 100%;
+					height: 100%;
+				}
+
 				> .leftHeader {
 					width: 100%;
 					display: flex;
+
+					@include mobile {
+						width: 100%;
+					}
 
 					> .logo {
 						padding-right: 40px;
@@ -138,6 +179,10 @@
 						padding-right: 30px;
 
 						transform: translateY(2px);
+
+						@include mobile {
+							display: none;
+						}
 
 						> a {
 							text-decoration: none;
@@ -158,7 +203,34 @@
 					display: flex;
 					
 					> .search {
+
+						display: flex;
+
 						padding-right: 12px;
+
+						align-items: center;
+
+						> .mobileSearch {
+							display: none;
+
+							cursor: pointer;
+
+							@include semiMobile {
+								display: flex;
+							}
+						}
+
+						> .mobileMenu {
+							display: none;
+
+							margin-left: 16px;
+
+							cursor: pointer;
+
+							@include mobile {
+								display: flex;
+							}
+						}
 
 						> .searchInput {
 							width: 288px;
@@ -184,6 +256,10 @@
 
 					> .chat {
 
+						@include mobile {
+							display: none;
+						}
+
 						> .chatBtn {
 							width: 86px;
 							height: 40px;
@@ -208,6 +284,13 @@
 			padding-top: 64px;
 
 			position: relative;
+
+			@include mobile {
+				width: 100%;
+				min-width: 320px;
+
+				padding-top: 56px;
+			}
 		}
 
 		> .footerContainer {
@@ -216,10 +299,20 @@
 			border-top-width: 1px;
 			border-top-style: solid;
 
+			@include mobile {
+				width: 100%;
+				min-width: 320px;
+			}
+
 			> .footer {
 				width: 768px;
 
 				margin: 0 auto;
+
+				@include mobile {
+					width: 100%;
+					padding: 0px 16px;
+				}
 
 				> .linkFooter {
 					display: flex;
@@ -229,12 +322,49 @@
 					padding-top: 48px;
 					padding-bottom: 48px;
 
+					@include mobile {
+						font-size: 13px;
+
+						display: block;
+					}
+					
+					> .mobileLinkFooter {
+						width: 100%;
+
+						display: none;
+
+						margin-bottom: 20px;
+
+						font-weight: bold;
+
+						@include mobile {
+							display: flex;
+						}
+						
+						> div {
+							padding-left: 24px;
+
+							> a {
+								text-decoration: none;
+							}
+						}
+
+					}
+
 					> .leftLinkFooter {						
 						padding-right: 70px;
+
+						@include mobile {
+							padding-right: 0px;
+						}
 
 						> .linkList {
 							width: 400px;
 							height: 150px;
+
+							@include mobile {
+								width: 100%;
+							}
 
 							> .list {
 								height: calc(100% / 3);
@@ -255,13 +385,16 @@
 									> a:hover {
 										text-decoration: underline;
 									}
-								
 								}
 							}
 						}
 					}
 
 					> .rightLinkFooter {
+
+						@include mobile {
+							display: none;
+						}
 						> span {
 							display: inline-block;
 
@@ -290,8 +423,11 @@
 					border-top-width: 1px;
 					border-top-style: solid;
 
-					> .leftInfoFooter {
+					@include mobile {
+						font-size: 12px;
+					}
 
+					> .leftInfoFooter {
 						> .infoDiv {
 							padding-bottom: 16px;
 
@@ -313,7 +449,6 @@
 						> .inquiryDiv {
 							padding-bottom: 16px;
 
-
 							> .inquirySpan {
 								margin-right: 16px;
 								
@@ -330,7 +465,6 @@
 						}
 
 						> .readDiv {
-							
 							> .readAnchor {
 								margin-right: 16px;
 
@@ -349,26 +483,34 @@
 		}
 	}
 }
-
 </style>
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import { linkAddress, link, download, info, inquiry, read } from './structure/types'
+import { LinkAddress, Link, Download, Info, Inquiry, Read } from './structure/types'
 import LinkFooterJsonFile from '@/assets/linkFooter.json'
 import LinkJsonFile from '@/assets/link.json'
 import InfoFooterJsonFile from '@/assets/infoFooter.json'
+import SearchIcon from '@/components/icon/SearchIcon.vue'
+import MenuIcon from '@/components/icon/MenuIcon.vue'
 
-@Component
+@Component({
+	components: {
+		SearchIcon,
+		MenuIcon
+	}
+})
 export default class App extends Vue {
 	searchQuery: string = ""
 	mode: string = this.$store.getters.getMode
-	linkAddress: linkAddress[] = LinkJsonFile.link as any
-	linkFooter: link[] = LinkFooterJsonFile.link as any
-	downloadFooter: download[] = LinkFooterJsonFile.download as any
-	infoFooter: info[] = InfoFooterJsonFile.info as any
-	inquiryFoorer: inquiry[] = InfoFooterJsonFile.inquiry as any
-	readFooter: read[] = InfoFooterJsonFile.read as any
+	
+	linkAddress: LinkAddress[] = LinkJsonFile.link as LinkAddress[]
+	linkFooter: Link[] = LinkFooterJsonFile.link as Link[]
+	downloadFooter: Download[] = LinkFooterJsonFile.download as Download[]
+	infoFooter: Info[] = InfoFooterJsonFile.info as Info[]
+	inquiryFoorer: Inquiry[] = InfoFooterJsonFile.inquiry as Inquiry[]
+	readFooter: Read[] = InfoFooterJsonFile.read as Read[]
+
 
 	@Watch('$store.state.mode')
 	modeChange() {
@@ -414,8 +556,6 @@ export default class App extends Vue {
 		if (this.searchQuery == "") {
 			return alert('검색어를 입력하세요.')
 		}
-
-		this.$store.commit('setSearchQuery', this.searchQuery)
 
 		this.$router.push({name: 'search', query: {q: this.searchQuery}});
 	}

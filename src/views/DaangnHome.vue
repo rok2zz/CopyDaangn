@@ -7,24 +7,25 @@
 					<div :class="[$style.leftLanding, $style.landing1]">
 						<div :class="$style.landingSpan">
 							<span :class="$style.mainTitle">당신 근처의<br>당근마켓</span>
-							<span>중고 거래부터 동네 정보까지, 이웃과 함께해<br>가깝고 따뜻한 당신의 근처를 만들어요.</span>
+							<span :class="$style.sub">중고 거래부터 동네 정보까지, 이웃과 함께해 가깝고 따뜻한 당신의 근처를 만들어요.</span>
 						</div>
 					</div>
 					<div :class="[$style.rightLanding, $style.landing1]">
-						<img class="general-background-color-landing-1" :src="require('@/assets/landing1.webp')">
+						<img :class="[$style.landingImage, 'general-background-color-landing-1']" :src="require('@/assets/landing1.webp')">
+						<img :class="$style.mobileLanding1" :src="require('@/assets/images/mobileLanding1.webp')" alt="">
 					</div>
 				</div>
 			</div>
 
 			<div :class="$style.landing">
 				<div :class="$style.contents">
-					<div :class="$style.leftLanding">
+					<div :class="[$style.leftLanding, $style.webImage]">
 						<img :src="require('@/assets/landing2.webp')">
 					</div>
 					<div :class="[$style.rightLanding, $style.landing2]">
 						<div :class="$style.landingSpan">
 							<span :class="$style.title">우리 동네<br>중고 직거래 마켓</span>
-							<span>동네 주민들과 가깝고 따뜻한 거래를 지금 경험해보세요</span>
+							<span :class="$style.subTitle">동네 주민들과 가깝고 따뜻한 거래를 지금 경험해보세요</span>
 							<div :class="$style.landingBtn">
 								<router-link to="/hot_articles">
 									<button class="general-font-color-basic">인기매물 보기</button>
@@ -35,6 +36,9 @@
 							</div>
 						</div>
 					</div>
+					<div :class="[$style.leftLanding, $style.mobileImage]">
+						<img :src="require('@/assets/landing2.webp')">
+					</div>
 				</div>
 			</div>
 
@@ -43,7 +47,7 @@
 					<div :class="$style.leftLanding">
 						<div :class="$style.landingSpan">
 							<span :class="$style.title">이웃과 함께 하는<br>동네생활</span>
-							<span>우리 동네의 다양한 이야기를 이웃과 함께 나누어요.</span>
+							<span :class="$style.subTitle">우리 동네의 다양한 이야기를 이웃과 함께 나누어요.</span>
 							<div :class="$style.icon">
 								<div :class="$style.contents">
 									<img :src="require('@/assets/icon1.svg')">
@@ -71,7 +75,7 @@
 
 			<div :class="$style.landing">
 				<div :class="$style.contents">
-					<div :class="$style.leftLanding">
+					<div :class="[$style.leftLanding, $style.webImage]">
 						<img :src="require('@/assets/landing4.webp')">
 					</div>
 					<div :class="[$style.rightLanding, $style.landing4]">
@@ -85,6 +89,9 @@
 							</div>
 						</div>
 					</div>
+					<div :class="[$style.leftLanding, $style.mobileImage]">
+						<img :src="require('@/assets/landing4.webp')">
+					</div>
 				</div>
 			</div>
 
@@ -95,7 +102,7 @@
 						<span>중고거래 인기매물</span>
 					</div>
 					<div :class="$style.list">
-						<HotArticlesList :sliceIndex="4" :products="products"/>
+						<HotArticlesList :maxLength="4" :products="products"/>
 					</div>
 					<div :class="$style.link">
 						<router-link class="general-font-color-basic" to="/hot_articles">
@@ -113,7 +120,7 @@
 					</router-link>
 					<div :class="$style.keywordsList" v-if="isKeywordsExists()">
 						<span v-for="(item, index) in keywords.slice(0, 10)" :key="index">
-							<span class="general-font-color-basic" v-on:click="updateSearchQuery(item)">{{ item.word }}</span>
+							<router-link class="general-font-color-basic" :to="updateSearchQuery(item)">{{ item.word }}</router-link>
 						</span>
 					</div>
 				</div>
@@ -123,12 +130,17 @@
 </template>
 
 <style lang="scss" module>
+@import '@/assets/scss/utils.scss';
+
 .index {
-	
 	> .container {
 
 		> .landing {
 			padding: 60px 0px;
+
+			@include mobile {
+				width: 100%;
+			}
 			
 			> .contents {
 				width: 1024px;
@@ -139,6 +151,14 @@
 				padding: 0px 16px;
 
 				white-space: pre-wrap;
+
+				@include mobile {
+					width: 100%;
+
+					display: block;
+
+					text-align: center;
+				}
 
 				span {					
 					display: inline-block;
@@ -151,6 +171,12 @@
 					font-weight: bold;
 
 					padding-bottom: 24px;
+
+					@include mobile {
+						width: 100%;
+
+						font-size: 28px;
+					}
 				}
 
 				.mainTitle {
@@ -158,15 +184,40 @@
 					font-weight: bold;
 					
 					padding-bottom: 24px;
+
+					@include mobile {
+						width: 100%;
+
+						font-size: 32px;
+					}
 				}
-				
+
+				.sub {
+					width: 300px;
+				}
+
+				.subTitle {
+					@include mobile {
+						width: 200px;
+					}
+				}
 
 				> .leftLanding {
 					display: flex;
 					align-items: center;
 
+					@include mobile {
+						width: 100%;
+
+						display: block;
+					}
+
 					> img {
 						width: 532px;
+
+						@include mobile {
+							width: 300px;
+						}
 					}
 
 					> .landingSpan {
@@ -175,6 +226,10 @@
 							display: flex;
 
 							padding-top: 40px;
+
+							@include mobile {
+								display: none;
+							}
 
 							> .contents {
 								width: calc(100% / 3);
@@ -202,19 +257,53 @@
 
 					padding-left: 60px;
 					padding-bottom: 130px;
+
+					@include mobile {
+						width: 100%;
+
+						padding-left: 0px;
+						padding-bottom: 30px
+					}
+				}
+
+				> .leftLanding.webImage {
+					@include mobile {
+						display: none;
+					}
+				}
+
+				> .leftLanding.mobileImage {
+					display: none;
+
+					@include mobile {
+						display: block;
+					}
 				}
 
 				> .rightLanding {
 					display: flex;
 					align-items: center;
 
+					@include mobile {
+						display: block;
+					}
+
 					> img {
 						width: 546px;
+
+						@include mobile {
+							width: 300px;
+						}
 					}
 
 					> .landingSpan {
-					
 						> .landingBtn {
+							
+							@include mobile {
+								width: 300px;
+
+								margin: 0 auto;
+							}
 
 							> a {
 
@@ -227,6 +316,12 @@
 
 									border: none;
 									border-radius: 5px;
+
+									@include mobile {
+										width: 250px;
+
+										margin-top: 20px;
+									}
 								}
 
 								> button:hover {
@@ -236,6 +331,10 @@
 
 							> a:nth-child(2) {
 								margin-left: 16px;
+
+								@include mobile {
+									margin-left: 0px;
+								}
 							}
 						}
 					}
@@ -244,26 +343,62 @@
 				> .rightLanding.landing1 {
 					width: 60%;
 
-					> img {
+					@include mobile {
+						width: 100%;
+					}
+
+					> .landingImage {
 						width: 802px;
+
+						@include mobile {
+							display: none;
+						}
+					}
+
+					> .mobileLanding1 {
+						display: none;
+
+						@include mobile {
+							width: 300px;
+
+							display: block;
+
+							margin: 0 auto;
+						}
 					}
 				}
 
 				> .rightLanding.landing2 {
 					padding-left: 48px;
+
+					@include mobile {
+						padding-left: 0px;
+					}
 				}
 
 				> .rightLanding.landing3 {
 					padding-left: 20px;
+
+					@include mobile {
+						padding-left: 0px;
+					}
 				}
 
 				> .rightLanding.landing4 {
 					padding-left: 120px;
+
+					@include mobile {
+						padding-left: 0px;
+					}
 				}
 			}
 
 			> .contents.landing1 {
 				width: 1200px;
+				
+				@include mobile {
+					width: 100%;
+				}
 			}
 		}
 
@@ -279,6 +414,11 @@
 
 				margin: 0 auto;
 
+				@include mobile {
+					width: auto;
+					min-width: 320px;
+				}
+
 				> .title {
 					text-align: center;
 
@@ -287,53 +427,17 @@
 					
 					padding-top: 60px;
 					padding-bottom: 80px;
+
+					@include mobile {
+						font-size: 28px;
+
+						padding-bottom: 48px;
+					}
 				}
 
 				> .list {
 					display: flex;
 					flex-wrap: wrap;
-
-					> .articles {
-						width: 212px;
-						
-						display: flex;
-
-						margin: 0px 22px;
-						margin-bottom: 56px;
-
-						> a {
-							display: block;
-							
-							> img {
-								width: 212px;
-								height: 212px;
-
-								margin-bottom: 10px;
-
-								border-radius: 12px;
-							}
-
-							
-							> span {
-								width: 100%;
-
-								display: inline-block;
-								
-								font-size: 13px;
-
-								padding-bottom: 4px;
-							}
-
-							> .title {
-								font-size: 16px;
-							}
-
-							> .price {
-								font-size: 15px;
-								font-weight: bold;
-							}
-						}
-					}
 				}
 
 				> .link {
@@ -343,6 +447,10 @@
 					font-weight: bold;
 
 					padding-bottom: 120px;
+
+					@include mobile {
+						padding-bottom: 0px;
+					}
 				}
 			}
 		}
@@ -356,28 +464,51 @@
 				margin: 0 auto;
 				text-align: center;
 
+				@include mobile {
+					width: 312px;
+				}
+
 				> a {
 					font-weight: bold;
 				}
 
 				> .keywordsList {
-					width: 928px;
-					height: 56px;
+					width: 750px;
 
 					display: flex;
 					align-items: center;
 
 					margin: 0 auto;
 
+					@include mobile {
+						width: 312px;
+
+						flex-wrap: wrap;
+						
+						margin-top: 24px;
+					}
+
 					> span {
 						width: 10%;
+						margin-top: 16px;
+						margin-bottom: 8px;
+
+						@include mobile {
+							width: 25%;
+						}
 						
-						> span {
-							cursor: pointer;
+						> a {
+							text-decoration: none;
 						}
 
-						> span:hover {
+						> a:hover {
 							text-decoration: underline;
+						}
+					}
+
+					> span:nth-child(n+5) {
+						@include mobile {
+							width: 33%;
 						}
 					}
 				}
@@ -390,19 +521,21 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { Keyword, Product } from '@/structure/types';
+import { RawLocation } from 'vue-router';
 import ContentsJsonFile from '@/assets/contents.json'
 import KeywordsJsonFile from '@/assets/topKeywords.json'
 import HotArticlesList from '@/components/HotArticlesList.vue';
 
 @Component({
     components: {
-      HotArticlesList
+     	HotArticlesList
     },
 })
 export default class DaangnHome extends Vue {
 	mode: string = this.$store.getters.getMode
-	products: Product[] = ContentsJsonFile.products as any
-	keywords: Keyword[] = KeywordsJsonFile.keywords
+	products: Product[] = ContentsJsonFile.products as Product[]
+	keywords: Keyword[] = KeywordsJsonFile.keywords as Keyword[]
+
 
 	mounted() {
 		this.$store.commit('setMode', 'light')
@@ -416,10 +549,8 @@ export default class DaangnHome extends Vue {
 		return this.keywords != null
 	}
 
-	updateSearchQuery(keyword: Keyword) {
-		this.$store.commit('setSearchQuery', keyword)
-
-		this.$router.push({name: 'search', query: {q: keyword.word}});
+	updateSearchQuery(keyword: Keyword): RawLocation {
+		return {name: 'search', query: {q: keyword.word}};
 	}
 }
 </script>

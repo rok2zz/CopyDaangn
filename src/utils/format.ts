@@ -25,7 +25,7 @@ export function priceType(val: Product): string {
     return priceComma
 }
 
-export function timeForToday(val: number | undefined): string {
+export function getRelativeTime(val: number | undefined): string {
     if (!val) return ""
 
     var today = new Date();

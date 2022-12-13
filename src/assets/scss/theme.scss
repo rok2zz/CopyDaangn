@@ -7,6 +7,7 @@ body.light {
         > span { color: #ff6f0f; }
     }	
 
+    .general-font-color { color: #FFFFFF; }
     .general-font-color-basic { color: #212529; }
     .general-font-color-basic-2 { color: #868E96; }
     .general-font-color-basic-3 { color: #212124; }
@@ -36,6 +37,7 @@ body.light {
     .change-border-top-color { border-top-color: #EAEBEE; }
     .change-border-color { border-color: #D1D3D8; }
     .general-border-color { border-color: #E9ECEF; }
+    .general-border-color-chat { border-color: #FF8A3D;}
 
     .general-pointer-color-up { color: #E03131; }
     .general-pointer-color-down { color: #186EC0; }
@@ -47,9 +49,12 @@ body.light {
     .general-background-color-jobs { background-color: #FFE2D2;}
     .general-background-color-realty { background-color: #D2EDFA; }
     .general-background-color-imageview { background-color: black; }
+    .general-background-color-emphasize { background-color: #FF8A3D; }
 
     .change-background-color-basic { background-color: #FFFFFF; }
     .change-background-color-search { background-color: #F2F3F6; }
+
+    .change-fill-color path { fill: #212124 }
 }
 
 body.dark {
@@ -59,6 +64,7 @@ body.dark {
         > span { color: #ff6f0f; }
     }	
 
+    .general-font-color { color: #FFFFFF; }
     .general-font-color-basic { color: #212529; }
     .general-font-color-basic-2 { color: #868E96; }
     .general-font-color-basic-3 { color: #212124; }
@@ -92,6 +98,7 @@ body.dark {
     .change-border-top-color { border-top-color: #34373D; }
     .change-border-color { border-color: #50545C; }
     .general-border-color { border-color:  #E9ECEF; }
+    .general-border-color-chat { border-color: #FF8A3D;}
 
     .general-background-color-landing-1 { background-color: #FBF7F2; }
     .general-background-color-landing-3 { background-color: #E6F3E6; }
@@ -100,7 +107,10 @@ body.dark {
     .general-background-color-jobs { background-color: #FFE2D2;}
     .general-background-color-realty { background-color: #D2EDFA; }
     .general-background-color-imageview { background-color: black; }
+    .general-background-color-emphasize { background-color: #FF8A3D; }
 
     .change-background-color-basic { background-color: #17171A; }
-    .change-background-color-search { background-color: #2B2E33;}
+    .change-background-color-search { background-color: #2B2E33; }
+
+    .change-fill-color path { fill: #EAEBEE }
 }

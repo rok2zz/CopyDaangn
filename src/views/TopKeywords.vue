@@ -12,8 +12,9 @@
 </template>
 
 <style lang="scss" module>
+@import '@/assets/scss/utils.scss';
+
 .index {
-	
 	> .container {
 		width: 100%;
 
@@ -25,6 +26,10 @@
 
 			padding-bottom: 80px;
 
+			@include mobile {
+				width: 300px;
+			}
+
 			> .title {
 				display: inline-block;
 
@@ -32,15 +37,20 @@
 				font-weight: bold;
 
 				padding-bottom: 40px;
+
+				@include mobile {
+					font-size: 24px;
+
+					padding-bottom: 30px;
+				}
 			}
 		}
 	}
 }
-
 </style>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import Keywords from '@/components/Keywords.vue'
 
 @Component({

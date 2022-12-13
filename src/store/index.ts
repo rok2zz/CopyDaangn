@@ -11,17 +11,11 @@ export default new Vuex.Store({
 	getters: {
 		getMode(state) {
 			return state.mode
-		},
-		getSearchQuery(state) {
-			return state.searchQuery
 		}
 	},
 	mutations: {
 		setMode(state, value) {
 			state.mode = value
-		},
-		setSearchQuery(state, value) {
-			state.searchQuery = value
 		}
 	},
 })

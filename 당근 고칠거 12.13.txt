@@ -1,0 +1,16 @@
+types.ts// class명 첫글자 대문자로 변경 ㅇ
+
+theme 같은 색 여러개면 따로 빼서 이름지음
+$bar-color-level-1 
+
+timeFortoday 이름 변경 ㅇ
+
+store에 searchQuery 필요 없음 ㅇ
+
+sliceIndex >> maxLength ㅇ 
+
+undefined 안써도됨 ㅇ
+
+imageview.vue를 새 페이지 말고 그냥 오버레이로 뜨게
+
+rightlanding이 left 보다 위로 가게 해야 할 경우가 있음

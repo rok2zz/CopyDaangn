@@ -26,13 +26,15 @@
         }
     ],
     "download": [
-        {
-            "downloadImage": "appstore.svg",
-            "downloadLink": "https://apps.apple.com/kr/app/%EB%8B%B9%EA%B7%BC%EB%A7%88%EC%BC%93-%EC%A4%91%EA%B3%A0%EA%B1%B0%EB%9E%98-%ED%95%84%EC%88%98%EC%95%B1/id1018769995"
+        {   
+            "name": "IOS",
+            "image": "appstore.svg",
+            "link": "https://apps.apple.com/kr/app/%EB%8B%B9%EA%B7%BC%EB%A7%88%EC%BC%93-%EC%A4%91%EA%B3%A0%EA%B1%B0%EB%9E%98-%ED%95%84%EC%88%98%EC%95%B1/id1018769995"
         },
         {
-            "downloadImage": "google.svg",
-            "downloadLink": "https://play.google.com/store/apps/details?id=com.towneers.www&hl=ko"
+            "name": "Android",
+            "image": "google.svg",
+            "link": "https://play.google.com/store/apps/details?id=com.towneers.www&hl=ko"
         }
     ]
 }

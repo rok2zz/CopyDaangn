@@ -39,12 +39,12 @@ export interface Keyword {
     changes: number
 }
 
-export interface linkAddress {
+export interface LinkAddress {
     address: string
     name: string
 }
 
-export interface link {
+export interface Link {
     inPage: string
     inPageLink: string
     outPage: string
@@ -53,21 +53,22 @@ export interface link {
     managePageLink: string
 }
 
-export interface download {
-    downloadImage: string
-    downloadLink: string 
+export interface Download {
+    name: string
+    image: string
+    link: string 
 }
 
-export interface info {
+export interface Info {
     bold: string
     regular: string
 }
 
-export interface inquiry {
+export interface Inquiry {
     inquiry: string
 }
 
-export interface read {
+export interface Read {
     address: string
     info: string
 }

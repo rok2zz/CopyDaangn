@@ -4,7 +4,7 @@
 			<span :class="$style.ranking">
 				<span>{{ index + 1 }}</span>
 			</span>
-			<span :class="[$style.search, 'general-font-color-basic']" v-on:click="updateSearchQuery(item)">{{ item.word }}</span>
+			<router-link :class="[$style.search, 'general-font-color-basic']" :to="updateSearchQuery(item)">{{ item.word }}</router-link>
 			<span :class="$style.pointer" v-if="isChangesExists(item)">
 				<span v-if="item.changes > 0"><span class="general-pointer-color-up">↑</span>{{ item.changes }}</span>
 				<span v-else-if="item.changes < 0"><span class="general-pointer-color-down">↓</span>{{ -item.changes }}</span>
@@ -15,6 +15,8 @@
 </template>
 
 <style lang="scss" module>
+@import '@/assets/scss/utils.scss';
+
 .index {
 	> .rankingList {
 		width: 414px;
@@ -26,6 +28,10 @@
 
 		border-bottom-width: 1px;
 		border-bottom-style: solid;
+
+		@include mobile {
+			width: 300px;
+		}
 
 		> span {
 			font-size: 17px;
@@ -47,6 +53,7 @@
 			width: 100%;
 
 			text-align: left;
+			text-decoration: none;
 
 			cursor: pointer;
 		}
@@ -56,22 +63,20 @@
 		}
 	}
 }
-
 </style>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { Keyword } from '@/structure/types';
+import { RawLocation } from 'vue-router';
 import KeywordsJsonFile from '@/assets/topKeywords.json'
 
 @Component
 export default class Keywords extends Vue {
-	keywords: Keyword[] = KeywordsJsonFile.keywords
+	keywords: Keyword[] = KeywordsJsonFile.keywords as Keyword[]
 
-	updateSearchQuery(keyword: Keyword) {
-		this.$store.commit('setSearchQuery', keyword)
-
-		this.$router.push({name: 'search', query: {q: keyword.word}});
+	updateSearchQuery(keyword: Keyword): RawLocation {
+		return {name: 'search', query: {q: keyword.word}};
 	}
  	
 	isChangesExists(item: Keyword): boolean {
