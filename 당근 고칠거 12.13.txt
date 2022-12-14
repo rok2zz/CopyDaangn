@@ -11,6 +11,6 @@ sliceIndex >> maxLength ㅇ
 
 undefined 안써도됨 ㅇ
 
-imageview.vue를 새 페이지 말고 그냥 오버레이로 뜨게
+imageview.vue를 새 페이지 말고 그냥 오버레이로 뜨게 ㅇ
 
-rightlanding이 left 보다 위로 가게 해야 할 경우가 있음
+rightlanding이 left 보다 위로 가게 해야 할 경우가 있음 ㅇ

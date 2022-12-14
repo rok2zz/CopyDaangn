@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
 
+$bar-font-color-level-1: #3E6284;
+$bar-font-color-level-2: #19446C;
+$bar-font-color-level-3: #2069AE;
+$bar-font-color-level-4: #3BA34E;
+$bar-font-color-level-5: #E1970C;
+$bar-font-color-level-6: #DF5D06;
+
 body.light {
     background-color: #FFFFFF;
 
@@ -19,19 +26,19 @@ body.light {
     .change-font-color-footer { color: #4D5159; }
     .change-font-color-link { color: #212124; }
 
-    .change-font-color-temperature-1 { color: #3E6284; }
-    .change-font-color-temperature-2 { color: #19446C; }
-    .change-font-color-temperature-3 { color: #2069AE; }
-    .change-font-color-temperature-4 { color: #3BA34E; }
-    .change-font-color-temperature-5 { color: #E1970C; }
-    .change-font-color-temperature-6 { color: #DF5D06; }
+    .change-font-color-temperature-1 { color: $bar-font-color-level-1; }
+    .change-font-color-temperature-2 { color: $bar-font-color-level-2; }
+    .change-font-color-temperature-3 { color: $bar-font-color-level-3; }
+    .change-font-color-temperature-4 { color: $bar-font-color-level-4; }
+    .change-font-color-temperature-5 { color: $bar-font-color-level-5; }
+    .change-font-color-temperature-6 { color: $bar-font-color-level-6; }
     .change-bar-color-temparature-0 { background-color: #E9ECEF; }
-    .change-bar-color-temperature-1 { background-color: #3E6284; }
-    .change-bar-color-temperature-2 { background-color: #19446C; }
-    .change-bar-color-temperature-3 { background-color: #2069AE; }
-    .change-bar-color-temperature-4 { background-color: #3BA34E; }
-    .change-bar-color-temperature-5 { background-color: #E1970C; }
-    .change-bar-color-temperature-6 { background-color: #DF5D06; }
+    .change-bar-color-temperature-1 { background-color: $bar-font-color-level-1; }
+    .change-bar-color-temperature-2 { background-color: $bar-font-color-level-2; }
+    .change-bar-color-temperature-3 { background-color: $bar-font-color-level-3; }
+    .change-bar-color-temperature-4 { background-color: $bar-font-color-level-4; }
+    .change-bar-color-temperature-5 { background-color: $bar-font-color-level-5; }
+    .change-bar-color-temperature-6 { background-color: $bar-font-color-level-6; }
 
     .general-border-bottom-color { border-bottom-color: #E9ECEF; }
     .change-border-top-color { border-top-color: #EAEBEE; }
@@ -79,19 +86,19 @@ body.dark {
     .change-font-color-link { color: #EAEBEE; }
 
 
-    .change-font-color-temperature-1 { color: #3E6284; }
-    .change-font-color-temperature-2 { color: #19446C; }
-    .change-font-color-temperature-3 { color: #2069AE; }
-    .change-font-color-temperature-4 { color: #3BA34E; }
-    .change-font-color-temperature-5 { color: #E1970C; }
-    .change-font-color-temperature-6 { color: #DF5D06; }
+    .change-font-color-temperature-1 { color: $bar-font-color-level-1; }
+    .change-font-color-temperature-2 { color: $bar-font-color-level-2; }
+    .change-font-color-temperature-3 { color: $bar-font-color-level-3; }
+    .change-font-color-temperature-4 { color: $bar-font-color-level-4; }
+    .change-font-color-temperature-5 { color: $bar-font-color-level-5; }
+    .change-font-color-temperature-6 { color: $bar-font-color-level-6; }
     .change-bar-color-temparature-0 { background-color: #E9ECEF; }
-    .change-bar-color-temperature-1 { background-color: #3E6284; }
-    .change-bar-color-temperature-2 { background-color: #19446C; }
-    .change-bar-color-temperature-3 { background-color: #2069AE; }
-    .change-bar-color-temperature-4 { background-color: #3BA34E; }
-    .change-bar-color-temperature-5 { background-color: #E1970C; }
-    .change-bar-color-temperature-6 { background-color: #DF5D06; }
+    .change-bar-color-temperature-1 { background-color: $bar-font-color-level-1; }
+    .change-bar-color-temperature-2 { background-color: $bar-font-color-level-2; }
+    .change-bar-color-temperature-3 { background-color: $bar-font-color-level-3; }
+    .change-bar-color-temperature-4 { background-color: $bar-font-color-level-4; }
+    .change-bar-color-temperature-5 { background-color: $bar-font-color-level-5; }
+    .change-bar-color-temperature-6 { background-color: $bar-font-color-level-6; }
 
     .general-pointer-color-up { color: #E03131; }
     .general-pointer-color-down { color: #186EC0; }

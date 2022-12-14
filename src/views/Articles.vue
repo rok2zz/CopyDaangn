@@ -1,28 +1,26 @@
 <template>
 	<div :class="$style.index">
 		<div :class="[$style.container, 'general-font-color-basic']">
-			<div :class="$style.hiddenPage" v-if="isHidden()">
+			<div v-if="isHidden()" :class="$style.hiddenPage">
 				<span>숨겨져 있는 게시글은 볼 수 없습니당 :(</span>
 			</div>
 
-			<div :class="$style.nonHiddenPage" v-else-if="isProductLoaded()">
+			<div v-else-if="isProductLoaded()" :class="$style.nonHiddenPage">
 				<!-- 메인 이미지 -->
 				<div :class="$style.articleImage">
-					<button class="general-background-color-light" v-on:click="updateImageIndex(-1)" v-if="maxImageIndex != 1">
+					<button v-if="maxImageIndex != 1" class="general-background-color-light" v-on:click="updateImageIndex(-1)">
 						<img :src="require('@/assets/chvron_left.svg')">
 					</button>
-					<div :class="$style.infoImage" v-if="isImageLoaded()">
-						<router-link :to="updateImageQuery(getSelectedProduct())">
-							<img :src="selectedProduct?.images[imageIndex]">
-						</router-link>
-						<div :class="$style.infoImageBtn" v-if="maxImageIndex > 1">
-							<span :class="$style.btnSpan" v-for="(item, index) in maxImageIndex" :key="index">
-								<button :class="$style.imageBtn" v-if="index == imageIndex" v-on:click="updateImageBtn(index)"></button>
+					<div v-if="isImageLoaded()" :class="$style.infoImage">
+						<img :src="getSelectedProduct().images[imageIndex]" v-on:click="updateShowImage">
+						<div v-if="maxImageIndex > 1" :class="$style.infoImageBtn">
+							<span v-for="(item, index) in maxImageIndex" :key="index" :class="$style.btnSpan">
+								<button v-if="index == imageIndex" :class="$style.imageBtn" v-on:click="updateImageBtn(index)"></button>
 								<button v-else v-on:click="updateImageBtn(index)"></button>
 							</span>
 						</div>
 					</div>
-					<button class="general-background-color-light" v-on:click="updateImageIndex(1)" v-if="maxImageIndex != 1">
+					<button v-if="maxImageIndex != 1" class="general-background-color-light" v-on:click="updateImageIndex(1)">
 						<img :src="require('@/assets/chvron_right.svg')">
 					</button>
 				</div>
@@ -69,6 +67,12 @@
 						<button class="general-border-color-chat general-font-color-emphasize general-background-color-light">판매자와 채팅하기</button>
 					</div>
 				</div>	
+			</div>
+
+			<!-- 이미지 확대 -->
+			<div v-if="isShowImage" :class="[$style.imageView, 'general-background-color-imageview']">
+				<img :src="getSelectedProduct().images[imageIndex]" :class="$style.image"  v-on:click="updateShowImage">
+				<img :class="$style.close" :src="require('@/assets/close.svg')" v-on:click="updateShowImage">
 			</div>
 
 			<!-- 인기 품목 -->
@@ -144,23 +148,21 @@
 
 					position: relative;
 
-					> a {
+					> img {
+						width: 677px;
+						height: 500px;
 
-						> img {
-							width: 677px;
-							height: 500px;
+						border-radius: 10px;
+						object-fit: cover;
 
-							border-radius: 10px;
+						cursor: pointer;
 
-							cursor: pointer;
+						@include mobile {
+							aspect-ratio: 1 / 1;
+							width: 100%;
+							height: initial;
 
-							@include mobile {
-								aspect-ratio: 1 / 1;
-								width: 100%;
-								height: initial;
-
-								border-radius: 0px;
-							}
+							border-radius: 0px;
 						}
 					}
 
@@ -375,6 +377,34 @@
 			}
 		}
 
+		> .imageView {
+			width: 100%;
+			height: 100%;
+
+			display: flex;
+			position: fixed;
+			top: 0px;
+			left: 0px;
+			align-items: center;
+
+			z-index: 3;
+
+			> .image {
+				width: 100%;
+				height: auto;
+				max-width: 850px;
+
+				margin: 0 auto;
+			}
+
+			> .close {
+				position: absolute;
+				top: 20px;
+				right: 20px;
+				cursor: pointer;
+			}
+		}
+
 		> .hotArticles {
 			> .contents {
 				width: 677px;
@@ -456,10 +486,12 @@ export default class Articles extends Vue {
 	products: Product[] = ContentsJsonFile.products as Product[]
 	duplicatedProducts: Product[] = []
 	selectedProduct?: Product
+
 	articleID?: string
 	imageIndex: number = 0
 	maxImageIndex: number = 0
 	tempIndex: string = '1'
+	isShowImage: boolean = false
 
 	mounted() {
 		this.init()
@@ -596,6 +628,10 @@ export default class Articles extends Vue {
 
 	getTime(product: Product): string {
 		return getRelativeTime(product.registered_date)
+	}
+
+	updateShowImage() {
+		this.isShowImage = !this.isShowImage
 	}
 
 }
