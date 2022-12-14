@@ -10,28 +10,61 @@
 								<img :src="require('@/assets/logo.svg')">
 							</router-link>
 						</div>
-						<div :class="$style.link" v-for="(item, index) in linkAddress" :key="index">
+						<div v-for="(item, index) in linkAddress" :key="index" :class="$style.link">
 							<router-link :to="('/' + item.address)">
 								<span class="change-font-color-footer">{{ item.name }}</span>
 							</router-link>
 						</div>
 					</div>
-					
+
 					<div :class="$style.rightHeader">
 						<div :class="$style.search">
-							<div :class="$style.mobileSearch">
+							<div :class="$style.mobileIcon" v-on:click="updateShowSearch">
 								<SearchIcon />
 							</div>
-							<div :class="$style.mobileMenu">
-								<MenuIcon />
-							</div>
-							<input v-on:keydown="keydownHandler" :class="[$style.searchInput, 'change-font-color-basic', 'change-background-color-search']" type="text" placeholder="물품이나 동네를 검색해보세요" v-model="searchQuery">
+							<input v-on:keydown="keydownHandler" :class="[$style.searchInput, 'change-font-color-basic', 'change-background-color-search']"
+								 type="text" placeholder="물품이나 동네를 검색해보세요" v-model="searchQuery">
+						</div>
+						<div :class="$style.mobileIcon" v-on:click="updateShowMenu">
+							<CloseIcon v-if="isShowMenu" />
+							<MenuIcon v-else />
 						</div>
 						<div :class="$style.chat">
 							<button :class="[$style.chatBtn, 'change-font-color-basic', 'change-background-color-basic', 'change-border-color']">채팅하기</button>
 						</div>
 					</div>
 				</div>
+			</div>
+			
+			<!-- 모바일 검색 -->
+			<div v-if="isShowSearch" :class="[$style.mobileSearch, 'change-font-color-basic']">
+				<div :class="[$style.search, 'change-background-color-basic']">
+					<input v-on:keydown="keydownHandler" :class="[$style.searchInput, 'change-font-color-basic', 'change-background-color-search']" 
+						type="text" placeholder="물품이나 동네를 검색해보세요" v-model="searchQuery">
+					<div :class="$style.handler">
+						<button :class="[$style.cancel, 'change-font-color-basic', 'change-background-color-basic']" v-on:click="updateShowSearch">취소</button>
+					</div>
+				</div>
+				<div :class="[$style.recommend, 'change-background-color-basic']" v-on:click="updateShowSearch">
+					<span :class="[$style.title, 'general-font-color-footer']">추천</span>
+					<div :class="$style.keywords">
+						<router-link v-for="(item, index) in keywords.slice(0, 6)" :key="index" 
+							:class="[$style.list, 'change-font-color-basic', 'change-border-bottom-color']" :to="getKeywordQuery(item)">
+							{{ item.word }}
+						</router-link>
+					</div>
+				</div>
+				<div :class="[$style.blackBox, 'general-background-color-dark']" v-on:click="updateShowSearch"></div>
+			</div>
+
+			<!-- 모바일 메뉴 -->
+			<div v-if="isShowMenu" :class="$style.mobileMenu" v-on:click="updateShowMenu">
+				<div :class="[$style.list, 'change-font-color-basic', 'change-background-color-basic']">
+					<router-link v-for="(item, index) in linkAddress" :key="index" :class="$style.link" :to="('/' + item.address)">
+						<span class="change-font-color-footer">{{ item.name }}</span>
+					</router-link>
+				</div>
+				<div :class="[$style.blackBox, 'general-background-color-dark']"></div>
 			</div>
 
 			<!-- 뷰 출력 -->
@@ -132,6 +165,10 @@
 .index {
 
 	> .container {
+		@include mobile {
+			width: 100%;
+			min-width: 320px;
+		}
 		> .headContainer {		
 			width: 100%;	
 			height: 64px;
@@ -206,28 +243,20 @@
 
 						display: flex;
 
-						padding-right: 12px;
+						margin-right: 12px;
 
 						align-items: center;
 
-						> .mobileSearch {
+						@include mobile {
+							margin-right: 0px;
+						}
+
+						> .mobileIcon {
 							display: none;
 
 							cursor: pointer;
 
 							@include semiMobile {
-								display: flex;
-							}
-						}
-
-						> .mobileMenu {
-							display: none;
-
-							margin-left: 16px;
-
-							cursor: pointer;
-
-							@include mobile {
 								display: flex;
 							}
 						}
@@ -254,6 +283,18 @@
 						}
 					}
 
+					> .mobileIcon {
+						display: none;
+
+						margin-left: 16px;
+
+						cursor: pointer;
+
+						@include mobile {
+							display: flex;
+						}
+					}
+
 					> .chat {
 
 						@include mobile {
@@ -277,13 +318,164 @@
 				}
 			}
 		}
+
+		> .mobileSearch {
+			width: 100%;
+			height: 100%;
+			min-width: 320px;
+			min-height: 56px;
+
+			display: none;
+
+			@include mobile {
+				display: initial;
+				position: fixed;
+				top: 0;
+				left: 0;
+
+				z-index: 3;
+			}
+
+			> .search {
+				height: 40px;
+
+				display: flex;
+
+				margin-top: 12px;
+				padding: 0px 16px;
+
+				> .searchInput {
+					width: 100%;
+
+					font-size: 16px;
+					
+					padding: 9px 12px;
+
+					border: 0px;
+					border-radius: 3px;
+				}
+
+				> .handler {
+					width: 40px;
+					height: 100%;
+
+					font-size: 16px;
+
+					margin-left: 16px;
+
+					cursor: pointer;
+
+					> .cancel {
+						height: 100%;
+						
+						display: inline-block;
+
+						border: none;
+					}
+				}
+			}
+
+			> .recommend {
+				font-size: 14px;
+
+				padding-top: 20px;
+
+				padding: 12px 16px 0px;
+
+				> .title {
+					width: 100%;
+
+					display: inline-block;
+
+					font-weight: bold;
+
+					padding-bottom: 5px;
+				}
+
+				> .keywords {
+					width: 100%;
+
+					display: flex;
+					flex-wrap: wrap;
+
+					> .list {
+						width: 50%;
+
+						padding: 16px 0px;
+
+						border-bottom-width: 1px;
+						border-bottom-style: solid;
+
+						text-decoration: none;
+					}
+
+					> .list:nth-last-child(-n + 2) {
+						border-bottom: none;
+					}
+				}
+			}
+
+			> .blackBox {
+				height: 100%;
+
+				opacity: 0.5;
+			}
+		}
+
+		> .mobileMenu {
+			width: 100%;
+			height: 100%;
+			min-width: 320px;
+			min-height: 56px;
+
+			display: none;
+
+
+			@include mobile {
+				display: initial;
+				position: fixed;
+				top: 56px;
+				left: 0;
+
+				z-index: 3;
+			}
+
+			> .list {
+				
+				padding: 12px 16px;
+			
+				> a {
+					width: 100%;
+
+					display: block;
+
+					text-decoration: none;
+
+					font-size: 16px;
+
+					padding: 16px;
+				}
+
+				:global {
+					.router-link-exact-active {
+
+					}
+				}	
+			}
+
+			> .blackBox {
+				height: 100%;
+
+				opacity: 0.5;
+			}
+		}
 		
 		> .mainContainer {
 			min-width: 1200px;
 
-			padding-top: 64px;
-
 			position: relative;
+
+			padding-top: 64px;
 
 			@include mobile {
 				width: 100%;
@@ -487,22 +679,29 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import { LinkAddress, Link, Download, Info, Inquiry, Read } from './structure/types'
+import { LinkAddress, Link, Download, Info, Inquiry, Read, Keyword } from './structure/types'
 import LinkFooterJsonFile from '@/assets/linkFooter.json'
 import LinkJsonFile from '@/assets/link.json'
 import InfoFooterJsonFile from '@/assets/infoFooter.json'
+import KeywordsJsonFile from '@/assets/topKeywords.json'
 import SearchIcon from '@/components/icon/SearchIcon.vue'
 import MenuIcon from '@/components/icon/MenuIcon.vue'
+import CloseIcon from '@/components/icon/CloseIcon.vue'
+import { RawLocation } from 'vue-router'
 
 @Component({
 	components: {
 		SearchIcon,
-		MenuIcon
+		MenuIcon,
+		CloseIcon
 	}
 })
 export default class App extends Vue {
 	searchQuery: string = ""
 	mode: string = this.$store.getters.getMode
+
+	isShowMenu: boolean = false
+	isShowSearch: boolean = false
 	
 	linkAddress: LinkAddress[] = LinkJsonFile.link as LinkAddress[]
 	linkFooter: Link[] = LinkFooterJsonFile.link as Link[]
@@ -510,6 +709,7 @@ export default class App extends Vue {
 	infoFooter: Info[] = InfoFooterJsonFile.info as Info[]
 	inquiryFoorer: Inquiry[] = InfoFooterJsonFile.inquiry as Inquiry[]
 	readFooter: Read[] = InfoFooterJsonFile.read as Read[]
+	keywords: Keyword[] = KeywordsJsonFile.keywords as Keyword[]
 
 
 	@Watch('$store.state.mode')
@@ -558,6 +758,26 @@ export default class App extends Vue {
 		}
 
 		this.$router.push({name: 'search', query: {q: this.searchQuery}});
+	}
+
+	getKeywordQuery(keyword: Keyword): RawLocation {
+		this.isShowSearch = true
+
+		return {name: 'search', query: {q: keyword.word}};
+	}
+
+	isHidden(): boolean {
+		return this.isShowSearch
+	}
+
+	updateShowMenu() {
+		this.isShowMenu = !this.isShowMenu
+	}
+
+	updateShowSearch() {
+		this.isShowSearch = !this.isShowSearch
+
+		if (this.isShowMenu == true) this.isShowMenu = false
 	}
 }
 </script>

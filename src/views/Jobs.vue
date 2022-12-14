@@ -22,7 +22,6 @@
 .index {
 
 	> .container {
-		
 		> .contents {
 			height: 315px;
 

@@ -22,7 +22,6 @@
 .index {
 
 	> .container {
-		width: 100%;
 		
 		> .contents {
 			width: 100%;
