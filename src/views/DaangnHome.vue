@@ -11,7 +11,7 @@
 						</div>
 					</div>
 					<div :class="[$style.rightLanding, $style.landing1]">
-						<img :class="[$style.landingImage, 'general-background-color-landing-1']" :src="require('@/assets/landing1.webp')">
+						<img :class="[$style.landingImage, 'general-background-color-landing-1']" :src="require('@/assets/images/landing1.webp')">
 						<img :class="$style.mobileLanding1" :src="require('@/assets/images/mobileLanding1.webp')" alt="">
 					</div>
 				</div>

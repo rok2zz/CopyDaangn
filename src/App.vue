@@ -7,7 +7,7 @@
 					<div :class="$style.leftHeader">
 						<div :class="$style.logo">
 							<router-link to="/">
-								<img :src="require('@/assets/logo.svg')">
+								<img :src="require('@/assets/images/logo.svg')">
 							</router-link>
 						</div>
 						<div v-for="(item, index) in linkAddress" :key="index" :class="$style.link">
@@ -106,7 +106,7 @@
 							<div :class="$style.downloadBtn">
 								<div v-for="(item, index) in downloadFooter" :key="index">
 									<a :href="item.link" target="_blank">
-										<img :src="require('@/assets/button_' + item.image)">
+										<img :src="require('@/assets/images/button_' + item.image)">
 									</a>
 								</div>
 							</div>

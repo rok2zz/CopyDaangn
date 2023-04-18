@@ -9,7 +9,7 @@
 					<span :class="[$style.priceLike, 'general-font-color-emphasize']">
 						<span :class="$style.price">{{ getPrice(item) }}원</span>
 						<span class="general-font-color-basic">
-							<img :src="require('@/assets/heart_small.svg')">{{ item.likes }}
+							<img :src="require('@/assets/images/heart_small.svg')">{{ item.likes }}
 						</span>
 					</span>
 				</div>
