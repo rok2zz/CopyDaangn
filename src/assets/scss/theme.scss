@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+$bar-font-color-level-1: #3E6284;
+$bar-font-color-level-2: #19446C;
+$bar-font-color-level-3: #2069AE;
+$bar-font-color-level-4: #3BA34E;
+$bar-font-color-level-5: #E1970C;
+$bar-font-color-level-6: #DF5D06;
+
+body.light {
+    background-color: #FFFFFF;
+
+    .router-link-exact-active {
+        > span { color: #ff6f0f; }
+    }	
+
+    .general-font-color { color: #FFFFFF; }
+    .general-font-color-basic { color: #212529; }
+    .general-font-color-basic-2 { color: #868E96; }
+    .general-font-color-basic-3 { color: #212124; }
+    .general-font-color-emphasize { color: #FF8A3D; }
+    .general-font-color-search { color: #868E96; }
+    .general-font-color-footer { color: #868B94; }
+
+    .change-font-color-basic { color: #212124; }
+    .change-font-color-footer { color: #4D5159; }
+    .change-font-color-link { color: #212124; }
+
+    .change-font-color-temperature-1 { color: $bar-font-color-level-1; }
+    .change-font-color-temperature-2 { color: $bar-font-color-level-2; }
+    .change-font-color-temperature-3 { color: $bar-font-color-level-3; }
+    .change-font-color-temperature-4 { color: $bar-font-color-level-4; }
+    .change-font-color-temperature-5 { color: $bar-font-color-level-5; }
+    .change-font-color-temperature-6 { color: $bar-font-color-level-6; }
+    .change-bar-color-temparature-0 { background-color: #E9ECEF; }
+    .change-bar-color-temperature-1 { background-color: $bar-font-color-level-1; }
+    .change-bar-color-temperature-2 { background-color: $bar-font-color-level-2; }
+    .change-bar-color-temperature-3 { background-color: $bar-font-color-level-3; }
+    .change-bar-color-temperature-4 { background-color: $bar-font-color-level-4; }
+    .change-bar-color-temperature-5 { background-color: $bar-font-color-level-5; }
+    .change-bar-color-temperature-6 { background-color: $bar-font-color-level-6; }
+
+    .general-border-bottom-color { border-bottom-color: #E9ECEF; }
+    .change-border-top-color { border-top-color: #EAEBEE; }
+    .change-border-bottom-color { border-bottom-color: #EAEBEE; }
+    .change-border-color { border-color: #D1D3D8; }
+    .general-border-color { border-color: #E9ECEF; }
+    .general-border-color-chat { border-color: #FF8A3D;}
+
+    .general-pointer-color-up { color: #E03131; }
+    .general-pointer-color-down { color: #186EC0; }
+
+    .general-background-color-landing-1 { background-color: #FBF7F2; }
+    .general-background-color-landing-3 { background-color: #E6F3E6; }
+    .general-background-color-search { background-color: #F8F9FA; }
+    .general-background-color-light { background-color: #FFFFFF; }
+    .general-background-color-dark { background-color: #17171A; }
+    .general-background-color-jobs { background-color: #FFE2D2;}
+    .general-background-color-realty { background-color: #D2EDFA; }
+    .general-background-color-imageview { background-color: black; }
+    .general-background-color-emphasize { background-color: #FF8A3D; }
+
+    .change-background-color-basic { background-color: #FFFFFF; }
+    .change-background-color-search { background-color: #F2F3F6; }
+
+    .change-fill-color path { fill: #212124 }
+}
+
+body.dark {
+    background-color: #17171A;
+
+    .router-link-exact-active {
+        > span { color: #ff6f0f; }
+    }	
+
+    .general-font-color { color: #FFFFFF; }
+    .general-font-color-basic { color: #212529; }
+    .general-font-color-basic-2 { color: #868E96; }
+    .general-font-color-basic-3 { color: #212124; }
+    .general-font-color-emphasize { color: #FF8A3D; }
+    .general-font-color-search { color: #868E96; }
+    .general-font-color-footer { color: #868B94; }
+
+    .change-font-color-basic { color: #EAEBEE; }
+    .change-font-color-footer { color: #ADB1BA; }
+    .change-font-color-link { color: #EAEBEE; }
+
+
+    .change-font-color-temperature-1 { color: $bar-font-color-level-1; }
+    .change-font-color-temperature-2 { color: $bar-font-color-level-2; }
+    .change-font-color-temperature-3 { color: $bar-font-color-level-3; }
+    .change-font-color-temperature-4 { color: $bar-font-color-level-4; }
+    .change-font-color-temperature-5 { color: $bar-font-color-level-5; }
+    .change-font-color-temperature-6 { color: $bar-font-color-level-6; }
+    .change-bar-color-temparature-0 { background-color: #E9ECEF; }
+    .change-bar-color-temperature-1 { background-color: $bar-font-color-level-1; }
+    .change-bar-color-temperature-2 { background-color: $bar-font-color-level-2; }
+    .change-bar-color-temperature-3 { background-color: $bar-font-color-level-3; }
+    .change-bar-color-temperature-4 { background-color: $bar-font-color-level-4; }
+    .change-bar-color-temperature-5 { background-color: $bar-font-color-level-5; }
+    .change-bar-color-temperature-6 { background-color: $bar-font-color-level-6; }
+
+    .general-pointer-color-up { color: #E03131; }
+    .general-pointer-color-down { color: #186EC0; }
+
+    .general-border-bottom-color { border-bottom-color: #E9ECEF; }
+    .change-border-top-color { border-top-color: #34373D; }
+    .change-border-bottom-color { border-bottom-color: #34373D; }
+    .change-border-color { border-color: #50545C; }
+    .general-border-color { border-color:  #E9ECEF; }
+    .general-border-color-chat { border-color: #FF8A3D;}
+
+    .general-background-color-landing-1 { background-color: #FBF7F2; }
+    .general-background-color-landing-3 { background-color: #E6F3E6; }
+    .general-background-color-search { background-color: #F8F9FA; }
+    .general-background-color-light { background-color: #FFFFFF; }
+    .general-background-color-dark { background-color: #17171A; }
+    .general-background-color-jobs { background-color: #FFE2D2; }
+    .general-background-color-realty { background-color: #D2EDFA; }
+    .general-background-color-imageview { background-color: black; }
+    .general-background-color-emphasize { background-color: #FF8A3D; }
+
+    .change-background-color-basic { background-color: #17171A; }
+    .change-background-color-search { background-color: #2B2E33; }
+
+    .change-fill-color path { fill: #EAEBEE }
+}

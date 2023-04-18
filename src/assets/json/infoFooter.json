@@ -1,0 +1,62 @@
+{
+    "info": [
+        {
+            "bold": "대표",
+            "regular": "김재현, 김용현"
+        },
+        {
+            "bold": "사업자번호",
+            "regular": "375-87-00088"
+        },
+        {
+            "bold": "직업제공사업 신고번호",
+            "regular": "2016-서울서초-0051"
+        },
+        {
+            "bold": "주소",
+            "regular": "서울특별시 구로구 디지털로 30길 28, 609호 (당근서비스)"
+        },
+        {
+            "bold": "전화",
+            "regular": "1544-9796"
+        },
+        {
+            "bold": "고객문의",
+            "regular": "cs@daangnservice.com"
+        }
+    ],
+
+    "inquiry": [ 
+        {
+            "inquiry": "제휴 문의"
+        }, 
+        {
+            "inquiry": "광고 문의"
+        }, 
+        {
+            "inquiry": "PR 문의"
+        }, 
+        {
+            "inquiry": "IR 문의"
+        }
+    ],
+
+    "read": [
+        {
+            "address": "https://www.daangn.com/policy/terms",
+            "info": "이용약관"
+        },
+        {
+            "address": "https://www.daangn.com/policy/pribacy",
+            "info": "개인정보처리방침"
+        },
+        {
+            "address": "https://www.daangn.com/policy/location",
+            "info": "위치기반서비스 이용약관"
+        },
+        {
+            "address": "https://www.daangn.com/wv/faqs/3994",
+            "info": "이용자보호 비전과 계획"
+        }
+    ]
+}

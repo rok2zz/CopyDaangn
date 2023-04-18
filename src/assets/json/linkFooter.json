@@ -1,0 +1,40 @@
+{
+    "link": [
+        {
+            "inPage": "중고거래",
+            "inPageLink": "hot_articles",
+            "outPage": "당근비즈니스",
+            "outPageLink": "https://business.daangn.com/",
+            "managePage": "자주 묻는 질문",
+            "managePageLink": "https://cs.kr.karrotmarket.com/wv/faqs"
+        },
+        {
+            "inPage": "동네가게",
+            "inPageLink": "",
+            "outPage": "채팅하기",
+            "outPageLink": "https://chat.daangn.com/onboarding",
+            "managePage": "회사 소개",
+            "managePageLink": "https://team.daangn.com/"
+        },
+        {
+            "inPage": "당근알바",
+            "inPageLink": "jobs",
+            "outPage": "",
+            "outPageLink": "",
+            "managePage": "인재 채용",
+            "managePageLink": "https://team.daangn.com/jobs/"
+        }
+    ],
+    "download": [
+        {   
+            "name": "IOS",
+            "image": "appstore.svg",
+            "link": "https://apps.apple.com/kr/app/%EB%8B%B9%EA%B7%BC%EB%A7%88%EC%BC%93-%EC%A4%91%EA%B3%A0%EA%B1%B0%EB%9E%98-%ED%95%84%EC%88%98%EC%95%B1/id1018769995"
+        },
+        {
+            "name": "Android",
+            "image": "google.svg",
+            "link": "https://play.google.com/store/apps/details?id=com.towneers.www&hl=ko"
+        }
+    ]
+}
