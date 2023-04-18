@@ -1,4 +1,8 @@
-# study1
+# CopyDaangn
+
+copy Daangn.com with Vue.js and TypeScript
+
+테마 변경 구현
 
 ## Project setup
 ```
